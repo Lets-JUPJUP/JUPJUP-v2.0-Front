@@ -1,13 +1,69 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+:root {
+  --main: #7654ff;
+  --light: #f3efff;
+  --grey100: #eef0f3;
+  --grey300: #d5d9de;
+  --grey500: #8d939a;
+  --white: #ffffff;
+  --black: #09090a;
+
+  font-family: "SUIT";
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+.MuiFormControl-root {
+  position: absolute !important;
+  right: 40px;
+  height: 0px !important;
+  overflow: hidden;
+}
+.MuiFormControl-root * {
+  height: 0px !important;
+  overflow: hidden;
 }
