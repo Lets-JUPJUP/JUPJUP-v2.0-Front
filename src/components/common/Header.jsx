@@ -5,6 +5,7 @@ import noti from "../../assets/icons/noti.svg";
 import home from "../../assets/icons/home.svg";
 import share from "../../assets/icons/share.svg";
 import alert from "../../assets/icons/alert.svg";
+import styled from "styled-components";
 
 const Header = ({
   isBack = false,
@@ -16,22 +17,42 @@ const Header = ({
   subtitle = "",
 }) => {
   return (
-    <div class="w-full h-15 p-5 flex justify-between items-center ">
-      <div class="w-6">
+    <Wrapper>
+      <Left>
         {isBack && <img src={back} />}
         {isHome && <img src={home} />}
-      </div>
-      <div>
-        <div class="text-lg font-semibold text-black">{title}</div>
+      </Left>
+      <Center>
+        <div>{title}</div>
         {subtitle && <div>{subtitle}</div>}
-      </div>
-      <div class="w-6">
+      </Center>
+      <Right>
         {isNoti && <img src={noti} />}
         {isShare && <img src={share} />}
         {isAlert && <img src={alert} />}
-      </div>
-    </div>
+      </Right>
+    </Wrapper>
   );
 };
 
 export default Header;
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+`;
+
+const Left = styled.div`
+  width: 24px;
+`;
+
+const Center = styled.div`
+  font-weight: 600;
+  font-size: 20px;
+`;
+const Right = styled.div`
+  width: 24px;
+`;
