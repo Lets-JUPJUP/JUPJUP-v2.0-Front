@@ -1,76 +1,72 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import SearchBar from "./SearchBar";
 
 const { kakao } = window;
 
 const KakaoMap = () => {
-  function searchLocationByAddress(map, address, name) {
-    // 마커 이미지 주소입니다
-    var imageSrc = "";
-
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
-
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(address, function (result, status) {
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 마커 이미지의 이미지 크기 입니다
-        var imageSize = new kakao.maps.Size(24, 35);
-
-        // 마커 이미지를 생성합니다
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-          map: map,
-          position: coords,
-          image: markerImage, // 마커 이미지
-        });
-
-        // // 인포윈도우로 장소에 대한 설명을 표시합니다
-        // var infowindow = new kakao.maps.InfoWindow({
-        //   content:
-        //     '<div style="width:150px;text-align:center;padding:6px 0;font-family:Pretendard">' +
-        //     name +
-        //     "</div>",
-        // });
-        // infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-      }
-    });
-  }
+  const [keyword, setKeyword] = useState("");
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
+  const mapRef = useRef(null);
 
   useEffect(() => {
-    var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-      mapOptions = {
-        center: new kakao.maps.LatLng(37.555134, 126.936893), // 지도의 중심좌표
-        level: 5, // 지도의 확대 레벨
-        isPanto: true,
-      };
+    const mapContainer = document.getElementById("map");
+    const mapOption = {
+      center: new kakao.maps.LatLng(37.5664056, 126.9778222),
+      level: 10,
+    };
 
-    // 지도를 표시할 div와 지도 옵션으로 지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOptions);
+    mapRef.current = new kakao.maps.Map(mapContainer, mapOption);
 
-    // 현재 위치 마커가 표시될 위치입니다 - 신촌역 좌표로 설정함
-    var markerPosition = new kakao.maps.LatLng(37.555134, 126.936893);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const locPosition = new kakao.maps.LatLng(lat, lon);
 
-    // 현재 위치 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-      position: markerPosition,
-    });
-
-    // 마커가 지도 위에 표시되도록 설정합니다
-    marker.setMap(map);
+          mapRef.current.setCenter(locPosition);
+          setLat(lat);
+          setLon(lon);
+        },
+        function (error) {
+          console.error("위치 정보를 가져오는데 실패했습니다:", error); // 실패 로그
+          const locPosition = new kakao.maps.LatLng(37.5664056, 126.9778222);
+          mapRef.current.setCenter(locPosition);
+          alert("위치 권한을 허용해야 합니다.");
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        }
+      );
+    } else {
+      console.log("Geolocation을 사용할 수 없습니다."); // Geolocation 미지원 로그
+    }
   }, []);
+
+  useEffect(() => {
+    if (lat !== 0 && lon !== 0) {
+      const locPosition = new kakao.maps.LatLng(lat, lon);
+      if (mapRef.current) {
+        mapRef.current.setCenter(locPosition);
+      }
+    }
+  }, [lat, lon]);
 
   return (
     <Wrapper>
-      <Map id="map" />
+      <div className="top">
+        <SearchBar
+          keyword={keyword}
+          setKeyword={setKeyword}
+          setLat={setLat}
+          setLon={setLon}
+        />
+      </div>
+      <Map id="map"></Map>
     </Wrapper>
   );
 };
@@ -80,6 +76,14 @@ export default KakaoMap;
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
+
+  .top {
+    width: 100%;
+    position: absolute;
+    top: 16px;
+    left: 0;
+    z-index: 10;
+  }
 `;
 
 const Map = styled.div`
