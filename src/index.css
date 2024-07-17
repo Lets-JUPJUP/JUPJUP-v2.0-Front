@@ -27,32 +27,32 @@
 
 @font-face {
   font-family: "SUIT";
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.eot");
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.eot?#iefix")
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.eot?#iefix")
       format("embedded-opentype"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.woff2")
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.woff2")
       format("woff2"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.woff")
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.woff")
       format("woff"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Regular.ttf")
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.ttf")
       format("truetype");
   font-display: swap;
 }
 
 @font-face {
   font-family: "SUIT";
-  font-weight: 700;
+  font-weight: 600;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.eot");
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.eot?#iefix")
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.eot?#iefix")
       format("embedded-opentype"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.woff2")
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.woff2")
       format("woff2"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.woff")
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.woff")
       format("woff"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Bold.ttf")
+    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.ttf")
       format("truetype");
   font-display: swap;
 }
