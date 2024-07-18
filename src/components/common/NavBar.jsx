@@ -7,11 +7,13 @@ import plog_grey from "../../assets/icons/plog_grey.svg";
 
 const NavBar = () => {
   return (
-    <Wrapper>
-      <img src={map_grey} />
-      <img src={plog_grey} />
-      <img src={profile_grey} />
-    </Wrapper>
+    <Gap>
+      <Wrapper>
+        <img src={map_grey} />
+        <img src={plog_grey} />
+        <img src={profile_grey} />
+      </Wrapper>
+    </Gap>
   );
 };
 
@@ -20,6 +22,7 @@ export default NavBar;
 const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
+  background-color: var(--white);
 
   display: flex;
   box-sizing: border-box;
@@ -29,4 +32,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+`;
+
+const Gap = styled.div`
+  margin-bottom: 101px;
 `;
