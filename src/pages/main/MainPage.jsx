@@ -57,7 +57,7 @@ const Wrapper = styled.div`
   }
 
   .btn {
-    margin: 20px auto 40px;
+    margin: 20px auto 0px;
   }
 `;
 
