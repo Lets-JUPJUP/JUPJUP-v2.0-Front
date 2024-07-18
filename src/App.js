@@ -4,6 +4,7 @@ import LoginLoadingPage from "./pages/auth/LoginLoadingPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import MapPage from "./pages/map/MapPage";
 import MainPage from "./pages/main/MainPage";
+import PloggingListPage from "./pages/list/PloggingListPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/map" element={<MapPage />} />
 
         <Route path="/" element={<MainPage />} />
+        <Route path="/list" element={<PloggingListPage />} />
       </Routes>
     </div>
   );
