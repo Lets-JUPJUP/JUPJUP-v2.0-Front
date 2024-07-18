@@ -3,6 +3,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import LoginLoadingPage from "./pages/auth/LoginLoadingPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import MapPage from "./pages/map/MapPage";
+import MainPage from "./pages/main/MainPage";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
 
         <Route path="/map" element={<MapPage />} />
+
+        <Route path="/" element={<MainPage />} />
       </Routes>
     </div>
   );
