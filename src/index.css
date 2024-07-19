@@ -3,10 +3,8 @@
   padding: 0;
 }
 
-@media screen and (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
+html {
+  font-size: 14px;
 }
 
 :root {
@@ -20,6 +18,7 @@
 
   font-family: "SUIT";
   line-height: 140%;
+  font-weight: 300;
 }
 
 @font-face {
