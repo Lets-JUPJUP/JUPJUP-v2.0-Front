@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
-import Filter from "../../components/list/Filter";
+import FilterHeader from "../../components/list/FilterHeader";
 import Item from "../../components/list/Item";
 import NavBar from "../../components/common/NavBar";
 
@@ -10,7 +10,7 @@ const PloggingListPage = () => {
     <>
       <Header isHome={true} isNoti={true} title="플로깅하기" />
       <Wrapper>
-        <Filter />
+        <FilterHeader />
 
         <List>
           <Item />

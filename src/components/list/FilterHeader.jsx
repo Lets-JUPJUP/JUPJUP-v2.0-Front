@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import filter from "../../assets/icons/filter.svg";
 
-const Filter = () => {
+const FilterHeader = () => {
   return (
     <Wrapper>
       <img src={filter} />
@@ -18,7 +18,7 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default FilterHeader;
 
 const Wrapper = styled.div`
   display: flex;
