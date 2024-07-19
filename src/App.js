@@ -5,6 +5,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import MapPage from "./pages/map/MapPage";
 import MainPage from "./pages/main/MainPage";
 import PloggingListPage from "./pages/list/PloggingListPage";
+import FilterSelectPage from "./pages/list/FilterSelectPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
 
         <Route path="/" element={<MainPage />} />
         <Route path="/list" element={<PloggingListPage />} />
+        <Route path="/list/filters" element={<FilterSelectPage />} />
       </Routes>
     </div>
   );
