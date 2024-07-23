@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import down from "../../assets/icons/down.svg";
 
-const Select = () => {
+const Select = ({ isActive }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openSelect = () => {
     setIsOpen(!isOpen);
@@ -13,7 +13,7 @@ const Select = () => {
         <img src={down} className="down" />
         성별
       </Wrapper>
-      {isOpen && (
+      {isActive && isOpen && (
         <Options>
           <div className="option">남성</div>
           <div className="line" />

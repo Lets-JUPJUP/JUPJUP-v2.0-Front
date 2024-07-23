@@ -23,7 +23,7 @@ const RegisterPage = () => {
         <Inputs>
           <Input placeholder="닉네임" />
           <Input placeholder="NN 세" />
-          <Select />
+          <Select isActive={true} />
         </Inputs>
       </Form>
 
