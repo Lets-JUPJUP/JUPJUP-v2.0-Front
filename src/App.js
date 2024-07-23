@@ -8,6 +8,7 @@ import PloggingListPage from "./pages/list/PloggingListPage";
 import FilterSelectPage from "./pages/list/FilterSelectPage";
 import MyPage from "./pages/user/MyPage";
 import EditPage from "./pages/user/EditPage";
+import DetailPage from "./pages/post/DetailPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/list" element={<PloggingListPage />} />
         <Route path="/list/filters" element={<FilterSelectPage />} />
+        <Route path="/detail/:id" element={<DetailPage />} />
 
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<EditPage />} />
