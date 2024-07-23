@@ -55,5 +55,6 @@ const Wrapper = styled.div`
 
   .icon {
     height: 52px;
+    margin-bottom: 12px;
   }
 `;
