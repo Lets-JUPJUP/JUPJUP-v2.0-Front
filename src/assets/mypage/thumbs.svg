@@ -1,0 +1,34 @@
+<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ic / thumbs" opacity="0.9">
+<path id="Vector 89" d="M7.80062 23.9219H15.0806V47.8419H7.80062C5.50312 47.8419 3.64062 45.9794 3.64062 43.6819V28.0819C3.64062 25.7844 5.50312 23.9219 7.80062 23.9219Z" fill="url(#paint0_linear_4783_2967)"/>
+<path id="Vector 90" d="M23.9181 4.16016L15.0781 24.1802V47.8402H36.2952C40.3952 47.8402 43.884 44.8533 44.5158 40.8023L47.0893 24.3012C47.4828 21.7786 45.5321 19.5002 42.979 19.5002H30.4181V10.4002C30.4181 6.9539 27.6244 4.16016 24.1781 4.16016H23.9181Z" fill="#FFC9C0"/>
+<g id="Mask group">
+<mask id="mask0_4783_2967" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="15" y="4" width="33" height="44">
+<path id="Vector 95" d="M23.9181 4.16016L15.0781 24.1802V47.8402H36.2952C40.3952 47.8402 43.884 44.8533 44.5158 40.8023L47.0893 24.3012C47.4828 21.7786 45.5321 19.5002 42.979 19.5002H30.4181V4.16016H23.9181Z" fill="#FFC9C0"/>
+</mask>
+<g mask="url(#mask0_4783_2967)">
+<g id="Group 164">
+<path id="Vector 92 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M47.5544 26.8867C47.6388 27.1612 47.4848 27.4522 47.2103 27.5367C43.8091 28.5832 38.0096 29.8035 33.7456 29.3771C33.4599 29.3485 33.2514 29.0937 33.28 28.8079C33.3085 28.5222 33.5634 28.3137 33.8491 28.3423C37.9052 28.7479 43.5457 27.5761 46.9045 26.5427C47.1789 26.4582 47.4699 26.6123 47.5544 26.8867Z" fill="#F4988C"/>
+<path id="Vector 93 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M47.5544 32.6055C47.6388 32.88 47.4848 33.171 47.2103 33.2554C43.8091 34.302 38.0096 35.5222 33.7456 35.0958C33.4599 35.0673 33.2514 34.8124 33.28 34.5267C33.3085 34.2409 33.5634 34.0324 33.8491 34.061C37.9052 34.4666 43.5457 33.2949 46.9045 32.2614C47.1789 32.177 47.4699 32.331 47.5544 32.6055Z" fill="#F4988C"/>
+<path id="Vector 94 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M47.5544 38.3282C47.6388 38.6026 47.4848 38.8936 47.2103 38.9781C43.8091 40.0246 38.0096 41.2449 33.7456 40.8185C33.4599 40.7899 33.2514 40.5351 33.28 40.2493C33.3085 39.9636 33.5634 39.7551 33.8491 39.7837C37.9052 40.1893 43.5457 39.0175 46.9045 37.9841C47.1789 37.8996 47.4699 38.0537 47.5544 38.3282Z" fill="#F4988C"/>
+</g>
+</g>
+</g>
+<path id="Vector 101" d="M12.9997 28.9303L4.67969 31.72V28.9303L12.9997 26V28.9303Z" fill="url(#paint1_linear_4783_2967)" fill-opacity="0.4"/>
+<path id="Vector 102" d="M24.9597 33.4456L4.67969 40.0395V33.4456L24.9597 26.5195V33.4456Z" fill="url(#paint2_linear_4783_2967)" fill-opacity="0.4"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_4783_2967" x1="15.0298" y1="50.7123" x2="-6.73503" y2="36.9458" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7654FF"/>
+<stop offset="1" stop-color="#9747FF"/>
+</linearGradient>
+<linearGradient id="paint1_linear_4783_2967" x1="5.53494" y1="34.9933" x2="11.6001" y2="29.0094" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint2_linear_4783_2967" x1="6.76436" y1="47.7764" x2="17.2002" y2="37.2225" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
