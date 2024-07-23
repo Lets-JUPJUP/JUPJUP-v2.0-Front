@@ -32,6 +32,9 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.04),
+    0px -2px 20px 0px rgba(0, 0, 0, 0.06);
 `;
 
 const Gap = styled.div`
