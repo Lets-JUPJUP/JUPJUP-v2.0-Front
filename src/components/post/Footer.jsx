@@ -3,18 +3,22 @@ import styled from "styled-components";
 import bookmark from "../../assets/post/bookmark.svg";
 import right from "../../assets/post/right.svg";
 
-const Footer = ({ isParticipate = true }) => {
+const Footer = ({ isParticipate = true, isFail = true }) => {
   return (
     <Gap>
-      <Wrapper $isParticipate={isParticipate}>
+      <Wrapper $isParticipate={!isFail && isParticipate}>
         <div className="top">
           <div className="time">모집 마감까지 00시간 00분</div>
           <div className="btns">
             <img src={bookmark} />
-            {isParticipate ? (
-              <div className="btn participate">신청 완료</div>
-            ) : (
-              <div className="btn">참여 신청</div>
+            {!isFail && (
+              <>
+                {isParticipate ? (
+                  <div className="btn participate">신청 완료</div>
+                ) : (
+                  <div className="btn">참여 신청</div>
+                )}
+              </>
             )}
           </div>
         </div>
