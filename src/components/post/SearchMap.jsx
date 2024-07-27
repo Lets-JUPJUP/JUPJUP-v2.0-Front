@@ -44,6 +44,35 @@ const SearchMap = () => {
       var marker = new kakao.maps.Marker({
         image: markerImage,
         position: position,
+        title: currentIndex.toString(),
+      });
+
+      // 마커에 dragend 이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, "dragend", function () {
+        //드래그 종료 지점으로 해당 인덱스의 핀 좌표, 주소 업데이트
+        const newPosition = marker.getPosition();
+        console.log(newPosition);
+
+        const index = parseInt(marker.getTitle(), 10);
+
+        searchDetailAddrFromCoords(newPosition, (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            const newAddress = result[0].address.address_name;
+
+            setRoute((prevRoute) => {
+              const newRoute = [...prevRoute];
+              newRoute[index] = {
+                ...newRoute[index],
+                latitude: newPosition.getLat(),
+                longitude: newPosition.getLng(),
+                address: newAddress, // Update address
+              };
+              return newRoute;
+            });
+          } else {
+            console.error("Failed to get address from coordinates:", status);
+          }
+        });
       });
 
       // 주소-좌표 변환 객체를 생성합니다
