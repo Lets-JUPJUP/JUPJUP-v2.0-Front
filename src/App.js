@@ -10,6 +10,7 @@ import MyPage from "./pages/user/MyPage";
 import EditPage from "./pages/user/EditPage";
 import DetailPage from "./pages/post/DetailPage";
 import NotiPage from "./pages/user/NotiPage";
+import UserProfile from "./pages/user/UserProfile";
 
 function App() {
   return (
@@ -28,8 +29,9 @@ function App() {
 
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<EditPage />} />
-
         <Route path="/mypage/noti" element={<NotiPage />} />
+
+        <Route path="/user/:id" element={<UserProfile />} />
       </Routes>
     </div>
   );
