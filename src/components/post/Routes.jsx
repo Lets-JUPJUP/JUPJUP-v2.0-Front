@@ -13,7 +13,7 @@ import xgrey from "../../assets/post/xgrey.svg";
 
 import styled from "styled-components";
 
-const Routes = ({ isDeletable = false, route = [] }) => {
+const Routes = ({ isDeletable = false, route = [], removeMarker }) => {
   const pinImages = [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9];
 
   return (
@@ -30,7 +30,11 @@ const Routes = ({ isDeletable = false, route = [] }) => {
               <div className="address">{el.address}</div>
             </div>
 
-            {isDeletable && <img src={xgrey} className="delete" />}
+            {isDeletable && (
+              <div onClick={() => removeMarker(idx)}>
+                <img src={xgrey} className="delete" />
+              </div>
+            )}
             {!isLast && <Line />}
           </Route>
         );

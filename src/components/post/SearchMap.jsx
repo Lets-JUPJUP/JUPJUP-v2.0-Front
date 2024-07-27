@@ -177,6 +177,34 @@ const SearchMap = () => {
     console.log(route);
   }, [markers]);
 
+  const removeMarker = (index) => {
+    setMarkers((prev) => {
+      const markerToRemove = prev[index];
+      markerToRemove.setMap(null);
+
+      const updatedMarkers = prev.filter((_, idx) => idx !== index);
+
+      if (updatedMarkers.length < prev.length) {
+        markerCountRef.current = updatedMarkers.length;
+      }
+
+      updatedMarkers.forEach((marker, idx) => {
+        marker.setTitle(idx.toString());
+        const imageSrc = pinImages[idx];
+        const markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          new kakao.maps.Size(32, 32),
+          { offset: new kakao.maps.Point(16, 32) }
+        );
+        marker.setImage(markerImage);
+      });
+
+      return updatedMarkers;
+    });
+
+    setRoute((prev) => prev.filter((_, idx) => idx !== index));
+  };
+
   return (
     <Wrapper>
       <div className="title">플로깅 루트</div>
@@ -190,7 +218,7 @@ const SearchMap = () => {
         <Map id="map-view" />
       </MapContainer>
 
-      <Routes isDeletable={true} route={route} />
+      <Routes isDeletable={true} route={route} removeMarker={removeMarker} />
     </Wrapper>
   );
 };
