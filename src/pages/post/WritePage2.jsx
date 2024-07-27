@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
-import SearchMap from "../../components/post/SearchMap";
+import SearchMap from "../../components/post/write/SearchMap";
 import LongBtn from "../../components/common/LongBtn";
 
 const WritePage2 = () => {

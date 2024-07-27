@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import search from "../../assets/icons/search.svg";
+import search from "../../../assets/icons/search.svg";
 
 const { kakao } = window;
 

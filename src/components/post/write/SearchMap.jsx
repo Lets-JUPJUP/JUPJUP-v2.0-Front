@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
-import Routes from "./Routes";
+import Routes from "../Routes";
 
-import pin1 from "../../assets/post/pin1.svg";
-import pin2 from "../../assets/post/pin2.svg";
-import pin3 from "../../assets/post/pin3.svg";
-import pin4 from "../../assets/post/pin4.svg";
-import pin5 from "../../assets/post/pin5.svg";
-import pin6 from "../../assets/post/pin6.svg";
-import pin7 from "../../assets/post/pin7.svg";
-import pin8 from "../../assets/post/pin8.svg";
-import pin9 from "../../assets/post/pin9.svg";
+import pin1 from "../../../assets/post/pin1.svg";
+import pin2 from "../../../assets/post/pin2.svg";
+import pin3 from "../../../assets/post/pin3.svg";
+import pin4 from "../../../assets/post/pin4.svg";
+import pin5 from "../../../assets/post/pin5.svg";
+import pin6 from "../../../assets/post/pin6.svg";
+import pin7 from "../../../assets/post/pin7.svg";
+import pin8 from "../../../assets/post/pin8.svg";
+import pin9 from "../../../assets/post/pin9.svg";
 
 const { kakao } = window;
 
