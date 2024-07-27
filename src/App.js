@@ -11,6 +11,7 @@ import EditPage from "./pages/user/EditPage";
 import DetailPage from "./pages/post/DetailPage";
 import NotiPage from "./pages/user/NotiPage";
 import UserProfile from "./pages/user/UserProfile";
+import SavedList from "./pages/user/SavedList";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<EditPage />} />
         <Route path="/mypage/noti" element={<NotiPage />} />
+        <Route path="/mypage/myplogging" element={<SavedList TYPE={"A"} />} />
+        <Route path="/mypage/bookmark" element={<SavedList TYPE={"B"} />} />
+        <Route path="/mypage/comment" element={<SavedList TYPE={"C"} />} />
 
         <Route path="/user/:id" element={<UserProfile />} />
       </Routes>
