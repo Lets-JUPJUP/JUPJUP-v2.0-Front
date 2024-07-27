@@ -27,7 +27,7 @@ const SearchMap = () => {
 
   const pinImages = [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9];
 
-  // 마커를 생성하고 지도위에 표시하는 함수입니다
+  // 마커를 생성하고 지도 위에 표시하는 함수입니다
   function addMarker(position) {
     //마커 최대 9개
     if (markerCountRef.current < 9) {
@@ -37,8 +37,8 @@ const SearchMap = () => {
 
       const markerImage = new kakao.maps.MarkerImage(
         imageSrc,
-        new kakao.maps.Size(32, 32), // Define the size of the marker image
-        { offset: new kakao.maps.Point(16, 32) } // Define the offset point of the marker
+        new kakao.maps.Size(32, 32),
+        { offset: new kakao.maps.Point(16, 32) }
       );
       // 마커를 생성합니다
       var marker = new kakao.maps.Marker({
@@ -65,7 +65,7 @@ const SearchMap = () => {
                 ...newRoute[index],
                 latitude: newPosition.getLat(),
                 longitude: newPosition.getLng(),
-                address: newAddress, // Update address
+                address: newAddress,
               };
               return newRoute;
             });
@@ -83,7 +83,7 @@ const SearchMap = () => {
         geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
       }
 
-      //좌표로 도로명 주소 가져오기 & 배열에 저장
+      //좌표로 주소 가져오기 & 배열에 저장
       searchDetailAddrFromCoords(position, (result, status) => {
         console.log(result[0]);
         console.log(result[0].address.address_name);
@@ -92,7 +92,7 @@ const SearchMap = () => {
         // 생성된 마커를 배열에 추가합니다
         setMarkers((prev) => {
           const updatedMarkers = [...prev, marker];
-          markerCountRef.current = updatedMarkers.length; // Update marker count ref
+          markerCountRef.current = updatedMarkers.length;
           return updatedMarkers;
         });
 
@@ -135,7 +135,7 @@ const SearchMap = () => {
           console.log("현재위치 가져오기 성공");
         },
         function (error) {
-          console.error("위치 정보를 가져오는데 실패했습니다:", error); // 실패 로그
+          console.error("위치 정보를 가져오는데 실패했습니다:", error);
           const locPosition = new kakao.maps.LatLng(37.5664056, 126.9778222);
           mapRef.current.setCenter(locPosition);
           alert("위치 권한을 허용해야 합니다.");
@@ -147,7 +147,7 @@ const SearchMap = () => {
         }
       );
     } else {
-      console.log("Geolocation을 사용할 수 없습니다."); // Geolocation 미지원 로그
+      console.log("Geolocation을 사용할 수 없습니다.");
     }
 
     // 지도를 클릭했을때 클릭한 위치에 마커를 추가하도록 지도에 클릭이벤트를 등록합니다
