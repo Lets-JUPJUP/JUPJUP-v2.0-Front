@@ -19,6 +19,7 @@ html {
   font-family: "SUIT";
   line-height: 140%;
   font-weight: 300;
+  color: var(--black);
 }
 
 @font-face {
