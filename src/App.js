@@ -13,6 +13,7 @@ import NotiPage from "./pages/user/NotiPage";
 import UserProfile from "./pages/user/UserProfile";
 import SavedList from "./pages/user/SavedList";
 import ReviewPage from "./pages/user/ReviewPage";
+import AlertPage from "./pages/user/AlertPage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/mypage/review/:id" element={<ReviewPage />} />
 
         <Route path="/user/:id" element={<UserProfile />} />
+        <Route path="/user/:id/alert" element={<AlertPage />} />
       </Routes>
     </div>
   );

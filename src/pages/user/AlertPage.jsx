@@ -1,17 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
-import Item from "../../components/list/Item";
+import LongBtn from "../../components/common/LongBtn";
+import AddPics from "../../components/common/AddPics";
 
 const AlertPage = () => {
   return (
     <>
-      <Header title="리뷰하기" isBack={true} isNoti={true} />
+      <Header title="신고 및 제보" isBack={true} />
       <Wrapper>
-        <div className="container">
-          <Item />
+        <textarea className="text" placeholder="문제 상황에 대해 작성하세요." />
+
+        <div className="gap">
+          <AddPics />
         </div>
       </Wrapper>
+
+      <Bottom>
+        <LongBtn text={"완료"} />
+      </Bottom>
     </>
   );
 };
@@ -19,10 +26,32 @@ const AlertPage = () => {
 export default AlertPage;
 
 const Wrapper = styled.div`
-  .container {
+  padding: 0 20px;
+
+  .gap {
     margin-top: 40px;
-    border-top: 1.2px solid var(--grey300);
-    border-bottom: 1.2px solid var(--grey300);
-    background: var(--white);
   }
+
+  .text {
+    margin-top: 40px;
+    height: 280px;
+    overflow-y: scroll;
+    border-radius: var(--basic, 2px);
+    background: var(--grey100, #eef0f3);
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    align-items: center;
+
+    outline: none;
+    border: none;
+  }
+`;
+
+const Bottom = styled.div`
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translate(-50%, 0%);
 `;
