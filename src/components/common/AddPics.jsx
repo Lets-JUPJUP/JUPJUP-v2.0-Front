@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import gallery from "../../assets/icons/gallery.svg";
-import LongBtn from "./LongBtn";
 
 const AddPics = () => {
   return (
