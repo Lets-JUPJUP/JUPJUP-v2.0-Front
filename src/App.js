@@ -9,6 +9,7 @@ import FilterSelectPage from "./pages/list/FilterSelectPage";
 import MyPage from "./pages/user/MyPage";
 import EditPage from "./pages/user/EditPage";
 import DetailPage from "./pages/post/DetailPage";
+import NotiPage from "./pages/user/NotiPage";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
 
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<EditPage />} />
+
+        <Route path="/mypage/noti" element={<NotiPage />} />
       </Routes>
     </div>
   );
