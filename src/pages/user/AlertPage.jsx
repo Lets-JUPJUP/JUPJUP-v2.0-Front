@@ -46,6 +46,7 @@ const Wrapper = styled.div`
 
     outline: none;
     border: none;
+    resize: none;
   }
 `;
 
