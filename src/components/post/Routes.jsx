@@ -9,32 +9,32 @@ import pin6 from "../../assets/post/pin6.svg";
 import pin7 from "../../assets/post/pin7.svg";
 import pin8 from "../../assets/post/pin8.svg";
 import pin9 from "../../assets/post/pin9.svg";
+import xgrey from "../../assets/post/xgrey.svg";
 
 import styled from "styled-components";
 
-const Routes = () => {
+const Routes = ({ isDeletable = false, route = [] }) => {
+  const pinImages = [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9];
+
   return (
     <Wrapper>
-      <Route>
-        <img className="pin" src={pin1} />
-        <div className="address">
-          주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명
-        </div>
-        <Line />
-      </Route>
+      {route.map((el, idx) => {
+        var isLast = false;
+        if (idx == route.length - 1) {
+          isLast = true;
+        }
+        return (
+          <Route>
+            <div className="left">
+              <img className="pin" src={pinImages[idx]} />
+              <div className="address">{el.address}</div>
+            </div>
 
-      <Route>
-        <img className="pin" src={pin2} />
-        <div className="address">
-          주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명주소명
-        </div>
-        <Line />
-      </Route>
-
-      <Route>
-        <img className="pin" src={pin3} />
-        <div className="address">주소명주소명</div>
-      </Route>
+            {isDeletable && <img src={xgrey} className="delete" />}
+            {!isLast && <Line />}
+          </Route>
+        );
+      })}
     </Wrapper>
   );
 };
@@ -46,23 +46,32 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  .address {
-    overflow: hidden;
-    color: var(--black);
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    font-size: 16px;
-    font-weight: 600;
-  }
 `;
 
 const Route = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 4px;
   align-items: center;
   position: relative;
+
+  .left {
+    width: calc(100% - 24px);
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    .address {
+      width: calc(100% - 64px);
+      overflow: hidden;
+      color: var(--black);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
 
   .pin {
     z-index: 1;

@@ -14,6 +14,8 @@ import UserProfile from "./pages/user/UserProfile";
 import SavedList from "./pages/user/SavedList";
 import ReviewPage from "./pages/user/ReviewPage";
 import AlertPage from "./pages/user/AlertPage";
+import WritePage from "./pages/post/WritePage";
+import WritePage2 from "./pages/post/WritePage2";
 
 function App() {
   return (
@@ -28,7 +30,10 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/list" element={<PloggingListPage />} />
         <Route path="/list/filters" element={<FilterSelectPage />} />
+
         <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/write/1" element={<WritePage />} />
+        <Route path="/write/2" element={<WritePage2 />} />
 
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<EditPage />} />
