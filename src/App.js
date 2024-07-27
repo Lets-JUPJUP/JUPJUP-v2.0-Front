@@ -12,6 +12,7 @@ import DetailPage from "./pages/post/DetailPage";
 import NotiPage from "./pages/user/NotiPage";
 import UserProfile from "./pages/user/UserProfile";
 import SavedList from "./pages/user/SavedList";
+import ReviewPage from "./pages/user/ReviewPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/mypage/myplogging" element={<SavedList TYPE={"A"} />} />
         <Route path="/mypage/bookmark" element={<SavedList TYPE={"B"} />} />
         <Route path="/mypage/comment" element={<SavedList TYPE={"C"} />} />
+        <Route path="/mypage/review/:id" element={<ReviewPage />} />
 
         <Route path="/user/:id" element={<UserProfile />} />
       </Routes>
