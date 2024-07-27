@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import thumbs from "../../assets/mypage/thumbs.svg";
-import star from "../../assets/mypage/star.svg";
-import count from "../../assets/mypage/count.svg";
+import thumbs from "../../../assets/mypage/thumbs.svg";
+import star from "../../../assets/mypage/star.svg";
+import count from "../../../assets/mypage/count.svg";
 
 const Stat = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import profile from "../../assets/mypage/profile.svg";
-import settings from "../../assets/mypage/settings.svg";
+import profile from "../../../assets/mypage/profile.svg";
+import settings from "../../../assets/mypage/settings.svg";
 import styled from "styled-components";
 
 const Info = () => {

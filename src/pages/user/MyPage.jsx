@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
-import Info from "../../components/mypage/Info";
-import Btns from "../../components/mypage/Btns";
-import Stat from "../../components/mypage/Stat";
-import New from "../../components/mypage/New";
+import Info from "../../components/user/mypage/Info";
+import Btns from "../../components/user/mypage/Btns";
+import Stat from "../../components/user/mypage/Stat";
+import New from "../../components/user/mypage/New";
 import NavBar from "../../components/common/NavBar";
 
 const MyPage = () => {

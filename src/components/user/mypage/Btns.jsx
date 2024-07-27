@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import message from "../../assets/mypage/message.svg";
-import bookmark from "../../assets/mypage/bookmark.svg";
-import calendar from "../../assets/mypage/calendar.svg";
+import message from "../../../assets/mypage/message.svg";
+import bookmark from "../../../assets/mypage/bookmark.svg";
+import calendar from "../../../assets/mypage/calendar.svg";
 
 const Btns = () => {
   return (

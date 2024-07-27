@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import right from "../../assets/mypage/right.svg";
-import Item from "../list/Item";
+import right from "../../../assets/mypage/right.svg";
+import Item from "../../list/Item";
 
 const New = () => {
   return (
