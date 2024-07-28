@@ -5,9 +5,9 @@ import map_grey from "../../assets/icons/map_grey.svg";
 import profile_grey from "../../assets/icons/profile_grey.svg";
 import plog_grey from "../../assets/icons/plog_grey.svg";
 
-const NavBar = () => {
+const NavBar = ({ isNoGap = false }) => {
   return (
-    <Gap>
+    <Gap $isNoGap={isNoGap}>
       <Wrapper>
         <img src={map_grey} />
         <img src={plog_grey} />
@@ -38,5 +38,5 @@ const Wrapper = styled.div`
 `;
 
 const Gap = styled.div`
-  margin-bottom: 101px;
+  margin-bottom: ${(props) => (props.$isNoGap ? "0px" : "101px")};
 `;
