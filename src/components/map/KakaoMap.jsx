@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
 import gps from "../../assets/icons/gps.svg";
+import Drawer from "./Drawer";
 
 const { kakao } = window;
 
 const KakaoMap = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [lat, setLat] = useState(0);
   const [lon, setLon] = useState(0);
@@ -78,22 +80,26 @@ const KakaoMap = () => {
   };
 
   return (
-    <Wrapper>
-      <div className="top">
-        <SearchBar
-          keyword={keyword}
-          setKeyword={setKeyword}
-          setLat={setLat}
-          setLon={setLon}
-        />
-      </div>
-      <div className="btns">
-        <div className="btn">현 지도로 재검색</div>
-        <img className="gps" src={gps} onClick={refreshMap} />
-      </div>
+    <>
+      {isOpen && <Drawer setIsOpen={setIsOpen} />}
 
-      <Map id="map"></Map>
-    </Wrapper>
+      <Wrapper>
+        <div className="top">
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            setLat={setLat}
+            setLon={setLon}
+          />
+        </div>
+        <div className="btns">
+          <div className="btn">현 지도로 재검색</div>
+          <img className="gps" src={gps} onClick={refreshMap} />
+        </div>
+
+        <Map id="map"></Map>
+      </Wrapper>
+    </>
   );
 };
 
@@ -102,6 +108,7 @@ export default KakaoMap;
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
+  position: relative;
 
   .top {
     width: 100%;
