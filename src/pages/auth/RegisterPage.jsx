@@ -71,11 +71,12 @@ const RegisterPage = () => {
     }
   }, [validNameData]);
 
-  //에러 처리
+  //가입 성공시 메인페이지로 이동
   useEffect(() => {
     if (createProfileStatus == 200) {
       navigate("/");
     } else if (createProfileError) {
+      //에러 처리
       setToastMessage("회원가입 오류: 부적절한 정보입니다.");
     }
   }, [createProfileError, createProfileStatus]);
