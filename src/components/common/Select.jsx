@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import down from "../../assets/icons/down.svg";
 
-const Select = ({ isActive }) => {
+const Select = ({ isActive, value, setValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openSelect = () => {
     setIsOpen(!isOpen);
@@ -11,13 +11,29 @@ const Select = ({ isActive }) => {
     <>
       <Wrapper onClick={openSelect}>
         <img src={down} className="down" />
-        성별
+        {value}
       </Wrapper>
       {isActive && isOpen && (
         <Options>
-          <div className="option">남성</div>
+          <div
+            className="option"
+            onClick={() => {
+              setValue("MALE");
+              setIsOpen(false);
+            }}
+          >
+            남성
+          </div>
           <div className="line" />
-          <div className="option">여성</div>
+          <div
+            className="option"
+            onClick={() => {
+              setValue("FEMALE");
+              setIsOpen(false);
+            }}
+          >
+            여성
+          </div>
         </Options>
       )}
     </>

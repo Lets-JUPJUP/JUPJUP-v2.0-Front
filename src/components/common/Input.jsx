@@ -1,8 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const Input = ({ placeholder }) => {
-  return <CustomInput placeholder={placeholder} type="number" />;
+const Input = ({ placeholder, onChange, value, type = "text" }) => {
+  return (
+    <CustomInput
+      placeholder={placeholder}
+      onChange={onChange}
+      value={value}
+      type={type}
+    />
+  );
 };
 
 export default Input;
