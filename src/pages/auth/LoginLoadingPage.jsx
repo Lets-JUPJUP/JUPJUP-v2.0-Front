@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { memberGetMyProfile_ } from "../../services/api/member";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import useFetch from "../../services/hooks/useFetch";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
 
 const LoginLoadingPage = () => {
   const [searchParams, _] = useSearchParams();
@@ -15,7 +15,7 @@ const LoginLoadingPage = () => {
       Authorization: `Bearer ${accessToken}`,
     },
   };
-  const { data, loading, error } = useFetch(memberGetMyProfile_, headers);
+  const { data, error } = useGetInitialData(memberGetMyProfile_, headers);
 
   //에러
   if (error) {

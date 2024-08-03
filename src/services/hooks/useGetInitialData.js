@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const useFetch = (requestFunc, headers, body) => {
+const useGetInitialData = (requestFunc, headers, body) => {
   const [data, setData] = useState(); // api 데이터 저장하기
   const [loading, setLoading] = useState(false); // 데이터 로딩 상태
   const [error, setError] = useState(false); // 에러 발생 상태
@@ -25,4 +25,4 @@ const useFetch = (requestFunc, headers, body) => {
   return { data, loading, error };
 };
 
-export default useFetch;
+export default useGetInitialData;
