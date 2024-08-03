@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const LongBtn = ({ isActive = false, text, onClick }) => {
+const LongBtn = ({ isActive = true, text, onClick }) => {
   return (
     <Wrapper>
       <Btn $isActive={isActive} onClick={isActive ? onClick : null}>
