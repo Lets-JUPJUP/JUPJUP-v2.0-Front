@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const LongBtn = ({ isActive = false, text }) => {
+const LongBtn = ({ isActive = false, text, onClick }) => {
   return (
     <Wrapper>
-      <Btn>{text}</Btn>
+      <Btn $isActive={isActive} onClick={isActive ? onClick : null}>
+        {text}
+      </Btn>
     </Wrapper>
   );
 };
@@ -25,7 +27,8 @@ const Btn = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  background: var(--main);
+  background: ${(props) =>
+    props.$isActive ? "var(--main)" : "var(--grey300)"};
 
   color: var(--white);
   font-size: 18px;
