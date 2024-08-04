@@ -74,6 +74,8 @@ const RegisterPage = () => {
   //가입 성공시 메인페이지로 이동
   useEffect(() => {
     if (createProfileStatus == 200) {
+      localStorage.setItem("gender", gender);
+      localStorage.setItem("age", age);
       navigate("/");
     } else if (createProfileError) {
       //에러 처리

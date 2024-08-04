@@ -28,7 +28,8 @@ const LoginLoadingPage = () => {
     if (data.isProfileCreated) {
       console.log(data.isProfileCreated);
       localStorage.setItem("juptoken", accessToken); // 로컬 스토리지에 저장
-      localStorage.setItem("id", data.id);
+      localStorage.setItem("gender", data.gender);
+      localStorage.setItem("age", data.age);
       navigate("/", {
         onComplete: () => {
           // 이동이 완료된 후에 새로고침
