@@ -20,15 +20,6 @@ export const postFormState = atom({
     withPet: false,
     content: "", // 글의 내용
     images: [], // 사진 추가 - presigned URL
-    district: "", // 플로깅 루트의 시작점의 지역구를 string으로 담음
-    route: [
-      // 플로깅 루트
-      // {
-      //   address: "",
-      //   latitude: undefined,
-      //   longitude: undefined,
-      // },
-    ],
   },
   effects_UNSTABLE: [persistAtom],
 });
