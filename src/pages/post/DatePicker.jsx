@@ -5,7 +5,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { forwardRef } from "react";
 
-const DatePicker = ({ target, setTarget }) => {
+const DatePicker = ({ target, setTarget, maxDate }) => {
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <CustomCalendarInput onClick={onClick} ref={ref}>
       {value !== "" ? (
@@ -27,6 +27,7 @@ const DatePicker = ({ target, setTarget }) => {
         showTimeSelect
         timeFormat="HH:mm"
         minDate={new Date()}
+        maxDate={maxDate}
         popperPlacement="bottom-end"
         popperContainer={({ children }) => (
           <CalendarContainer>{children}</CalendarContainer>
