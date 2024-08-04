@@ -15,7 +15,7 @@ import pin9 from "../../../assets/post/pin9.svg";
 
 const { kakao } = window;
 
-const SearchMap = () => {
+const SearchMap = ({ setRoute, route }) => {
   const mapRef = useRef(null);
   const markerCountRef = useRef(0); //마커 최대 개수 9개 관리를 위한 ref
 
@@ -23,7 +23,6 @@ const SearchMap = () => {
   const [lat, setLat] = useState(0); //지도 중심 좌표, 마커와 무관
   const [lon, setLon] = useState(0); //지도 중심 좌표, 마커와 무관
   const [markers, setMarkers] = useState([]); //지도 표시 마커 배열
-  const [route, setRoute] = useState([]); //객체(주소명,경도,위도)배열
 
   const pinImages = [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9];
 
@@ -85,10 +84,6 @@ const SearchMap = () => {
 
       //좌표로 주소 가져오기 & 배열에 저장
       searchDetailAddrFromCoords(position, (result, status) => {
-        console.log(result[0]);
-        console.log(result[0].address.address_name);
-        console.log(result[0].address.region_2depth_name);
-
         // 생성된 마커를 배열에 추가합니다
         setMarkers((prev) => {
           const updatedMarkers = [...prev, marker];
@@ -110,6 +105,8 @@ const SearchMap = () => {
       marker.setMap(mapRef.current);
       marker.setDraggable(true);
     } else {
+      //9개 선택 초과시 토스트 팝업
+      //핀은 최대 9개까지 루트에 추가할 수 있습니다.
       console.log("초과");
     }
   }
