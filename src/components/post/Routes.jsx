@@ -50,6 +50,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  height: 208px;
+  overflow-y: scroll;
 `;
 
 const Route = styled.div`
