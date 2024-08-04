@@ -6,7 +6,7 @@ const useBtnActive = (fields) => {
   useEffect(() => {
     // 모든 입력 필드가 채워졌는지 검사
     const allFieldsFilled = Object.values(fields).every(
-      (value) => value !== "" && value !== undefined
+      (value) => value !== "" && value !== undefined && value !== null
     );
 
     setIsActive(allFieldsFilled);
