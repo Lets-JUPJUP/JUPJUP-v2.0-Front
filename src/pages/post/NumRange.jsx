@@ -1,17 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 
-const NumRange = () => {
+const NumRange = ({ minValue, maxValue, onMinChange, onMaxChange }) => {
   return (
     <Wrapper>
       <div className="min">
         <div className="text">최소</div>
-        <input type="number" min="1" max="120" placeholder="nn" />
+        <input
+          type="number"
+          min="1"
+          max="120"
+          value={minValue}
+          placeholder="nn"
+          onChange={onMinChange}
+        />
       </div>
 
       <div className="max">
         <div className="text">최대</div>
-        <input type="number" min="1" max="120" placeholder="nn" />
+        <input
+          type="number"
+          min="1"
+          max="120"
+          value={maxValue}
+          placeholder="nn"
+          onChange={onMaxChange}
+        />
       </div>
     </Wrapper>
   );
