@@ -6,8 +6,11 @@ import bell from "../../assets/main/bell.svg";
 import banner from "../../assets/main/banner.svg";
 import NavBar from "../../components/common/NavBar";
 import LongBtn from "../../components/common/LongBtn";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <div className="header">
@@ -22,7 +25,11 @@ const MainPage = () => {
       </Recommend>
 
       <div className="btn">
-        <LongBtn text={"플로깅하기"} />
+        <LongBtn
+          text={"플로깅하기"}
+          isActive={true}
+          onClick={() => navigate("/list")}
+        />
       </div>
 
       <NavBar />
