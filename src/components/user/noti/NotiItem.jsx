@@ -1,22 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import noti from "../../../assets/icons/noti.svg";
+import { handleDateString } from "../../../services/format/date";
 
-const NotiItem = () => {
+const NotiItem = ({ notiItem, onClick }) => {
+  const { content, contentId, id, isRead, notificationType, time } = notiItem;
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick}>
       <div className="top">
         <div className="left">
           <img className="icon" src={noti} />
           <div className="title">플로깅 성사 여부 확인하기</div>
         </div>
 
-        <div className="date">00/00/00</div>
+        <div className="date">{handleDateString(time)}</div>
       </div>
 
-      <div className="bottom">
-        마이페이지 - 내 플로깅에서 참여 신청한 플로깅의 성사 여부를 확인하세요.
-      </div>
+      <div className="bottom">{content}</div>
     </Wrapper>
   );
 };

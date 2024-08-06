@@ -10,6 +10,7 @@ import {
   notiPostReadEach,
 } from "../../services/api/noti";
 import useFetch from "../../services/hooks/useFetch";
+import { useNavigate } from "react-router-dom";
 
 const NotiPage = () => {
   //알림 전체 읽음
@@ -21,10 +22,13 @@ const NotiPage = () => {
 
   //알림 리스트 가져오기
   const { data, error, fetchData: getList } = useFetch(notiGetList);
+
+  const navigate = useNavigate();
+
   console.log(data);
   useEffect(() => {
     getList();
-  }, [readAllStatus]);
+  }, []);
 
   return (
     <>
@@ -32,13 +36,22 @@ const NotiPage = () => {
       <Wrapper>
         <div className="list">
           {data &&
-            data.map((el) => {
-              return <NotiItem onClick={readEach(el.id)} />;
+            data.map((notiItem) => {
+              return (
+                <NotiItem
+                  notiItem={notiItem}
+                  key={notiItem.id}
+                  onClick={() => {
+                    readEach(notiItem.id);
+                    navigate(`/detail/${notiItem.contentId}`);
+                  }}
+                />
+              );
             })}
         </div>
 
         <div className="floating-btn">
-          <ReadBtn onClick={readAll} />
+          <ReadBtn onClick={() => readAll()} />
         </div>
       </Wrapper>
     </>
