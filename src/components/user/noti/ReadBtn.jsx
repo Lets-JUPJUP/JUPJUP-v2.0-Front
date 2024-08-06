@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const ReadBtn = () => {
-  return <Wrapper>전체 읽음 처리</Wrapper>;
+const ReadBtn = ({ onClick }) => {
+  return <Wrapper onClick={onClick}>전체 읽음 처리</Wrapper>;
 };
 
 export default ReadBtn;
