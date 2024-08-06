@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Info = () => {
+const Info = ({ startDate, member, age, gender, withPet }) => {
   return (
     <Wrapper>
-      <div className="row">참여 일시 | 텍스트</div>
-      <div className="row">참여 인원 | 텍스트</div>
-      <div className="row">참여 연령 | 텍스트</div>
-      <div className="row">참여 성별 | 텍스트</div>
+      <div className="row">참여 일시 | {startDate}</div>
+      <div className="row">참여 인원 | {member}</div>
+      <div className="row">참여 연령 | {age}</div>
+      <div className="row">참여 성별 | {gender}</div>
     </Wrapper>
   );
 };

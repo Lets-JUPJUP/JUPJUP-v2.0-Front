@@ -17,7 +17,7 @@ const Routes = ({ isDeletable = false, route = [], removeMarker }) => {
   const pinImages = [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9];
 
   return (
-    <Wrapper>
+    <Wrapper $isDeletable={isDeletable}>
       {route.map((el, idx) => {
         var isLast = false;
         if (idx == route.length - 1) {
@@ -51,8 +51,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 12px;
 
-  height: 208px;
-  overflow-y: scroll;
+  height: ${(props) => (props.$isDeletable ? "208px" : "")};
+  overflow-y: ${(props) => (props.$isDeletable ? "scroll" : "")};
 `;
 
 const Route = styled.div`

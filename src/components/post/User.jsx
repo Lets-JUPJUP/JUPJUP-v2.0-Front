@@ -2,19 +2,28 @@ import React from "react";
 import styled from "styled-components";
 import profile from "../../assets/post/profile.svg";
 import right from "../../assets/post/right.svg";
+import { handleDateString } from "../../services/format/date";
 
-const User = () => {
+const User = ({
+  authorId,
+  authorNickname,
+  authorProfileImageUrl,
+  createdAt,
+}) => {
   return (
     <Wrapper>
       <div className="left">
-        <img src={profile} />
+        <img
+          className="profile"
+          src={authorProfileImageUrl ? authorProfileImageUrl : profile}
+        />
         <div className="col">
-          <div className="nickname">사용자</div>
-          <div className="date">00/00 00:00</div>
+          <div className="nickname">{authorNickname}</div>
+          <div className="date">{handleDateString(createdAt)}</div>
         </div>
       </div>
 
-      <div className="btn">
+      <div className="btn" onClick={`/user/${authorId}`}>
         프로필 보기
         <img src={right} />
       </div>
@@ -27,6 +36,12 @@ export default User;
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+
+  .profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+  }
 
   .left {
     display: flex;
