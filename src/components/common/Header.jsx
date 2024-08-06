@@ -8,6 +8,7 @@ import alert from "../../assets/icons/alert.svg";
 import styled from "styled-components";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
 import { notiGetSubscribe } from "../../services/api/noti";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({
   isBack = false,
@@ -21,18 +22,20 @@ const Header = ({
   //SSE 구독 요청
   useGetInitialData(notiGetSubscribe);
 
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Left>
-        {isBack && <img src={back} />}
-        {isHome && <img src={home} />}
+        {isBack && <img src={back} onClick={() => navigate(-1)} />}
+        {isHome && <img src={home} onClick={() => navigate("/")} />}
       </Left>
       <Center>
         <div>{title}</div>
         {subtitle && <div>{subtitle}</div>}
       </Center>
       <Right>
-        {isNoti && <img src={noti} />}
+        {isNoti && <img src={noti} onClick={() => navigate("/mypage/noti")} />}
         {isShare && <img src={share} />}
         {isAlert && <img src={alert} />}
       </Right>
