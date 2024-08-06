@@ -6,6 +6,8 @@ import home from "../../assets/icons/home.svg";
 import share from "../../assets/icons/share.svg";
 import alert from "../../assets/icons/alert.svg";
 import styled from "styled-components";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
+import { notiGetSubscribe } from "../../services/api/noti";
 
 const Header = ({
   isBack = false,
@@ -16,6 +18,9 @@ const Header = ({
   title = "",
   subtitle = "",
 }) => {
+  //SSE 구독 요청
+  useGetInitialData(notiGetSubscribe);
+
   return (
     <Wrapper>
       <Left>

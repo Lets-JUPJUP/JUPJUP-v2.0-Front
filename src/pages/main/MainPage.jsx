@@ -7,9 +7,15 @@ import banner from "../../assets/main/banner.svg";
 import NavBar from "../../components/common/NavBar";
 import LongBtn from "../../components/common/LongBtn";
 import { useNavigate } from "react-router-dom";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
+import { notiGetSubscribe } from "../../services/api/noti";
 
 const MainPage = () => {
   const navigate = useNavigate();
+
+  //메인페이지 공용헤더 사용 X
+  //SSE 알림 구독
+  useGetInitialData(notiGetSubscribe);
 
   return (
     <Wrapper>

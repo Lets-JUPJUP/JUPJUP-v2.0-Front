@@ -1,37 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
 import NotiItem from "../../components/user/noti/NotiItem";
 import ReadBtn from "../../components/user/noti/ReadBtn";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
+import {
+  notiGetList,
+  notiPostReadAll,
+  notiPostReadEach,
+} from "../../services/api/noti";
+import useFetch from "../../services/hooks/useFetch";
 
 const NotiPage = () => {
+  //알림 전체 읽음
+  const { status: readAllStatus, fetchData: readAll } =
+    useFetch(notiPostReadAll);
+
+  //알림 단일 읽음
+  const { fetchData: readEach } = useFetch(notiPostReadEach);
+
+  //알림 리스트 가져오기
+  const { data, error, fetchData: getList } = useFetch(notiGetList);
+  console.log(data);
+  useEffect(() => {
+    getList();
+  }, [readAllStatus]);
+
   return (
     <>
       <Header isBack={true} title="알림" />
       <Wrapper>
         <div className="list">
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
-          <NotiItem />
+          {data &&
+            data.map((el) => {
+              return <NotiItem onClick={readEach(el.id)} />;
+            })}
         </div>
 
         <div className="floating-btn">
-          <ReadBtn />
+          <ReadBtn onClick={readAll} />
         </div>
       </Wrapper>
     </>
