@@ -5,23 +5,31 @@ import profile from "../../assets/post/profile.svg";
 import comment from "../../assets/post/comment.svg";
 import alert from "../../assets/post/alert.svg";
 import x from "../../assets/post/x.svg";
+import { handleDateString } from "../../services/format/date";
 
-const Comment = ({ isMine = false }) => {
+const Comment = ({ comment }) => {
+  const { id, content, isRemoved, isAuthor, createdDate, replyList, parentId } =
+    comment;
+
+  const { writerId, nickname, profileImageUrl } = comment.writerInfoDto;
   return (
     <Wrapper>
       <div className="top">
         <div className="left">
-          <img className="profile" src={profile} />
-          {isMine ? (
-            <div className="nickname mine">닉네임</div>
+          <img
+            className="profile"
+            src={profileImageUrl ? profileImageUrl : profile}
+          />
+          {isAuthor ? (
+            <div className="nickname mine">{nickname}</div>
           ) : (
-            <div className="nickname">닉네임</div>
+            <div className="nickname">{nickname}</div>
           )}
 
-          <div className="date">00/00 00:00</div>
+          <div className="date">{handleDateString(createdDate)}</div>
         </div>
         <div className="icons">
-          {isMine ? (
+          {isAuthor ? (
             <img src={x} />
           ) : (
             <>
@@ -31,7 +39,7 @@ const Comment = ({ isMine = false }) => {
         </div>
       </div>
 
-      <p className="content">오 좋은 행사네요 전 신청했습니다~</p>
+      <p className="content">{content}</p>
     </Wrapper>
   );
 };

@@ -1,33 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import right from "../../assets/post/right.svg";
 import Comment from "./Comment";
+import useFetch from "../../services/hooks/useFetch";
+import { postCreateComment, postGetComments } from "../../services/api/post";
+import { useParams } from "react-router-dom";
 
 const Comments = () => {
+  const { id } = useParams();
+  const { data: comments, fetchData: getComments } = useFetch(postGetComments);
+
+  const { data, fetchData: createComment } = useFetch(postCreateComment);
+
+  console.log(comments);
+
+  useEffect(() => {
+    getComments(id);
+  }, []);
+
   return (
-    <Wrapper>
-      <Top>
-        <div className="title">댓글 (00)</div>
-        <div className="btn">
-          댓글 작성하기
-          <img src={right} />
-        </div>
-      </Top>
+    comments && (
+      <Wrapper>
+        <Top>
+          <div className="title">댓글 ({comments.commentNo})</div>
+          <div className="btn">
+            댓글 작성하기
+            <img src={right} />
+          </div>
+        </Top>
 
-      <Comment />
-      <div className="divider" />
-
-      <Comment isMine={true} />
-      <Recomment>
-        <Comment />
-      </Recomment>
-      <Recomment>
-        <Comment />
-      </Recomment>
-      <div className="divider" />
-
-      <Comment />
-    </Wrapper>
+        {comments.commentDtoList.map((comment, index) => {
+          var isLast = false;
+          if (index == comments.commentDtoList.length - 1) {
+            isLast = true;
+          }
+          return (
+            <>
+              <Comment comment={comment} />
+              {comment.replyList.map((reply) => {
+                return (
+                  <>
+                    <Recomment>
+                      <Comment comment={reply} />
+                    </Recomment>
+                  </>
+                );
+              })}
+              {!isLast && <div className="divider" />}
+            </>
+          );
+        })}
+      </Wrapper>
+    )
   );
 };
 
