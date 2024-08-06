@@ -18,6 +18,7 @@ const KakaoMap = () => {
   const [refresh, setRefresh] = useState(false); //현위치 다시 가져오기
   const [refetch, setRefetch] = useState(false); // 변경시 쓰레기통 정보 refetch
 
+  const [currentPin, setCurrentPin] = useState(null);
   const mapRef = useRef(null);
 
   const {
@@ -110,6 +111,13 @@ const KakaoMap = () => {
 
         marker.setMap(mapRef.current); // 마커가 지도 위에 표시되도록 설정
         marker.setDraggable(false);
+
+        // 마커에 클릭이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, "click", function () {
+          // drawer 오픈
+          setIsOpen(true);
+          setCurrentPin(trashCan);
+        });
       });
     }
   }, [trashCansData]);
@@ -135,7 +143,7 @@ const KakaoMap = () => {
 
   return (
     <>
-      {isOpen && <Drawer setIsOpen={setIsOpen} />}
+      {isOpen && <Drawer setIsOpen={setIsOpen} target={currentPin} />}
 
       <Wrapper>
         <div className="top">

@@ -11,67 +11,106 @@ import colorstatus3 from "../../assets/map/colorstatus3.svg";
 
 import LongBtn from "../common/LongBtn";
 import right from "../../assets/post/right.svg";
+import useFetch from "../../services/hooks/useFetch";
+import { mapGetFeedback, mapPostFeedback } from "../../services/api/map";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
 
-const Drawer = ({ setIsOpen }) => {
+const Drawer = ({ setIsOpen, target }) => {
+  const { status, fetchData: postFeedback } = useFetch(mapPostFeedback);
+
+  const { data: feedbacks, error } = useGetInitialData(
+    mapGetFeedback,
+    target.id
+  );
+
   return (
-    <Bg
-      onClick={() => {
-        setIsOpen(false);
-      }}
-    >
+    <>
+      <Bg
+        onClick={() => {
+          setIsOpen(false);
+        }}
+      />
       <Wrapper>
-        <img
-          src={xgrey}
-          className="btn"
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        />
-        <div className="name">쓰레기통 이름</div>
-        <div className="address"> 성동구 00로 00길 0-00</div>
+        <Top>
+          <img
+            src={xgrey}
+            className="btn"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          />
+          <div className="name">{target.name}</div>
+          <div className="address">{target.address}</div>
 
-        <div className="imgs">
-          <img className="img" src={""} />
-          <img className="img" src={""} /> <img className="img" src={""} />
-          <img className="img" src={""} />
-        </div>
-
-        <div className="review">관리 상태 리뷰</div>
-        <Status>
-          <div className="status">
-            <img src={status1} />
-            <div className="text">관리 필요</div>
-            <div className="cnt">10</div>
+          <div className="imgs">
+            <img className="img" src={""} />
+            <img className="img" src={""} /> <img className="img" src={""} />
+            <img className="img" src={""} />
           </div>
 
-          <div className="status">
-            <img src={status2} />
-            <div className="text">보통</div>
-            <div className="cnt">10</div>
-          </div>
+          <div className="review">관리 상태 리뷰</div>
+          {feedbacks && (
+            <Status>
+              <div
+                className="status"
+                onClick={() =>
+                  postFeedback({
+                    trashCanId: target.id, // 쓰레기통 id
+                    feedbackCode: 0, // 피드백 코드
+                  })
+                }
+              >
+                <img src={status1} />
+                <div className="text">관리 필요</div>
+                <div className="cnt">{feedbacks["관리 필요"]}</div>
+              </div>
 
-          <div className="status">
-            <img src={status3} />
-            <div className="text">우수</div>
-            <div className="cnt">10</div>
+              <div
+                className="status"
+                onClick={() =>
+                  postFeedback({
+                    trashCanId: target.id, // 쓰레기통 id
+                    feedbackCode: 1, // 피드백 코드
+                  })
+                }
+              >
+                <img src={status2} />
+                <div className="text">보통</div>
+                <div className="cnt">{feedbacks["보통"]}</div>
+              </div>
+
+              <div
+                className="status"
+                onClick={() =>
+                  postFeedback({
+                    trashCanId: target.id, // 쓰레기통 id
+                    feedbackCode: 2, // 피드백 코드
+                  })
+                }
+              >
+                <img src={status3} />
+                <div className="text">우수</div>
+                <div className="cnt">{feedbacks["우수"]}</div>
+              </div>
+            </Status>
+          )}
+        </Top>
+
+        <Bottom>
+          <div className="inquiry">
+            민원 접수하기
+            <img className="right" src={right} />
           </div>
-        </Status>
+          <LongBtn text={"완료"} />
+        </Bottom>
       </Wrapper>
-
-      <Bottom>
-        <div className="inquiry">
-          민원 접수하기
-          <img className="right" src={right} />
-        </div>
-        <LongBtn text={"완료"} />
-      </Bottom>
-    </Bg>
+    </>
   );
 };
 
 export default Drawer;
 
-const Wrapper = styled.div`
+const Top = styled.div`
   width: 100%;
   box-sizing: border-box;
   border-radius: 16px 16px 0 0;
@@ -160,7 +199,11 @@ const Bg = styled.div`
   top: 0;
   left: 0;
   z-index: 100;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
+`;
+
+const Wrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
 `;
