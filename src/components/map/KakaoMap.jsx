@@ -3,6 +3,9 @@ import styled from "styled-components";
 import SearchBar from "./SearchBar";
 import gps from "../../assets/icons/gps.svg";
 import Drawer from "./Drawer";
+import useFetch from "../../services/hooks/useFetch";
+import { mapGetTrashCans } from "../../services/api/map";
+import pin from "../../assets/map/pin.svg";
 
 const { kakao } = window;
 
@@ -12,14 +15,23 @@ const KakaoMap = () => {
   const [lat, setLat] = useState(0);
   const [lon, setLon] = useState(0);
 
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false); //현위치 다시 가져오기
+  const [refetch, setRefetch] = useState(false); // 변경시 쓰레기통 정보 refetch
+
   const mapRef = useRef(null);
+
+  const {
+    data: trashCansData,
+    error,
+    status,
+    fetchData: getTrashCans,
+  } = useFetch(mapGetTrashCans);
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
     const mapOption = {
       center: new kakao.maps.LatLng(37.5664056, 126.9778222),
-      level: 10,
+      level: 5,
     };
 
     mapRef.current = new kakao.maps.Map(mapContainer, mapOption);
@@ -59,7 +71,48 @@ const KakaoMap = () => {
         mapRef.current.setCenter(locPosition);
       }
     }
+
+    setRefetch(!refetch);
   }, [lat, lon]);
+
+  useEffect(() => {
+    //중심좌표 변경 시 쓰레기통 정보 get
+    if (lat !== 0 && lon !== 0) {
+      getTrashCans({ x: lat, y: lon });
+    }
+  }, [refetch]);
+
+  useEffect(() => {
+    //쓰레기통 정보 변할 때마다 화면에 보여줄 핀 배열 변경
+
+    if (trashCansData && trashCansData.trashCans.length) {
+      // 마커 이미지의 이미지 주소입니다
+      var imageSrc = pin;
+
+      trashCansData.trashCans.forEach((trashCan) => {
+        console.log(trashCan);
+        const locPosition = new kakao.maps.LatLng(
+          trashCan.latitude,
+          trashCan.longitude
+        );
+        const imageSize = new kakao.maps.Size(40, 40); // 마커 이미지의 이미지 크기
+        const imageOption = { offset: new kakao.maps.Point(20, 40) };
+        const markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        ); // 마커 이미지를 생성
+
+        var marker = new kakao.maps.Marker({
+          position: locPosition, // 마커를 표시할 위치
+          image: markerImage, // 마커 이미지
+        });
+
+        marker.setMap(mapRef.current); // 마커가 지도 위에 표시되도록 설정
+        marker.setDraggable(false);
+      });
+    }
+  }, [trashCansData]);
 
   useEffect(() => {
     // 마우스 드래그로 지도 이동이 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
@@ -67,10 +120,11 @@ const KakaoMap = () => {
       // 지도 중심 좌표를 얻어옵니다
       var latlng = mapRef.current.getCenter();
 
-      var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
-      message += "경도는 " + latlng.getLng() + " 입니다";
-
-      console.log(message);
+      // var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
+      // message += "경도는 " + latlng.getLng() + " 입니다";
+      setLat(latlng.getLat());
+      setLon(latlng.getLng());
+      // console.log(message);
     });
   }, []);
 
