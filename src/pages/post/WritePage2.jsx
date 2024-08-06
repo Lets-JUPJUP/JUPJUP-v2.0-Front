@@ -9,8 +9,10 @@ import useBtnActive from "../../services/hooks/useBtnActive";
 import useFetch from "../../services/hooks/useFetch";
 import { postCreatePost } from "../../services/api/post";
 import { useNavigate } from "react-router-dom";
+import Toast from "../../components/common/Toast";
 
 const WritePage2 = () => {
+  const [toastMessage, setToastMessage] = useState("");
   const [body, setBody] = useRecoilState(postFormState);
   const [route, setRoute] = useState([]); //객체(주소명,경도,위도)배열
   const [district, setDistrict] = useState(""); //시작 지점의 지역구
@@ -30,16 +32,16 @@ const WritePage2 = () => {
     writePost(requestBody);
   };
 
-  //요청 성공시
+  //요청 성공시 & 실패시
   useEffect(() => {
     if (writePostStatus == 200) {
       const id = writePostData.id;
       resetBody(); //바디 리셋
       navigate(`/detail/${id}`); //상세 페이지 이동
-    } else {
-      //시작 지점 서울이 아닌 지역 선택시 500에러
+    } else if (writePostError) {
+      //시작 지점 서울이 아닌 지역 선택시 500 에러
       //토스트 팝업 처리
-      //플로깅 루트의 시작위치는 서울시로 설정해주세요.
+      setToastMessage("플로깅 루트의 시작 위치는 서울시로 설정해주세요.");
     }
   }, [writePostError, writePostStatus]);
 
@@ -53,6 +55,9 @@ const WritePage2 = () => {
 
   return (
     <>
+      {toastMessage && (
+        <Toast message={toastMessage} setToastMessage={setToastMessage} />
+      )}
       <Header isBack={true} title={"플로거 모집하기"} isNoti={true} />
       <Wrapper>
         <SearchMap setRoute={setRoute} route={route} />

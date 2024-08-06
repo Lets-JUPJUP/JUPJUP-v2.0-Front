@@ -12,6 +12,7 @@ import pin6 from "../../../assets/post/pin6.svg";
 import pin7 from "../../../assets/post/pin7.svg";
 import pin8 from "../../../assets/post/pin8.svg";
 import pin9 from "../../../assets/post/pin9.svg";
+import Toast from "../../common/Toast";
 
 const { kakao } = window;
 
@@ -23,6 +24,8 @@ const SearchMap = ({ setRoute, route }) => {
   const [lat, setLat] = useState(0); //지도 중심 좌표, 마커와 무관
   const [lon, setLon] = useState(0); //지도 중심 좌표, 마커와 무관
   const [markers, setMarkers] = useState([]); //지도 표시 마커 배열
+
+  const [toastMessage, setToastMessage] = useState(""); //토스트 메세지
 
   const pinImages = [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9];
 
@@ -106,8 +109,7 @@ const SearchMap = ({ setRoute, route }) => {
       marker.setDraggable(true);
     } else {
       //9개 선택 초과시 토스트 팝업
-      //핀은 최대 9개까지 루트에 추가할 수 있습니다.
-      console.log("초과");
+      setToastMessage("핀은 최대 9개까지 루트에 추가할 수 있습니다.");
     }
   }
 
@@ -144,7 +146,6 @@ const SearchMap = ({ setRoute, route }) => {
         }
       );
     } else {
-      console.log("Geolocation을 사용할 수 없습니다.");
     }
 
     // 지도를 클릭했을때 클릭한 위치에 마커를 추가하도록 지도에 클릭이벤트를 등록합니다
@@ -203,20 +204,25 @@ const SearchMap = ({ setRoute, route }) => {
   };
 
   return (
-    <Wrapper>
-      <div className="title">플로깅 루트</div>
-      <SearchBar
-        keyword={keyword}
-        setKeyword={setKeyword}
-        setLat={setLat}
-        setLon={setLon}
-      />
-      <MapContainer>
-        <Map id="map-view" />
-      </MapContainer>
+    <>
+      {toastMessage && (
+        <Toast message={toastMessage} setToastMessage={setToastMessage} />
+      )}
+      <Wrapper>
+        <div className="title">플로깅 루트</div>
+        <SearchBar
+          keyword={keyword}
+          setKeyword={setKeyword}
+          setLat={setLat}
+          setLon={setLon}
+        />
+        <MapContainer>
+          <Map id="map-view" />
+        </MapContainer>
 
-      <Routes isDeletable={true} route={route} removeMarker={removeMarker} />
-    </Wrapper>
+        <Routes isDeletable={true} route={route} removeMarker={removeMarker} />
+      </Wrapper>
+    </>
   );
 };
 
