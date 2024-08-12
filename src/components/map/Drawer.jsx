@@ -42,11 +42,7 @@ const Drawer = ({ setIsOpen, target }) => {
           <div className="name">{target.name}</div>
           <div className="address">{target.address}</div>
 
-          <div className="imgs">
-            <img className="img" src={""} />
-            <img className="img" src={""} /> <img className="img" src={""} />
-            <img className="img" src={""} />
-          </div>
+          <div className="divider" />
 
           <div className="review">관리 상태 리뷰</div>
           {feedbacks && (
@@ -128,7 +124,7 @@ const Top = styled.div`
   }
 
   .review {
-    margin-top: 50px;
+    margin-top: 38px;
     font-size: 16px;
     font-weight: 600;
     text-align: center;
@@ -145,13 +141,6 @@ const Top = styled.div`
     color: var(--grey500);
     text-align: center;
     font-size: 12px;
-  }
-
-  .imgs {
-    margin-top: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
   }
 `;
 
@@ -206,4 +195,11 @@ const Wrapper = styled.div`
   bottom: 0;
   left: 0;
   z-index: 101;
+
+  .divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--grey300);
+    margin-top: 12px;
+  }
 `;
