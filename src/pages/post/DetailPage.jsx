@@ -19,11 +19,16 @@ const DetailPage = () => {
   const { id } = useParams();
   const { data } = useGetInitialData(postGetDetail, id);
 
-  console.log(data);
   return (
     data && (
       <>
-        <Header isBack={true} isShare={true} />
+        <Header
+          isBack={true}
+          isShare={true}
+          isDetail={true}
+          postTitle={data.title}
+          dueDate={data.dueDate}
+        />
         <Wrapper>
           <div className="map">
             <Mapview route={data.route} />

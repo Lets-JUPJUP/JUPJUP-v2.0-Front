@@ -9,6 +9,7 @@ import styled from "styled-components";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
 import { notiGetSubscribe } from "../../services/api/noti";
 import { useNavigate } from "react-router-dom";
+import { handleDateString } from "../../services/format/date";
 
 const Header = ({
   isBack = false,
@@ -18,6 +19,9 @@ const Header = ({
   isAlert = false,
   title = "",
   subtitle = "",
+  isDetail = false,
+  postTitle = "",
+  dueDate = "",
 }) => {
   //SSE 구독 요청
   useGetInitialData(notiGetSubscribe);
@@ -30,10 +34,21 @@ const Header = ({
         {isBack && <img src={back} onClick={() => navigate(-1)} />}
         {isHome && <img src={home} onClick={() => navigate("/")} />}
       </Left>
-      <Center>
-        <div>{title}</div>
-        {subtitle && <div>{subtitle}</div>}
-      </Center>
+      {isDetail ? (
+        <DetailCenter>
+          <div className="title">{postTitle}</div>
+          {dueDate && (
+            <div className="dueDate">
+              {handleDateString(dueDate, true)}모집 마감
+            </div>
+          )}
+        </DetailCenter>
+      ) : (
+        <Center>
+          <div>{title}</div>
+          {subtitle && <div>{subtitle}</div>}
+        </Center>
+      )}
       <Right>
         {isNoti && <img src={noti} onClick={() => navigate("/mypage/noti")} />}
         {isShare && <img src={share} />}
@@ -63,4 +78,23 @@ const Center = styled.div`
 `;
 const Right = styled.div`
   width: 24px;
+`;
+
+const DetailCenter = styled.div`
+  .title {
+    color: var(--black);
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .dueDate {
+    color: var(--main);
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+  }
 `;
