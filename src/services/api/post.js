@@ -20,6 +20,7 @@ export const postCreateComment = async (id, body) => {
   return await client.post(`/api/v1/comments/${id}`, body);
 };
 
+//필터링 리스트 조회
 export const postGetList = async ({
   allGender,
   withPet,
@@ -36,4 +37,14 @@ export const postGetList = async ({
   return await client.get(
     `/api/v1/posts/filter?allGender=${allGender}&withPet=${withPet}&allAge=${allAge}${districtsUri}&excludeClosedRecruitment=${excludeClosedRecruitment}`
   );
+};
+
+//북마크하기
+export const postCreateBookmark = async (id) => {
+  return await client.post(`/api/v1/hearts/${id}`);
+};
+
+//북마크 취소
+export const postDeleteBookmark = async (id) => {
+  return await client.delete(`/api/v1/hearts/${id}`);
 };

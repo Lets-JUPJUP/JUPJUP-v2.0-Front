@@ -17,7 +17,7 @@ import { handleDateString } from "../../services/format/date";
 
 const DetailPage = () => {
   const { id } = useParams();
-  const { data } = useGetInitialData(postGetDetail, id);
+  const { data, refetch } = useGetInitialData(postGetDetail, id);
 
   return (
     data && (
@@ -59,7 +59,15 @@ const DetailPage = () => {
           <Comments />
         </Wrapper>
 
-        <Footer />
+        <Footer
+          postId={data.id}
+          dueDate={data.dueDate}
+          isJoined={data.isJoined}
+          isFail={data.isEnded && !data.isRecruitmentSuccessful}
+          isHearted={data.isHearted}
+          isSuccess={data.isEnded && data.isRecruitmentSuccessful}
+          refetch={refetch}
+        />
       </>
     )
   );
