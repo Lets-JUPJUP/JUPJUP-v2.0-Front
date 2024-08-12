@@ -19,10 +19,24 @@ const Drawer = ({ setIsOpen, target }) => {
   const { error: postError, fetchData: postFeedback } =
     useFetch(mapPostFeedback);
 
-  const { data: feedbacks, error } = useGetInitialData(
-    mapGetFeedback,
-    target.id
-  );
+  const {
+    data: feedbacks,
+    error,
+    loading,
+  } = useGetInitialData(mapGetFeedback, target.id);
+
+  const [code, setCode] = useState(undefined);
+
+  useEffect(() => {
+    if (
+      feedbacks &&
+      (feedbacks.feedbackCode == 1 ||
+        feedbacks.feedbackCode == 2 ||
+        feedbacks.feedbackCode == 3)
+    ) {
+      setCode(feedbacks.feedbackCode);
+    }
+  }, [feedbacks]);
 
   useEffect(() => {
     if (postError && postError.response.status == 400) {
@@ -54,56 +68,20 @@ const Drawer = ({ setIsOpen, target }) => {
           <div className="review">관리 상태 리뷰</div>
           {feedbacks && (
             <Status>
-              <div
-                className="status"
-                onClick={() =>
-                  postFeedback({
-                    trashCanId: target.id, // 쓰레기통 id
-                    feedbackCode: 0, // 피드백 코드
-                  })
-                }
-              >
-                {feedbacks.feedbackCode == 0 ? (
-                  <img src={colorstatus1} />
-                ) : (
-                  <img src={status1} />
-                )}
+              <div className="status" onClick={() => setCode(0)}>
+                {code == 0 ? <img src={colorstatus1} /> : <img src={status1} />}
                 <div className="text">관리 필요</div>
                 {/* <div className="cnt">{}</div> */}
               </div>
 
-              <div
-                className="status"
-                onClick={() =>
-                  postFeedback({
-                    trashCanId: target.id, // 쓰레기통 id
-                    feedbackCode: 1, // 피드백 코드
-                  })
-                }
-              >
-                {feedbacks.feedbackCode == 1 ? (
-                  <img src={colorstatus2} />
-                ) : (
-                  <img src={status2} />
-                )}
+              <div className="status" onClick={() => setCode(1)}>
+                {code == 1 ? <img src={colorstatus2} /> : <img src={status2} />}
                 <div className="text">보통</div>
                 {/* <div className="cnt">{}</div> */}
               </div>
 
-              <div
-                className="status"
-                onClick={() =>
-                  postFeedback({
-                    trashCanId: target.id, // 쓰레기통 id
-                    feedbackCode: 2, // 피드백 코드
-                  })
-                }
-              >
-                {feedbacks.feedbackCode == 2 ? (
-                  <img src={colorstatus3} />
-                ) : (
-                  <img src={status3} />
-                )}
+              <div className="status" onClick={() => setCode(2)}>
+                {code == 2 ? <img src={colorstatus3} /> : <img src={status3} />}
                 <div className="text">우수</div>
                 {/* <div className="cnt">{}</div> */}
               </div>
@@ -116,7 +94,15 @@ const Drawer = ({ setIsOpen, target }) => {
             민원 접수하기
             <img className="right" src={right} />
           </div>
-          <LongBtn text={"완료"} />
+          <LongBtn
+            text={"완료"}
+            onClick={() =>
+              postFeedback({
+                trashCanId: target.id, // 쓰레기통 id
+                feedbackCode: code, // 피드백 코드
+              })
+            }
+          />
         </Bottom>
       </Wrapper>
     </>
