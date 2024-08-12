@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import xgrey from "../../assets/post/xgrey.svg";
@@ -16,12 +16,19 @@ import { mapGetFeedback, mapPostFeedback } from "../../services/api/map";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
 
 const Drawer = ({ setIsOpen, target }) => {
-  const { status, fetchData: postFeedback } = useFetch(mapPostFeedback);
+  const { error: postError, fetchData: postFeedback } =
+    useFetch(mapPostFeedback);
 
   const { data: feedbacks, error } = useGetInitialData(
     mapGetFeedback,
     target.id
   );
+
+  useEffect(() => {
+    if (postError.response.status == 400) {
+      //중복요청에러
+    }
+  }, [postError]);
 
   return (
     <>
@@ -56,9 +63,13 @@ const Drawer = ({ setIsOpen, target }) => {
                   })
                 }
               >
-                <img src={status1} />
+                {feedbacks.feedbackCode == 0 ? (
+                  <img src={colorstatus1} />
+                ) : (
+                  <img src={status1} />
+                )}
                 <div className="text">관리 필요</div>
-                <div className="cnt">{feedbacks["관리 필요"]}</div>
+                {/* <div className="cnt">{}</div> */}
               </div>
 
               <div
@@ -70,9 +81,13 @@ const Drawer = ({ setIsOpen, target }) => {
                   })
                 }
               >
-                <img src={status2} />
+                {feedbacks.feedbackCode == 1 ? (
+                  <img src={colorstatus2} />
+                ) : (
+                  <img src={status2} />
+                )}
                 <div className="text">보통</div>
-                <div className="cnt">{feedbacks["보통"]}</div>
+                {/* <div className="cnt">{}</div> */}
               </div>
 
               <div
@@ -84,9 +99,13 @@ const Drawer = ({ setIsOpen, target }) => {
                   })
                 }
               >
-                <img src={status3} />
+                {feedbacks.feedbackCode == 2 ? (
+                  <img src={colorstatus3} />
+                ) : (
+                  <img src={status3} />
+                )}
                 <div className="text">우수</div>
-                <div className="cnt">{feedbacks["우수"]}</div>
+                {/* <div className="cnt">{}</div> */}
               </div>
             </Status>
           )}
