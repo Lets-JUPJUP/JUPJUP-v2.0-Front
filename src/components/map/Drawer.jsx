@@ -25,7 +25,7 @@ const Drawer = ({ setIsOpen, target }) => {
   );
 
   useEffect(() => {
-    if (postError.response.status == 400) {
+    if (postError && postError.response.status == 400) {
       //중복요청에러
     }
   }, [postError]);
