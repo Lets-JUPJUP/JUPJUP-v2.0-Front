@@ -1,17 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-const Pic = () => {
+const Pic = ({ images }) => {
   return (
     <Wrapper>
-      <img src={"src"} className="square-image" />
+      {images.map((el) => {
+        return (
+          <Square>
+            <img src={el} className="square-image" />
+          </Square>
+        );
+      })}
     </Wrapper>
   );
 };
 
 export default Pic;
 
-const Wrapper = styled.div`
+const Square = styled.div`
   position: relative;
   width: 100%;
   padding-top: 100%;
@@ -29,4 +35,10 @@ const Wrapper = styled.div`
     min-height: 100%;
     object-fit: cover;
   }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;

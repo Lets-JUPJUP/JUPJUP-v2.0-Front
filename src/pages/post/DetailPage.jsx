@@ -48,7 +48,7 @@ const DetailPage = () => {
               withPet={data.withPet}
             />
             <Text content={data.content} />
-            <Pic />
+            <Pic images={data.fileUrls} />
           </div>
 
           <Comments />
