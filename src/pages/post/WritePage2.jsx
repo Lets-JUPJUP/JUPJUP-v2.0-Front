@@ -27,13 +27,12 @@ const WritePage2 = () => {
   const resetBody = useResetRecoilState(postFormState);
   const navigate = useNavigate();
 
-  const { urls, uploadImage } = useS3Image();
+  const { uploadImage } = useS3Image();
 
   //버튼 클릭시 글 작성 요청
-  const requestWrite = () => {
+  const requestWrite = async () => {
     //S3이미지 업로드
-    uploadImage(body.images);
-
+    const urls = await uploadImage(body.images);
     const requestBody = {
       ...body,
       images: urls,
