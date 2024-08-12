@@ -10,6 +10,7 @@ import useFetch from "../../services/hooks/useFetch";
 import { postCreatePost } from "../../services/api/post";
 import { useNavigate } from "react-router-dom";
 import Toast from "../../components/common/Toast";
+import useS3Image from "../../services/hooks/useS3Image";
 
 const WritePage2 = () => {
   const [toastMessage, setToastMessage] = useState("");
@@ -26,9 +27,20 @@ const WritePage2 = () => {
   const resetBody = useResetRecoilState(postFormState);
   const navigate = useNavigate();
 
+  const { urls, uploadImage } = useS3Image();
+
   //버튼 클릭시 글 작성 요청
   const requestWrite = () => {
-    const requestBody = { ...body, route: route, district: district };
+    //S3이미지 업로드
+    uploadImage(body.images);
+
+    const requestBody = {
+      ...body,
+      images: urls,
+      route: route,
+      district: district,
+    };
+
     writePost(requestBody);
   };
 

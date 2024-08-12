@@ -40,6 +40,9 @@ const Form = ({ setIsActive, checkValid }) => {
   //글 내용
   const [content, handleContentChange] = useInput(body.content);
 
+  //이미지원본파일
+  const [images, setImages] = useState([]);
+
   //토스트 팝업 메세지
   const [toastMessage, setToastMessage] = useState("");
 
@@ -79,7 +82,7 @@ const Form = ({ setIsActive, checkValid }) => {
           postGender: gender,
           withPet: withPet,
           content: content,
-          images: [],
+          images: images,
         });
 
         //다음페이지로 이동
@@ -175,7 +178,12 @@ const Form = ({ setIsActive, checkValid }) => {
           value={content}
           onChange={handleContentChange}
         />
-        <AddPics />
+        <AddPics
+          images={images}
+          setImages={setImages}
+          isMultiple={true}
+          maxFiles={5}
+        />
       </div>
     </Wrapper>
   );
