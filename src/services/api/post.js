@@ -19,3 +19,21 @@ export const postGetComments = async (id) => {
 export const postCreateComment = async (id, body) => {
   return await client.post(`/api/v1/comments/${id}`, body);
 };
+
+export const postGetList = async ({
+  allGender,
+  withPet,
+  allAge,
+  districts,
+  excludeClosedRecruitment,
+}) => {
+  console.log(allGender, withPet, allAge, districts, excludeClosedRecruitment);
+  var districtsUri = "";
+  for (var i = 0; i < districts.length; i++) {
+    districtsUri += `&districts=${districts[i]}`;
+  }
+
+  return await client.get(
+    `/api/v1/posts/filter?allGender=${allGender}&withPet=${withPet}&allAge=${allAge}${districtsUri}&excludeClosedRecruitment=${excludeClosedRecruitment}`
+  );
+};

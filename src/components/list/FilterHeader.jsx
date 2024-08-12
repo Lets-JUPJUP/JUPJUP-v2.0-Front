@@ -1,18 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import filter from "../../assets/icons/filter.svg";
+import { useNavigate } from "react-router-dom";
+import { filterPersistState } from "../../services/store/filter";
+import { useRecoilValue } from "recoil";
+import { getKorDistrict } from "../../services/translate/district";
 
 const FilterHeader = () => {
+  const navigate = useNavigate();
+
+  const filters = useRecoilValue(filterPersistState);
+  const { allGender, withPet, allAge, districts, excludeClosedRecruitment } =
+    filters;
+
   return (
     <Wrapper>
-      <img src={filter} />
+      <img src={filter} onClick={() => navigate("/list/filters")} />
       <div className="scroll-area">
-        <Option>모집 마감 제외</Option>
-        <Option>모집 마감 제외</Option>
-        <Option>모집 마감 제외</Option>
-        <Option>모집 마감 제외</Option>
-        <Option>모집 마감 제외</Option>
-        <Option>모집 마감 제외</Option>
+        {excludeClosedRecruitment ? <Option>모집 마감 제외</Option> : <></>}
+        {allGender ? <Option>성별 무관</Option> : <Option>내 성별 포함</Option>}
+        {allAge ? <Option>연령 무관</Option> : <Option>내 연령 포함</Option>}
+        {withPet ? <Option>반려동물 동반 가능</Option> : <></>}
+        {districts ? (
+          districts.map((el) => {
+            return <Option>{getKorDistrict(el)}</Option>;
+          })
+        ) : (
+          <></>
+        )}
       </div>
     </Wrapper>
   );

@@ -1,75 +1,129 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { filterState } from "../../services/store/filter";
+import FilterBtn from "./FilterBtn";
+import { district, getKorDistrict } from "../../services/translate/district";
 
 const Filters = () => {
+  const [filter, setFilter] = useRecoilState(filterState);
+
+  const { allGender, withPet, allAge, districts, excludeClosedRecruitment } =
+    filter;
+
+  const updateDistrictArr = (districtKey) => {
+    setFilter((prev) => {
+      //이미 선택된 지역구라면 삭제
+      if (prev.districts.includes(districtKey)) {
+        return {
+          ...prev,
+          districts: prev.districts.filter((item) => item !== districtKey),
+        };
+      } else {
+        //아직 선택 되지 않은 지역구면 추가
+        return {
+          ...prev,
+          districts: [...prev.districts, districtKey],
+        };
+      }
+    });
+  };
+
+  //선택된 지역인지 확인
+  const checkActiveDistrict = (districtKey) => {
+    return districts.includes(districtKey);
+  };
+
+  //원하는 값으로 배열 업데이트
+  const handleChange = (property, value) => {
+    setFilter((prev) => ({ ...prev, [property]: value }));
+  };
+
+  // 지역구 가나다 묶음
+  const chunkSizes = [8, 1, 3, 1, 5, 4, 3];
+
+  const groupedDistricts = [];
+  let index = 0;
+  chunkSizes.forEach((size) => {
+    groupedDistricts.push(district.slice(index, index + size));
+    index += size;
+  });
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
+
   return (
     <Wrapper>
       <div className="section">
         <div className="title">기본 설정</div>
         <div className="btns">
-          <Btn>모집 마감 제외</Btn>
-          <Btn>반려동물 동반 가능</Btn>
+          <FilterBtn
+            $isActive={excludeClosedRecruitment}
+            onClick={() =>
+              handleChange(
+                "excludeClosedRecruitment",
+                !excludeClosedRecruitment
+              )
+            }
+            text={"모집 마감 제외"}
+          />
+          <FilterBtn
+            $isActive={withPet}
+            onClick={() => handleChange("withPet", !withPet)}
+            text={"반려동물 동반 가능"}
+          />
         </div>
       </div>
 
       <div className="section">
         <div className="title">참여 연령</div>
         <div className="btns">
-          <Btn>연령 무관</Btn>
-          <Btn>내 연령 포함</Btn>
+          <FilterBtn
+            $isActive={allAge}
+            onClick={() => handleChange("allAge", true)}
+            text={"연령 무관"}
+          />
+          <FilterBtn
+            $isActive={!allAge}
+            onClick={() => handleChange("allAge", false)}
+            text={"내 연령 포함"}
+          />
         </div>
       </div>
 
       <div className="section">
         <div className="title">참여 성별 & 동물</div>
         <div className="btns">
-          <Btn>성별 무관</Btn>
-          <Btn>내 성별 포함</Btn>
+          <FilterBtn
+            $isActive={allGender}
+            onClick={() => handleChange("allGender", true)}
+            text={"성별 무관"}
+          />
+          <FilterBtn
+            $isActive={!allGender}
+            onClick={() => handleChange("allGender", false)}
+            text={"내 성별 포함"}
+          />
         </div>
       </div>
 
       <div className="section">
         <div className="title">시작 위치</div>
         <div className="container">
-          <div className="btns">
-            <Btn>강남구</Btn>
-            <Btn>강동구</Btn>
-            <Btn>강북구</Btn>
-            <Btn>강서구</Btn>
-            <Btn>관악구</Btn>
-            <Btn>광진구</Btn>
-            <Btn>구로구</Btn>
-            <Btn>금천구</Btn>
-          </div>
-          <div className="btns">
-            <Btn>노원구</Btn>
-          </div>
-          <div className="btns">
-            <Btn>도봉구</Btn>
-            <Btn>동대문구</Btn>
-            <Btn>동작구</Btn>
-          </div>
-          <div className="btns">
-            <Btn>마포구</Btn>
-          </div>
-          <div className="btns">
-            <Btn>서대문구</Btn>
-            <Btn>서초구</Btn>
-            <Btn>성동구</Btn>
-            <Btn>성북구</Btn>
-            <Btn>송파구</Btn>
-          </div>
-          <div className="btns">
-            <Btn>양천구</Btn>
-            <Btn>영등포구</Btn>
-            <Btn>용산구</Btn>
-            <Btn>은평구</Btn>
-          </div>
-          <div className="btns">
-            <Btn>종로구</Btn>
-            <Btn>중구</Btn>
-            <Btn>중랑구</Btn>
-          </div>
+          {groupedDistricts.map((group, index) => (
+            <div className="btns" key={index}>
+              {group.map((item) => (
+                <FilterBtn
+                  isDistrict={true}
+                  key={item.key}
+                  $isActive={checkActiveDistrict(item.key)}
+                  onClick={() => updateDistrictArr(item.key)}
+                  text={getKorDistrict(item.key)}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </Wrapper>
@@ -107,16 +161,4 @@ const Wrapper = styled.div`
     flex-direction: column;
     gap: 8px;
   }
-`;
-
-const Btn = styled.div`
-  display: flex;
-  padding: 8px 10px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  background: var(--grey100);
-
-  color: var(--grey500, #8d939a);
-  font-weight: 600;
 `;

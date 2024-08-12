@@ -2,34 +2,80 @@ import React from "react";
 import styled from "styled-components";
 import host from "../../assets/icons/host.svg";
 import pin from "../../assets/icons/pin.svg";
+import female from "../../assets/icons/female.svg";
+import male from "../../assets/icons/male.svg";
 import calendar from "../../assets/icons/calendar.svg";
+import { handleDateString } from "../../services/format/date";
+import { useNavigate } from "react-router-dom";
 
-const Item = () => {
+const Item = ({ item }) => {
+  const {
+    fileUrls,
+    id,
+    isAuthor,
+    isEnded,
+    isJoined,
+    isRecruitmentSuccessful,
+    isReviewed,
+    maxAge,
+    minAge,
+    postGender,
+    route,
+    startDate,
+    title,
+    withPet,
+  } = item;
+
+  //리뷰 버튼 활성화 조건 (내가 참여한 글, 작성자 아님, 모집성공, 시작일지남, 리뷰아직안함)
+  var isReviewAble =
+    isJoined &&
+    !isAuthor &&
+    isRecruitmentSuccessful &&
+    new Date(startDate) < new Date() &&
+    !isReviewed;
+
+  //포스트 활성화 조건 (리뷰가능인데 아직안함 또는 모집마감안된 상태 )
+  var isActive = isReviewAble || !isEnded;
+
+  const navigate = useNavigate();
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() => {
+        navigate(`/detail/${id}`);
+      }}
+    >
       <div className="container">
-        <div className="title">
-          플로깅 제목 위치 입니다. 플로깅 제목 위치 입니다. 플로깅 제목 위치
-          입니다.
-        </div>
+        <Title $isActive={isActive}>{title}</Title>
         <div className="grey">
           <img src={pin} />
-          <div className="location">
-            가나다라마바사아 자차카타파하 가나다라마바사아 자차카타파하
-            가나다라마바사아 자차카타파하
-          </div>
+          <div className="location">{route[0].address}</div>
         </div>
         <div className="grey date">
           <img src={calendar} />
-          00/00/00 00:00
+          {handleDateString(startDate)}
         </div>
         <div className="tags">
-          <img src={host} />
-          <Tag>00세~00세</Tag>
-          <Tag>반려동물 동반 가능</Tag>
+          {isAuthor && <img src={host} />}
+          <Tag>
+            {minAge}세~{maxAge}세
+          </Tag>
+          {postGender != "ANY" ? (
+            postGender == "FEMALE" ? (
+              <Tag>
+                <img src={female} />
+              </Tag>
+            ) : (
+              <Tag>
+                <img src={male} />
+              </Tag>
+            )
+          ) : (
+            <></>
+          )}
+          {withPet && <Tag>반려동물 동반 가능</Tag>}
         </div>
       </div>
-      <img className="image" src="" />
+      {fileUrls[0] && <img className="image" src={fileUrls[0]} />}
     </Wrapper>
   );
 };
@@ -98,4 +144,14 @@ const Tag = styled.div`
   color: var(--black);
   font-size: 12px;
   font-weight: 300;
+`;
+
+const Title = styled.div`
+  color: ${(props) => (props.$isActive ? "var(--black)" : "var(--grey500)")};
+  font-weight: 600;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 `;

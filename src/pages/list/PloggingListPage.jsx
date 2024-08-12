@@ -6,9 +6,16 @@ import Item from "../../components/list/Item";
 import NavBar from "../../components/common/NavBar";
 import writebtn from "../../assets/post/writebtn.svg";
 import { useNavigate } from "react-router-dom";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
+import { postGetList } from "../../services/api/post";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { filterPersistState, filterState } from "../../services/store/filter";
 
 const PloggingListPage = () => {
   const navigate = useNavigate();
+  const filters = useRecoilValue(filterPersistState);
+  const { data: list, error } = useGetInitialData(postGetList, filters);
+  console.log(list);
   return (
     <>
       <Header isHome={true} isNoti={true} title="플로깅하기" />
@@ -16,8 +23,10 @@ const PloggingListPage = () => {
         <FilterHeader />
 
         <List>
-          <Item />
-          <Item /> <Item /> <Item /> <Item /> <Item /> <Item />
+          {list &&
+            list.map((item) => {
+              return <Item item={item} key={item.id} />;
+            })}
         </List>
         <div className="btn" onClick={() => navigate("/write/1")}>
           <img src={writebtn} />
