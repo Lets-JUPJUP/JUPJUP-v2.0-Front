@@ -3,6 +3,7 @@ import styled from "styled-components";
 import profile from "../../assets/post/profile.svg";
 import right from "../../assets/post/right.svg";
 import { handleDateString } from "../../services/format/date";
+import { useNavigate } from "react-router-dom";
 
 const User = ({
   authorId,
@@ -10,6 +11,7 @@ const User = ({
   authorProfileImageUrl,
   createdAt,
 }) => {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <div className="left">
@@ -23,7 +25,7 @@ const User = ({
         </div>
       </div>
 
-      <div className="btn" onClick={`/user/${authorId}`}>
+      <div className="btn" onClick={navigate(`/user/${authorId}`)}>
         프로필 보기
         <img src={right} />
       </div>
