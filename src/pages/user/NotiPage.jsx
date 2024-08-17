@@ -3,12 +3,7 @@ import styled from "styled-components";
 import Header from "../../components/common/Header";
 import NotiItem from "../../components/user/noti/NotiItem";
 import ReadBtn from "../../components/user/noti/ReadBtn";
-import useGetInitialData from "../../services/hooks/useGetInitialData";
-import {
-  notiGetList,
-  notiPostReadAll,
-  notiPostReadEach,
-} from "../../services/api/noti";
+import { notiGetList, notiPostReadAll } from "../../services/api/noti";
 import useFetch from "../../services/hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 
@@ -16,9 +11,6 @@ const NotiPage = () => {
   //알림 전체 읽음
   const { status: readAllStatus, fetchData: readAll } =
     useFetch(notiPostReadAll);
-
-  //알림 단일 읽음
-  const { fetchData: readEach } = useFetch(notiPostReadEach);
 
   //알림 리스트 가져오기
   const { data, error, fetchData: getList } = useFetch(notiGetList);
@@ -37,16 +29,7 @@ const NotiPage = () => {
         <div className="list">
           {data &&
             data.map((notiItem) => {
-              return (
-                <NotiItem
-                  notiItem={notiItem}
-                  key={notiItem.id}
-                  onClick={() => {
-                    readEach(notiItem.id);
-                    navigate(`/detail/${notiItem.contentId}`);
-                  }}
-                />
-              );
+              return <NotiItem notiItem={notiItem} key={notiItem.id} />;
             })}
         </div>
 
