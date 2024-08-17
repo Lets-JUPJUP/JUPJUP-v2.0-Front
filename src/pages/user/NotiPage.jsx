@@ -17,10 +17,10 @@ const NotiPage = () => {
 
   const navigate = useNavigate();
 
-  console.log(data);
   useEffect(() => {
+    //전체 읽음 처리시 refetch
     getList();
-  }, []);
+  }, [readAllStatus]);
 
   return (
     <>
