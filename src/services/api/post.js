@@ -77,3 +77,8 @@ export const postGetWholeList = async () => {
 export const postGetBookmarkList = async () => {
   return await client.get(`/api/v1/hearts/lists`);
 };
+
+//댓글단 플로깅 리스트
+export const postGetCommentedList = async () => {
+  return await client.get(`/api/v1/comments/commented-posts`);
+};
