@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import DatePicker from "../../pages/post/DatePicker";
+import DatePicker from "./write/DatePicker";
 import AddPics from "../common/AddPics";
 import NumRange from "../../pages/post/NumRange";
 import useInput from "../../services/hooks/useInput";
