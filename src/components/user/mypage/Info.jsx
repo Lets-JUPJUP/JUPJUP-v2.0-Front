@@ -2,21 +2,30 @@ import React from "react";
 import profile from "../../../assets/mypage/profile.svg";
 import settings from "../../../assets/mypage/settings.svg";
 import styled from "styled-components";
+import useGetInitialData from "../../../services/hooks/useGetInitialData";
+import { memberGetMyProfile } from "../../../services/api/member";
+import { getKorGender } from "../../../services/translate/gender";
 
 const Info = () => {
-  return (
-    <Wrapper>
-      <div className="section">
-        <img src={profile} />
-        <div className="nickname">닉네임</div>
-        <div className="age-sex">00세, 여성</div>
-      </div>
+  const { data } = useGetInitialData(memberGetMyProfile);
 
-      <div className="section">
-        <div className="logout">로그아웃</div>
-        <img className="settings" src={settings} />
-      </div>
-    </Wrapper>
+  return (
+    data && (
+      <Wrapper>
+        <div className="section">
+          <img src={data.profileImageUrl || profile} className="profile" />
+          <div className="nickname">{data.nickname}</div>
+          <div className="age-sex">
+            {data.age}세, {getKorGender(data.gender)}
+          </div>
+        </div>
+
+        <div className="section">
+          <div className="logout">로그아웃</div>
+          <img className="settings" src={settings} />
+        </div>
+      </Wrapper>
+    )
   );
 };
 
@@ -57,5 +66,11 @@ const Wrapper = styled.div`
   .settings {
     width: 25px;
     height: 25px;
+  }
+
+  .profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
   }
 `;

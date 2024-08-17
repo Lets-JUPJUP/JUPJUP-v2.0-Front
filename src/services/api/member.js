@@ -27,3 +27,8 @@ export const memberUpdateProfile = async (body) => {
 export const memberGetUserProfile = async (memberId) => {
   return await client.get(`/api/v1/members/${memberId}`);
 };
+
+//유저 프로필 통계 조회
+export const memberGetUserStat = async (memberId) => {
+  return await client.get(`/api/v1/members/stats/${memberId}`);
+};

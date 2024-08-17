@@ -8,6 +8,8 @@ import New from "../../components/user/mypage/New";
 import NavBar from "../../components/common/NavBar";
 
 const MyPage = () => {
+  const memberId = localStorage.getItem("memberId");
+
   return (
     <>
       <Header title="마이페이지" isHome={true} isNoti={true} />
@@ -23,7 +25,7 @@ const MyPage = () => {
         <Bottom>
           <div className="title gap">내 통계</div>
           <div className="divider" />
-          <Stat />
+          <Stat memberId={memberId} />
           <div className="divider" />
         </Bottom>
       </Wrapper>
