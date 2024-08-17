@@ -1,34 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import right from "../../assets/post/right.svg";
 import Comment from "./Comment";
 import useFetch from "../../services/hooks/useFetch";
 import { postCreateComment, postGetComments } from "../../services/api/post";
 import { useParams } from "react-router-dom";
+import CommentInput from "./CommentInput";
 
 const Comments = () => {
   const { id } = useParams();
   const { data: comments, fetchData: getComments } = useFetch(postGetComments);
-
-  const { data, fetchData: createComment } = useFetch(postCreateComment);
+  const { status: createCommentStatus, fetchData: createComment } =
+    useFetch(postCreateComment);
 
   console.log(comments);
+  const [showInput, setShowInput] = useState(false);
 
   useEffect(() => {
     getComments(id);
-  }, []);
+  }, [createCommentStatus]);
 
   return (
     comments && (
       <Wrapper>
+        {showInput && (
+          <CommentInput
+            createComment={createComment}
+            setShowInput={setShowInput}
+            createCommentStatus={createCommentStatus}
+          />
+        )}
         <Top>
           <div className="title">댓글 ({comments.commentNo})</div>
-          <div className="btn">
+          <div className="btn" onClick={() => setShowInput(true)}>
             댓글 작성하기
             <img src={right} />
           </div>
         </Top>
-
         {comments.commentDtoList.map((comment, index) => {
           var isLast = false;
           if (index == comments.commentDtoList.length - 1) {

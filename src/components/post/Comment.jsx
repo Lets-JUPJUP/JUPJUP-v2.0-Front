@@ -72,6 +72,7 @@ const Wrapper = styled.div`
     height: 20px;
     flex-shrink: 0;
     margin-right: 4px;
+    border-radius: 2px;
   }
 
   .icons {
