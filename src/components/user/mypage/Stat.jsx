@@ -11,25 +11,27 @@ const Stat = ({ memberId }) => {
   const { data } = useGetInitialData(memberGetUserStat, memberId);
 
   return (
-    <Wrapper>
-      <div className="section">
-        <img className="icon" src={thumbs} />
-        <div className="name">좋아요</div>
-        <div className="num">{data.userHeartsCount}</div>
-      </div>
+    data && (
+      <Wrapper>
+        <div className="section">
+          <img className="icon" src={thumbs} />
+          <div className="name">좋아요</div>
+          <div className="num">{data.userHeartsCount}</div>
+        </div>
 
-      <div className="section">
-        <img className="icon" src={count} />
-        <div className="name">플로깅 횟수</div>
-        <div className="num">{data.postCount}</div>
-      </div>
+        <div className="section">
+          <img className="icon" src={count} />
+          <div className="name">플로깅 횟수</div>
+          <div className="num">{data.postCount}</div>
+        </div>
 
-      <div className="section">
-        <img className="icon" src={star} />
-        <div className="name">플로깅 평점</div>
-        <div className="num">{data.averageScore}</div>
-      </div>
-    </Wrapper>
+        <div className="section">
+          <img className="icon" src={star} />
+          <div className="name">플로깅 평점</div>
+          <div className="num">{data.averageScore}</div>
+        </div>
+      </Wrapper>
+    )
   );
 };
 
