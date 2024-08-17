@@ -25,7 +25,7 @@ const User = ({
         </div>
       </div>
 
-      <div className="btn" onClick={navigate(`/user/${authorId}`)}>
+      <div className="btn" onClick={() => navigate(`/user/${authorId}`)}>
         프로필 보기
         <img src={right} />
       </div>
