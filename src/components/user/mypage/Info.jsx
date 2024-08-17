@@ -5,10 +5,12 @@ import styled from "styled-components";
 import useGetInitialData from "../../../services/hooks/useGetInitialData";
 import { memberGetMyProfile } from "../../../services/api/member";
 import { getKorGender } from "../../../services/translate/gender";
+import { useNavigate } from "react-router-dom";
 
 const Info = () => {
   const { data } = useGetInitialData(memberGetMyProfile);
 
+  const navigate = useNavigate();
   return (
     data && (
       <Wrapper>
@@ -22,7 +24,11 @@ const Info = () => {
 
         <div className="section">
           <div className="logout">로그아웃</div>
-          <img className="settings" src={settings} />
+          <img
+            className="settings"
+            src={settings}
+            onClick={() => navigate("/mypage/edit")}
+          />
         </div>
       </Wrapper>
     )
