@@ -74,8 +74,12 @@ const RegisterPage = () => {
   //가입 성공시 메인페이지로 이동
   useEffect(() => {
     if (createProfileStatus == 200) {
+      const token = localStorage.getItem("temptoken");
       localStorage.setItem("gender", gender);
       localStorage.setItem("age", age);
+      localStorage.setItem("juptoken", token);
+      localStorage.setItem("memberId", profileData.id);
+      localStorage.removeItem("temptoken");
       navigate("/");
     } else if (createProfileError) {
       //에러 처리
