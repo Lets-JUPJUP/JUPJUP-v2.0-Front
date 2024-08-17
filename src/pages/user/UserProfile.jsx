@@ -11,7 +11,7 @@ const UserProfile = () => {
       <Wrapper>
         <Form>
           <div>
-            <img src={profile} class="my-16" />
+            <img src={profile} />
           </div>
 
           <div className="infos">

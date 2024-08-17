@@ -26,7 +26,7 @@ const MainPage = () => {
       <img src={mainview} className="mainview" />
 
       <Recommend>
-        <div class="title">이달의 추천 코스</div>
+        <div className="title">이달의 추천 코스</div>
         <img className="banner" src={banner} />
       </Recommend>
 
