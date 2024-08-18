@@ -7,6 +7,7 @@ import alert from "../../assets/post/alert.svg";
 import x from "../../assets/post/x.svg";
 import { handleDateString } from "../../services/format/date";
 import useFetch from "../../services/hooks/useFetch";
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({
   comment,
@@ -20,6 +21,7 @@ const Comment = ({
 
   const { writerId, nickname, profileImageUrl } = comment.writerInfoDto;
 
+  const navigate = useNavigate();
   const handleCreate = () => {
     //부모 댓글 id 설정
     setParentId(isReply ? parentId : id);
@@ -51,7 +53,10 @@ const Comment = ({
             <img src={x} onClick={handleDelete} />
           ) : (
             <>
-              <img src={alert} />
+              <img
+                src={alert}
+                onClick={() => navigate(`/user/${writerId}/alert`)}
+              />
               <img src={commenticon} onClick={handleCreate} />
             </>
           )}
