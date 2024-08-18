@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import profile from "../../assets/post/profile.svg";
-import comment from "../../assets/post/comment.svg";
+import commenticon from "../../assets/post/comment.svg";
 import alert from "../../assets/post/alert.svg";
 import x from "../../assets/post/x.svg";
 import { handleDateString } from "../../services/format/date";
+import useFetch from "../../services/hooks/useFetch";
 
-const Comment = ({ comment }) => {
+const Comment = ({
+  comment,
+  setShowInput,
+  setParentId,
+  isReply,
+  deleteFunc,
+}) => {
   const { id, content, isRemoved, isAuthor, createdDate, replyList, parentId } =
     comment;
 
   const { writerId, nickname, profileImageUrl } = comment.writerInfoDto;
+
+  const handleCreate = () => {
+    //부모 댓글 id 설정
+    setParentId(isReply ? parentId : id);
+    setShowInput(true);
+  };
+
+  const handleDelete = () => {
+    deleteFunc(id);
+  };
+
   return (
     <Wrapper>
       <div className="top">
@@ -30,10 +48,11 @@ const Comment = ({ comment }) => {
         </div>
         <div className="icons">
           {isAuthor ? (
-            <img src={x} />
+            <img src={x} onClick={handleDelete} />
           ) : (
             <>
-              <img src={alert} /> <img src={comment} />
+              <img src={alert} />
+              <img src={commenticon} onClick={handleCreate} />
             </>
           )}
         </div>

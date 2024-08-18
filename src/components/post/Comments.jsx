@@ -3,22 +3,50 @@ import styled from "styled-components";
 import right from "../../assets/post/right.svg";
 import Comment from "./Comment";
 import useFetch from "../../services/hooks/useFetch";
-import { postCreateComment, postGetComments } from "../../services/api/post";
+import {
+  postCreateComment,
+  postCreateReply,
+  postDeleteComment,
+  postDeleteReply,
+  postGetComments,
+} from "../../services/api/post";
 import { useParams } from "react-router-dom";
 import CommentInput from "./CommentInput";
 
 const Comments = () => {
   const { id } = useParams();
-  const { data: comments, fetchData: getComments } = useFetch(postGetComments);
+  const {
+    status,
+    data: comments,
+    fetchData: getComments,
+    loading,
+  } = useFetch(postGetComments);
   const { status: createCommentStatus, fetchData: createComment } =
     useFetch(postCreateComment);
+  const { status: createReplyStatus, fetchData: createReply } =
+    useFetch(postCreateReply);
 
-  console.log(comments);
+  const { status: deleteCommentStatus, fetchData: deleteComment } =
+    useFetch(postDeleteComment);
+
+  const { status: deleteReplyStatus, fetchData: deleteReply } =
+    useFetch(postDeleteReply);
+
   const [showInput, setShowInput] = useState(false);
 
+  const [parentId, setParentId] = useState(undefined);
   useEffect(() => {
     getComments(id);
-  }, [createCommentStatus]);
+  }, [
+    createCommentStatus,
+    createReplyStatus,
+    deleteCommentStatus,
+    deleteReplyStatus,
+  ]);
+
+  useState(() => {
+    console.log(comments);
+  }, [loading]);
 
   return (
     comments && (
@@ -27,12 +55,19 @@ const Comments = () => {
           <CommentInput
             createComment={createComment}
             setShowInput={setShowInput}
-            createCommentStatus={createCommentStatus}
+            createReply={createReply}
+            parentId={parentId}
           />
         )}
         <Top>
           <div className="title">댓글 ({comments.commentNo})</div>
-          <div className="btn" onClick={() => setShowInput(true)}>
+          <div
+            className="btn"
+            onClick={() => {
+              setParentId(undefined);
+              setShowInput(true);
+            }}
+          >
             댓글 작성하기
             <img src={right} />
           </div>
@@ -43,19 +78,31 @@ const Comments = () => {
             isLast = true;
           }
           return (
-            <>
-              <Comment comment={comment} />
+            <div key={comment.id}>
+              <Comment
+                deleteFunc={deleteComment}
+                comment={comment}
+                setShowInput={setShowInput}
+                setParentId={setParentId}
+                isReply={false}
+              />
               {comment.replyList.map((reply) => {
                 return (
-                  <>
+                  <div key={reply.id}>
                     <Recomment>
-                      <Comment comment={reply} />
+                      <Comment
+                        deleteFunc={deleteReply}
+                        comment={reply}
+                        setShowInput={setShowInput}
+                        isReply={true}
+                        setParentId={setParentId}
+                      />
                     </Recomment>
-                  </>
+                  </div>
                 );
               })}
               {!isLast && <div className="divider" />}
-            </>
+            </div>
           );
         })}
       </Wrapper>

@@ -6,32 +6,36 @@ import Btns from "../../components/user/mypage/Btns";
 import Stat from "../../components/user/mypage/Stat";
 import New from "../../components/user/mypage/New";
 import NavBar from "../../components/common/NavBar";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
+import { memberGetMyProfile } from "../../services/api/member";
 
 const MyPage = () => {
-  const memberId = localStorage.getItem("memberId");
+  const { data: info } = useGetInitialData(memberGetMyProfile);
 
   return (
-    <>
-      <Header title="마이페이지" isHome={true} isNoti={true} />
-      <Wrapper>
-        <Info />
-        <div className="divider" />
-
-        <Btns />
-        <div className="divider" />
-
-        <New />
-
-        <Bottom>
-          <div className="title gap">내 통계</div>
+    info && (
+      <>
+        <Header title="마이페이지" isHome={true} isNoti={true} />
+        <Wrapper>
+          <Info info={info} />
           <div className="divider" />
-          <Stat memberId={memberId} />
-          <div className="divider" />
-        </Bottom>
-      </Wrapper>
 
-      <NavBar />
-    </>
+          <Btns />
+          <div className="divider" />
+
+          <New />
+
+          <Bottom>
+            <div className="title gap">내 통계</div>
+            <div className="divider" />
+            <Stat memberId={info.id} />
+            <div className="divider" />
+          </Bottom>
+        </Wrapper>
+
+        <NavBar />
+      </>
+    )
   );
 };
 

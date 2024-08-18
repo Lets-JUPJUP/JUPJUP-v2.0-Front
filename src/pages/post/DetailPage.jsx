@@ -18,7 +18,7 @@ import { handleDateString } from "../../services/format/date";
 const DetailPage = () => {
   const { id } = useParams();
   const { data, refetch } = useGetInitialData(postGetDetail, id);
-
+  console.log(data);
   return (
     data && (
       <>

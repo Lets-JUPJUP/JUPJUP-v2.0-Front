@@ -5,7 +5,12 @@ import useFetch from "../../services/hooks/useFetch";
 import { postCreateComment } from "../../services/api/post";
 import { useParams } from "react-router-dom";
 
-const CommentInput = ({ createComment, setShowInput }) => {
+const CommentInput = ({
+  createComment,
+  setShowInput,
+  createReply,
+  parentId,
+}) => {
   const inputRef = useRef(null);
   const { id } = useParams(); //post_id
   const [content, setContent] = useState("");
@@ -22,7 +27,12 @@ const CommentInput = ({ createComment, setShowInput }) => {
   };
 
   const handleClick = () => {
-    createComment(id, { content: content });
+    if (parentId) {
+      createReply(id, { parentId: parentId, content: content });
+    } else {
+      createComment(id, { content: content });
+    }
+
     //성공시
     setContent("");
     setShowInput(false);

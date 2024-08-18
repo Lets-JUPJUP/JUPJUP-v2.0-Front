@@ -20,6 +20,21 @@ export const postCreateComment = async (id, body) => {
   return await client.post(`/api/v1/comments/${id}`, body);
 };
 
+//댓글 작성
+export const postCreateReply = async (id, body) => {
+  return await client.post(`/api/v1/comments/reply/${id}`, body);
+};
+
+//댓글 삭제
+export const postDeleteComment = async (id) => {
+  return await client.delete(`/api/v1/comments/${id}`);
+};
+
+//대댓글 삭제
+export const postDeleteReply = async (id) => {
+  return await client.delete(`/api/v1/comments/reply/${id}`);
+};
+
 //필터링 리스트 조회
 export const postGetList = async ({
   allGender,

@@ -7,18 +7,16 @@ import { memberGetMyProfile } from "../../../services/api/member";
 import { getKorGender } from "../../../services/translate/gender";
 import { useNavigate } from "react-router-dom";
 
-const Info = () => {
-  const { data } = useGetInitialData(memberGetMyProfile);
-
+const Info = ({ info }) => {
   const navigate = useNavigate();
   return (
-    data && (
+    info && (
       <Wrapper>
         <div className="section">
-          <img src={data.profileImageUrl || profile} className="profile" />
-          <div className="nickname">{data.nickname}</div>
+          <img src={info.profileImageUrl || profile} className="profile" />
+          <div className="nickname">{info.nickname}</div>
           <div className="age-sex">
-            {data.age}세, {getKorGender(data.gender)}
+            {info.age}세, {getKorGender(info.gender)}
           </div>
         </div>
 
