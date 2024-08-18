@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import xgrey from "../../assets/post/xgrey.svg";
@@ -88,6 +88,9 @@ const Bottom = styled.div`
 
   color: var(--grey500);
   font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const Bg = styled.div`
@@ -101,6 +104,8 @@ const Bg = styled.div`
 `;
 
 const Wrapper = styled.div`
+  max-height: 70%;
+  overflow-y: scroll;
   position: fixed;
   width: 100%;
   bottom: 0;
