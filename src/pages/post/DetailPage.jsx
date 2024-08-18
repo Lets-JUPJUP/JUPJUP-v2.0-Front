@@ -60,6 +60,8 @@ const DetailPage = () => {
         </Wrapper>
 
         <Footer
+          joinedMemberCount={data.joinedMemberCount}
+          maxMember={data.maxMember}
           postId={data.id}
           dueDate={data.dueDate}
           isJoined={data.isJoined}

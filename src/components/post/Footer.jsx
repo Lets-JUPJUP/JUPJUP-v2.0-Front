@@ -11,6 +11,8 @@ import {
 } from "../../services/api/post";
 
 const Footer = ({
+  joinedMemberCount,
+  maxMember,
   postId,
   dueDate,
   isJoined = true,
@@ -110,7 +112,9 @@ const Footer = ({
         </div>
 
         <div className="bottom">
-          <div className="people">00 / 00 참여중</div>
+          <div className="people">
+            {joinedMemberCount} / {maxMember} 참여중
+          </div>
           <img src={right} />
         </div>
       </Wrapper>
