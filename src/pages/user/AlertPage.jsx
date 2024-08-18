@@ -1,23 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
 import LongBtn from "../../components/common/LongBtn";
 import AddPics from "../../components/common/AddPics";
+import { useNavigate, useParams } from "react-router-dom";
+import useFetch from "../../services/hooks/useFetch";
+import { memberPostAlert } from "../../services/api/member";
+import useS3Image from "../../services/hooks/useS3Image";
+import useBtnActive from "../../services/hooks/useBtnActive";
 
 const AlertPage = () => {
+  //이미지원본파일
+  const [images, setImages] = useState([]);
+
+  //내용
+  const [content, setContent] = useState("");
+
+  //이미지 S3 업로드
+  const { uploadImage } = useS3Image();
+
+  //신고 글 작성
+  const { status: postAlertStatus, fetchData: postAlert } =
+    useFetch(memberPostAlert);
+
+  //버튼 활성화
+  const isBtnActive = useBtnActive({ content });
+
+  //신고대상 아이디
+  const { id } = useParams();
+
+  //신고대상 아이디
+  const navigate = useNavigate();
+
+  //버튼 클릭시 글 작성 요청
+  const requestWrite = async () => {
+    //S3이미지 업로드
+    const urls = await uploadImage(images);
+    const requestBody = {
+      targetId: id,
+      content: content,
+      image: urls[0],
+    };
+
+    if (content !== "") {
+      postAlert(requestBody);
+    }
+  };
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  useEffect(() => {
+    if (postAlertStatus == 200) {
+      navigate(-1);
+    }
+  }, [postAlertStatus]);
+
   return (
     <>
       <Header title="신고 및 제보" isBack={true} />
       <Wrapper>
-        <textarea className="text" placeholder="문제 상황에 대해 작성하세요." />
+        <textarea
+          className="text"
+          placeholder="문제 상황에 대해 작성하세요."
+          onChange={handleChange}
+          value={content}
+        />
 
         <div className="gap">
-          <AddPics />
+          <AddPics images={images} setImages={setImages} isMultiple={false} />
         </div>
       </Wrapper>
 
       <Bottom>
-        <LongBtn text={"완료"} />
+        <LongBtn text={"완료"} onClick={requestWrite} isActive={isBtnActive} />
       </Bottom>
     </>
   );

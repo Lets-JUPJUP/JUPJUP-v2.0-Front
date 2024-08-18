@@ -32,3 +32,8 @@ export const memberGetUserProfile = async (memberId) => {
 export const memberGetUserStat = async (memberId) => {
   return await client.get(`/api/v1/members/stats/${memberId}`);
 };
+
+//유저 신고
+export const memberPostAlert = async (body) => {
+  return await client.post(`/api/v1/reports`, body);
+};
