@@ -8,6 +8,7 @@ const Info = ({ startDate, member, age, gender, withPet }) => {
       <div className="row">참여 인원 | {member}</div>
       <div className="row">참여 연령 | {age}</div>
       <div className="row">참여 성별 | {gender}</div>
+      {withPet && <div className="row">반려동물 동반 가능</div>}
     </Wrapper>
   );
 };
