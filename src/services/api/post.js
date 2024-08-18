@@ -102,3 +102,13 @@ export const postGetCommentedList = async () => {
 export const postGetJoinList = async (id) => {
   return await client.get(`/api/v1/posts/${id}/members`);
 };
+
+//플로깅 참여 요청
+export const postRequestJoin = async (id) => {
+  return await client.post(`/api/v1/posts/${id}/join`);
+};
+
+//플로깅 참여 취소
+export const postCancelJoin = async (id) => {
+  return await client.delete(`/api/v1/posts/${id}/join`);
+};

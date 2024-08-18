@@ -6,12 +6,17 @@ import bookmarkblack from "../../assets/post/bookmarkblack.svg";
 import right from "../../assets/post/right.svg";
 import useFetch from "../../services/hooks/useFetch";
 import {
+  postCancelJoin,
   postCreateBookmark,
   postDeleteBookmark,
+  postRequestJoin,
 } from "../../services/api/post";
 import Drawer from "./Drawer";
+import { useParams } from "react-router-dom";
+import Toast from "../common/Toast";
 
 const Footer = ({
+  isAuthor,
   joinedMemberCount,
   maxMember,
   postId,
@@ -22,13 +27,25 @@ const Footer = ({
   isHearted = false,
   refetch,
 }) => {
+  //모집글 id
+  const { id } = useParams();
+
+  //남은 시간
   const [timeLeft, setTimeLeft] = useState("");
+
   //참여자 목록 drawer
   const [isOpen, setIsOpen] = useState(false);
 
   //북마크 토글 요청
   const { fetchData: createBookmark } = useFetch(postCreateBookmark);
   const { fetchData: deleteBookmark } = useFetch(postDeleteBookmark);
+
+  //참여하기 신청
+  const { fetchData: requestJoin } = useFetch(postRequestJoin);
+  const { fetchData: cancelJoin } = useFetch(postCancelJoin);
+
+  //토스트
+  const [toastMessage, setToastMessage] = useState("");
 
   //남은 시간 계산 타이머
   useEffect(() => {
@@ -75,8 +92,24 @@ const Footer = ({
     }, 150); // 0.15초 딜레이
   };
 
+  const handleClick = (TYPE) => {
+    if (TYPE == "JOIN") {
+      requestJoin(id);
+      setToastMessage(
+        `즐거운 플로깅 되세요 ${(
+          <br />
+        )} (모집 마감일 전까지 참여 여부를 수정할 수 있습니다)`
+      );
+    } else if (TYPE == "CANCEL") {
+      cancelJoin(id);
+    }
+  };
+
   return (
     <Gap>
+      {toastMessage && (
+        <Toast setToastMessage={setToastMessage} toastMessage={toastMessage} />
+      )}
       {isOpen && <Drawer setIsOpen={setIsOpen} maxMember={maxMember} />}
       <Wrapper $isJoined={!isFail && isJoined}>
         <div className="top">
@@ -106,9 +139,19 @@ const Footer = ({
             {!isFail && (
               <>
                 {isJoined ? (
-                  <div className="btn participate">신청 완료</div>
+                  <div
+                    className="btn participate"
+                    onClick={() => !isAuthor && handleClick("CANCEL")}
+                  >
+                    신청 완료
+                  </div>
                 ) : (
-                  <div className="btn">참여 신청</div>
+                  <div
+                    className="btn"
+                    onClick={() => !isAuthor && handleClick("JOIN")}
+                  >
+                    참여 신청
+                  </div>
                 )}
               </>
             )}
