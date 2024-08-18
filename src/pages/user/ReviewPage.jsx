@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from "../../components/common/Header";
 import Item from "../../components/list/Item";
 import Stars from "../../components/user/review/Stars";
-import Participant from "../../components/user/review/Participant";
+import Participant from "../../components/common/Participant";
 import LongBtn from "../../components/common/LongBtn";
 import NavBar from "../../components/common/NavBar";
 

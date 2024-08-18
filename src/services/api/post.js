@@ -97,3 +97,8 @@ export const postGetBookmarkList = async () => {
 export const postGetCommentedList = async () => {
   return await client.get(`/api/v1/comments/commented-posts`);
 };
+
+//플로깅 참여 멤버 목록 조회
+export const postGetJoinList = async (id) => {
+  return await client.get(`/api/v1/posts/${id}/members`);
+};

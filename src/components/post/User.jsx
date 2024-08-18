@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import profile from "../../assets/post/profile.svg";
-import right from "../../assets/post/right.svg";
+import right from "../../assets/mypage/right.svg";
 import { handleDateString } from "../../services/format/date";
 import { useNavigate } from "react-router-dom";
 

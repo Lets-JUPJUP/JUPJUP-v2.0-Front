@@ -9,6 +9,7 @@ import {
   postCreateBookmark,
   postDeleteBookmark,
 } from "../../services/api/post";
+import Drawer from "./Drawer";
 
 const Footer = ({
   joinedMemberCount,
@@ -22,6 +23,8 @@ const Footer = ({
   refetch,
 }) => {
   const [timeLeft, setTimeLeft] = useState("");
+  //참여자 목록 drawer
+  const [isOpen, setIsOpen] = useState(false);
 
   //북마크 토글 요청
   const { fetchData: createBookmark } = useFetch(postCreateBookmark);
@@ -74,6 +77,7 @@ const Footer = ({
 
   return (
     <Gap>
+      {isOpen && <Drawer setIsOpen={setIsOpen} maxMember={maxMember} />}
       <Wrapper $isJoined={!isFail && isJoined}>
         <div className="top">
           {isFail ? (
@@ -112,7 +116,12 @@ const Footer = ({
         </div>
 
         <div className="bottom">
-          <div className="people">
+          <div
+            className="people"
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
             {joinedMemberCount} / {maxMember} 참여중
           </div>
           <img src={right} />
