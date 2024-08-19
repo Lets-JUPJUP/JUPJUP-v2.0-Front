@@ -92,23 +92,29 @@ const Footer = ({
     }, 150); // 0.15초 딜레이
   };
 
-  const handleClick = (TYPE) => {
+  const toggleJoin = (TYPE) => {
     if (TYPE == "JOIN") {
       requestJoin(id);
       setToastMessage(
-        `즐거운 플로깅 되세요 ${(
-          <br />
-        )} (모집 마감일 전까지 참여 여부를 수정할 수 있습니다)`
+        `즐거운 플로깅 되세요 \n (모집 마감일 전까지 참여 여부를 수정할 수 있습니다)`
       );
     } else if (TYPE == "CANCEL") {
       cancelJoin(id);
     }
+
+    setTimeout(() => {
+      refetch(); //참가여부 반영된 정보로 업데이트
+    }, 150); // 0.15초 딜레이
   };
 
   return (
     <Gap>
       {toastMessage && (
-        <Toast setToastMessage={setToastMessage} toastMessage={toastMessage} />
+        <Toast
+          setToastMessage={setToastMessage}
+          message={toastMessage}
+          duration={2000}
+        />
       )}
       {isOpen && <Drawer setIsOpen={setIsOpen} maxMember={maxMember} />}
       <Wrapper $isJoined={!isFail && isJoined}>
@@ -141,14 +147,14 @@ const Footer = ({
                 {isJoined ? (
                   <div
                     className="btn participate"
-                    onClick={() => !isAuthor && handleClick("CANCEL")}
+                    onClick={() => !isAuthor && toggleJoin("CANCEL")}
                   >
                     신청 완료
                   </div>
                 ) : (
                   <div
                     className="btn"
-                    onClick={() => !isAuthor && handleClick("JOIN")}
+                    onClick={() => !isAuthor && !isJoined && toggleJoin("JOIN")}
                   >
                     참여 신청
                   </div>
