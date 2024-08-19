@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import back from "../../assets/icons/back.svg";
 import noti from "../../assets/icons/noti.svg";
@@ -8,7 +8,7 @@ import alert from "../../assets/icons/alert.svg";
 import styled from "styled-components";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
 import { notiGetSubscribe } from "../../services/api/noti";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { handleDateString } from "../../services/format/date";
 
 const Header = ({
@@ -29,10 +29,39 @@ const Header = ({
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  //접근 불가 페이지 제어
+  useEffect(() => {
+    // 현재 경로를 sessionStorage에 저장
+    const history = JSON.parse(sessionStorage.getItem("history")) || [];
+    history.push(location.pathname);
+    sessionStorage.setItem("history", JSON.stringify(history));
+  }, [location.pathname]);
+
+  const handleBack = () => {
+    const history = JSON.parse(sessionStorage.getItem("history")) || [];
+
+    if (history.length > 1) {
+      const previousPath = history[history.length - 2];
+
+      // 뒤로 가기 불가 페이지 제어
+      if (previousPath == "/write/2") {
+        history.pop(); // 현재 페이지를 스택에서 제거
+        sessionStorage.setItem("history", JSON.stringify(history));
+        navigate("/list");
+      } else {
+        history.pop(); // 현재 페이지를 스택에서 제거
+        sessionStorage.setItem("history", JSON.stringify(history));
+        navigate(-1);
+      }
+    }
+  };
+
   return (
     <Wrapper>
       <Left>
-        {isBack && <img src={back} onClick={() => navigate(-1)} />}
+        {isBack && <img src={back} onClick={handleBack} />}
         {isHome && <img src={home} onClick={() => navigate("/")} />}
       </Left>
       {isDetail ? (
