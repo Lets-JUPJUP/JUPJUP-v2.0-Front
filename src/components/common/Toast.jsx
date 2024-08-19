@@ -46,6 +46,7 @@ const Wrapper = styled.div`
   justify-content: center;
 
   div {
+    white-space: pre-line;
     width: 100%;
     box-sizing: border-box;
     padding: 12px 10px;
