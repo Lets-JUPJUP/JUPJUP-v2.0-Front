@@ -5,6 +5,7 @@ import pin from "../../assets/icons/pin.svg";
 import female from "../../assets/icons/female.svg";
 import male from "../../assets/icons/male.svg";
 import calendar from "../../assets/icons/calendar.svg";
+import thumbs from "../../assets/post/thumbs.svg";
 import { handleDateString } from "../../services/format/date";
 import { useNavigate } from "react-router-dom";
 
@@ -41,7 +42,7 @@ const Item = ({ item }) => {
   return (
     <Wrapper
       onClick={() => {
-        navigate(`/detail/${id}`);
+        !isReviewAble && navigate(`/detail/${id}`);
       }}
     >
       <div className="container">
@@ -76,6 +77,14 @@ const Item = ({ item }) => {
         </div>
       </div>
       {fileUrls[0] && <img className="image" src={fileUrls[0]} />}
+      {isReviewAble && (
+        <ReviewBtn
+          onClick={() => isReviewAble && navigate(`/mypage/review/${id}`)}
+        >
+          <img src={thumbs} />
+          리뷰하기
+        </ReviewBtn>
+      )}
     </Wrapper>
   );
 };
@@ -154,4 +163,26 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
+`;
+
+const ReviewBtn = styled.div`
+  position: absolute;
+  display: flex;
+  right: 20px;
+  height: 84px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--btn, 4px);
+  flex-shrink: 0;
+  border-radius: var(--special, 16px) var(--PasswordMask, 0px)
+    var(--PasswordMask, 0px) var(--basic, 2px);
+  background: var(--main, #7654ff);
+  box-shadow: -4px 0px 20px 0px rgba(0, 0, 0, 0.2);
+
+  color: var(--white, #fff);
+  text-align: center;
+  font-size: 12px;
 `;
