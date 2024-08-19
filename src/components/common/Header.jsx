@@ -22,6 +22,7 @@ const Header = ({
   isDetail = false,
   postTitle = "",
   dueDate = "",
+  idForAlert,
 }) => {
   //SSE 구독 요청
   useGetInitialData(notiGetSubscribe);
@@ -52,7 +53,12 @@ const Header = ({
       <Right>
         {isNoti && <img src={noti} onClick={() => navigate("/mypage/noti")} />}
         {isShare && <img src={share} />}
-        {isAlert && <img src={alert} />}
+        {isAlert && (
+          <img
+            src={alert}
+            onClick={() => navigate(`/user/${idForAlert}/alert`)}
+          />
+        )}
       </Right>
     </Wrapper>
   );

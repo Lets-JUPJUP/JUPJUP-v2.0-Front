@@ -3,28 +3,46 @@ import styled from "styled-components";
 import Stat from "../../components/user/mypage/Stat";
 import Header from "../../components/common/Header";
 import profile from "../../assets/auth/profile.svg";
+import useGetInitialData from "../../services/hooks/useGetInitialData";
+import {
+  memberGetUserProfile,
+  memberGetUserStat,
+} from "../../services/api/member";
+import { useParams } from "react-router-dom";
+import { getKorGender } from "../../services/translate/gender";
 
 const UserProfile = () => {
+  const { id } = useParams();
+  const { data: profile } = useGetInitialData(memberGetUserProfile, id);
+
   return (
     <>
-      <Header title="유저 프로필" isBack={true} isAlert={true} />
+      <Header
+        title="유저 프로필"
+        isBack={true}
+        isAlert={true}
+        idForAlert={id}
+      />
       <Wrapper>
         <Form>
           <div>
-            <img src={profile} />
+            <img
+              className="profile"
+              src={profile?.profileImageUrl || profile}
+            />
           </div>
 
           <div className="infos">
-            <Info>닉네임</Info>
-            <Info>NN세</Info>
-            <Info>여성</Info>
+            <Info>{profile?.nickname}</Info>
+            <Info>{profile?.age}세</Info>
+            <Info>{getKorGender(profile?.gender)}</Info>
           </div>
         </Form>
 
         <Bottom>
           <div className="stat">통계</div>
           <div className="container">
-            <Stat />
+            <Stat memberId={id} />
           </div>
         </Bottom>
       </Wrapper>
@@ -62,6 +80,12 @@ const Form = styled.div`
     flex-direction: column;
     gap: 16px;
     width: 280px;
+  }
+
+  .profile {
+    width: 160px;
+    height: 160px;
+    border-radius: 4px;
   }
 `;
 
