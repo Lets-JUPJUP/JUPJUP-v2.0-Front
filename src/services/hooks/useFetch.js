@@ -6,14 +6,16 @@ const useFetch = (requestFunc) => {
   const [status, setStatus] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [isRefetch, setIsRefetch] = useState(false);
 
   const fetchData = async (headers, body) => {
     setLoading(true);
-    setStatus(undefined);
+
     try {
       const response = await requestFunc(headers, body);
 
       setStatus(response.data.status);
+      setIsRefetch(!isRefetch);
       setData(response.data.data);
     } catch (err) {
       setError(err);
@@ -21,7 +23,7 @@ const useFetch = (requestFunc) => {
     setLoading(false);
   };
 
-  return { data, loading, error, status, fetchData };
+  return { data, loading, error, status, isRefetch, fetchData };
 };
 
 export default useFetch;

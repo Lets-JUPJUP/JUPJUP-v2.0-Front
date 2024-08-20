@@ -21,15 +21,15 @@ const Comments = () => {
     fetchData: getComments,
     loading,
   } = useFetch(postGetComments);
-  const { status: createCommentStatus, fetchData: createComment } =
+  const { isRefetch: createCommentisRefetch, fetchData: createComment } =
     useFetch(postCreateComment);
-  const { status: createReplyStatus, fetchData: createReply } =
+  const { isRefetch: createReplyisRefetch, fetchData: createReply } =
     useFetch(postCreateReply);
 
-  const { status: deleteCommentStatus, fetchData: deleteComment } =
+  const { isRefetch: deleteCommentisRefetch, fetchData: deleteComment } =
     useFetch(postDeleteComment);
 
-  const { status: deleteReplyStatus, fetchData: deleteReply } =
+  const { isRefetch: deleteReplyisRefetch, fetchData: deleteReply } =
     useFetch(postDeleteReply);
 
   const [showInput, setShowInput] = useState(false);
@@ -38,10 +38,10 @@ const Comments = () => {
   useEffect(() => {
     getComments(id);
   }, [
-    createCommentStatus,
-    createReplyStatus,
-    deleteCommentStatus,
-    deleteReplyStatus,
+    createCommentisRefetch,
+    createReplyisRefetch,
+    deleteCommentisRefetch,
+    deleteReplyisRefetch,
   ]);
 
   useState(() => {
