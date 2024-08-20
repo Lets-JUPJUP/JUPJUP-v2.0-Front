@@ -9,6 +9,7 @@ const useFetch = (requestFunc) => {
 
   const fetchData = async (headers, body) => {
     setLoading(true);
+    setStatus(undefined);
     try {
       const response = await requestFunc(headers, body);
 
