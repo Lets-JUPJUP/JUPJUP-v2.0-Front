@@ -92,13 +92,17 @@ const Comments = ({ setShowFooter, comments, getComments }) => {
             </div>
           );
         })}
+
         {showInput && (
-          <CommentInput
-            createComment={createComment}
-            setShowInput={setShowInput}
-            createReply={createReply}
-            parentId={parentId}
-          />
+          <>
+            <Gap />
+            <CommentInput
+              createComment={createComment}
+              setShowInput={setShowInput}
+              createReply={createReply}
+              parentId={parentId}
+            />
+          </>
         )}
       </Wrapper>
     )
@@ -143,4 +147,8 @@ const Wrapper = styled.div`
 
 const Recomment = styled.div`
   padding-left: 30px;
+`;
+
+const Gap = styled.div`
+  margin-bottom: 44px;
 `;

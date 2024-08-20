@@ -63,17 +63,15 @@ const CommentInput = ({
   };
 
   return (
-    <Gap>
-      <Wrapper ref={wrapperRef}>
-        <input
-          ref={inputRef}
-          placeholder="댓글을 입력하세요"
-          onChange={handleChange}
-          value={content}
-        />
-        <Send src={send} onClick={handleClick} />
-      </Wrapper>
-    </Gap>
+    <Wrapper ref={wrapperRef}>
+      <input
+        ref={inputRef}
+        placeholder="댓글을 입력하세요"
+        onChange={handleChange}
+        value={content}
+      />
+      <Send src={send} onClick={handleClick} />
+    </Wrapper>
   );
 };
 
@@ -104,8 +102,4 @@ const Wrapper = styled.div`
 
 const Send = styled.img`
   width: 20px;
-`;
-
-const Gap = styled.div`
-  margin-bottom: 44px;
 `;
