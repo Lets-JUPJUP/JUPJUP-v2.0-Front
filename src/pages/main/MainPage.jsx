@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import letsjupjup from "../../assets/main/letsjupjup.svg";
-import mainview from "../../assets/main/mainview.svg";
+import mainview from "../../assets/main/mainview.png";
 import bell from "../../assets/main/bell.svg";
-import banner from "../../assets/main/banner.svg";
+import banner from "../../assets/main/banner.png";
 import NavBar from "../../components/common/NavBar";
 import LongBtn from "../../components/common/LongBtn";
 import { useNavigate } from "react-router-dom";
