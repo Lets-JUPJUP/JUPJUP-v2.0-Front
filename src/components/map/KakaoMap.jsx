@@ -6,6 +6,7 @@ import Drawer from "./Drawer";
 import useFetch from "../../services/hooks/useFetch";
 import { mapGetTrashCans } from "../../services/api/map";
 import pin from "../../assets/map/pin.svg";
+import NavBar from "../common/NavBar";
 
 const { kakao } = window;
 
@@ -163,7 +164,8 @@ const KakaoMap = () => {
           <img className="gps" src={gps} onClick={refreshMap} />
         </div>
 
-        <Map id="map"></Map>
+        <Map id="map" />
+        <NavBar />
       </Wrapper>
     </>
   );
@@ -173,7 +175,6 @@ export default KakaoMap;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 57px);
   position: relative;
 
   .top {
@@ -217,5 +218,5 @@ const Wrapper = styled.div`
 
 const Map = styled.div`
   width: 100%;
-  height: calc(100%);
+  height: calc(100vh - 57px);
 `;
