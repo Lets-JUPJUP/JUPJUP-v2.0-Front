@@ -37,3 +37,13 @@ export const memberGetUserStat = async (memberId) => {
 export const memberPostAlert = async (body) => {
   return await client.post(`/api/v1/reports`, body);
 };
+
+//플로깅 리뷰 참여자 좋아요
+export const memberPostHeart = async (body) => {
+  return await client.post(`/api/v2/user-hearts`, body);
+};
+
+//플로깅 리뷰 별점
+export const memberPostScore = async (body) => {
+  return await client.post(`/api/v2/scores`, body);
+};

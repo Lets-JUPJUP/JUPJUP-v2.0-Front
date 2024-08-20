@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import profile from "../../assets/mypage/profile.svg";
 import host from "../../assets/icons/host.svg";
 import thumbs from "../../assets/icons/thumbs.svg";
+import thumbs_color from "../../assets/icons/thumbs_color.svg";
 import { getKorGender } from "../../services/translate/gender";
 
-const Participant = ({ participant, isThumb, isHost = false }) => {
+const Participant = ({
+  participant,
+  isThumb,
+  setThumbTargets,
+  thumbTargets,
+}) => {
+  const [thumbState, setThumbState] = useState(false);
+
+  useEffect(() => {
+    if (thumbTargets.includes(participant.memberId)) {
+      setThumbState(true);
+    }
+  }, []);
+
+  const toggleThumb = () => {
+    thumbState
+      ? setThumbTargets((prev) =>
+          prev.filter((id) => id !== participant.memberId)
+        )
+      : setThumbTargets((prev) => [...prev, participant.memberId]);
+
+    setThumbState(!thumbState);
+  };
+
   return (
     <Wrapper>
       <div className="left">
@@ -16,11 +40,15 @@ const Participant = ({ participant, isThumb, isHost = false }) => {
             {participant.age}세, {getKorGender(participant.gender)}
           </div>
         )}
-        {isHost && <img className="host" src={host} />}
+        {participant.host && <img className="host" src={host} />}
       </div>
 
       {isThumb ? (
-        <img className="thumbs" src={thumbs} />
+        thumbState ? (
+          <img className="thumbs" src={thumbs_color} onClick={toggleThumb} />
+        ) : (
+          <img className="thumbs" src={thumbs} onClick={toggleThumb} />
+        )
       ) : (
         <div className="grey">
           {participant.age}세, {getKorGender(participant.gender)}

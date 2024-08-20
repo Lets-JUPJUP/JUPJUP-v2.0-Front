@@ -9,7 +9,7 @@ import thumbs from "../../assets/post/thumbs.svg";
 import { handleDateString } from "../../services/format/date";
 import { useNavigate } from "react-router-dom";
 
-const Item = ({ item }) => {
+const Item = ({ item, viewOnly = false }) => {
   const {
     fileUrls,
     id,
@@ -39,13 +39,57 @@ const Item = ({ item }) => {
   var isActive = isReviewAble || !isEnded;
 
   const navigate = useNavigate();
-  return (
+  return viewOnly ? (
+    <Wrapper
+      onClick={() => {
+        navigate(`/detail/${id}`);
+      }}
+    >
+      <div className="container">
+        <Title $isActive={true}>{title}</Title>
+        <div className="grey">
+          <img src={pin} />
+          <div className="location">{route[0].address}</div>
+        </div>
+        <div className="grey date">
+          <img src={calendar} />
+          {handleDateString(startDate)}
+        </div>
+        <div className="tags">
+          {isAuthor && <img src={host} />}
+          <Tag>
+            {minAge}세~{maxAge}세
+          </Tag>
+          {postGender != "ANY" ? (
+            postGender == "FEMALE" ? (
+              <Tag>
+                <img src={female} />
+              </Tag>
+            ) : (
+              <Tag>
+                <img src={male} />
+              </Tag>
+            )
+          ) : (
+            <></>
+          )}
+          {withPet && <Tag>반려동물 동반 가능</Tag>}
+        </div>
+      </div>
+      {fileUrls[0] && <img className="image" src={fileUrls[0]} />}
+    </Wrapper>
+  ) : (
     <Wrapper
       onClick={() => {
         !isReviewAble && navigate(`/detail/${id}`);
       }}
     >
-      <div className="container">
+      <div
+        className="container"
+        onClick={() => {
+          isReviewAble && navigate(`/detail/${id}`);
+        }}
+      >
         <Title $isActive={isActive}>{title}</Title>
         <div className="grey">
           <img src={pin} />
