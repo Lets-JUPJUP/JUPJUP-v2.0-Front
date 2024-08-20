@@ -99,7 +99,7 @@ const RegisterPage = () => {
 
         <Form>
           <div>
-            <img src={profile} />
+            <img src={profileImage || profile} />
           </div>
 
           <Comment>
