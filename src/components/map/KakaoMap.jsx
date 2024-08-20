@@ -38,32 +38,36 @@ const KakaoMap = () => {
     mapRef.current = new kakao.maps.Map(mapContainer, mapOption);
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const locPosition = new kakao.maps.LatLng(lat, lon);
-
-          mapRef.current.setCenter(locPosition);
-          setLat(lat);
-          setLon(lon);
-        },
-        function (error) {
-          console.error("위치 정보를 가져오는데 실패했습니다:", error); // 실패 로그
-          const locPosition = new kakao.maps.LatLng(37.5664056, 126.9778222);
-          mapRef.current.setCenter(locPosition);
-          alert("위치 권한을 허용해야 합니다.");
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        }
-      );
+      navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      });
     } else {
       console.log("Geolocation을 사용할 수 없습니다."); // Geolocation 미지원 로그
     }
   }, [refresh]);
+
+  const successHandler = (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    const locPosition = new kakao.maps.LatLng(lat, lon);
+
+    mapRef.current.setCenter(locPosition);
+    setLat(lat);
+    setLon(lon);
+  };
+
+  const errorHandler = (error) => {
+    if (error.message === "User denied Geolocation") {
+      alert("위치 정보에 동의해주셔야 해당 서비스 이용이 가능합니다.");
+      const locPosition = new kakao.maps.LatLng(37.5664056, 126.9778222);
+      mapRef.current.setCenter(locPosition);
+      return;
+    } else {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (lat !== 0 && lon !== 0) {
