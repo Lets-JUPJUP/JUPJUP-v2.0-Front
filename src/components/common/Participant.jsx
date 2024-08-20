@@ -15,7 +15,7 @@ const Participant = ({
   const [thumbState, setThumbState] = useState(false);
 
   useEffect(() => {
-    if (thumbTargets.includes(participant.memberId)) {
+    if (isThumb && thumbTargets.includes(participant.memberId)) {
       setThumbState(true);
     }
   }, []);
