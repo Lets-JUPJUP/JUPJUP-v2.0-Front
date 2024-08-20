@@ -99,7 +99,7 @@ const RegisterPage = () => {
 
         <Form>
           <div>
-            <img src={profileImage || profile} />
+            <img className="profileimage" src={profileImage || profile} />
           </div>
 
           <Comment>
@@ -146,6 +146,12 @@ const Form = styled.div`
   gap: 40px;
   margin-top: 60px;
   align-items: center;
+
+  .profileimage {
+    width: 160px;
+    height: 160px;
+    border-radius: 4px;
+  }
 `;
 
 const Inputs = styled.div`
