@@ -17,6 +17,7 @@ const CommentInput = ({
   useEffect(() => {
     if (inputRef.current !== null) {
       inputRef.current.disabled = false; // input 비활성화 해제
+      inputRef.current.focus(); // input에 focus
     }
 
     // 인풋 바깥 클릭을 감지하는 이벤트 리스너 등록
