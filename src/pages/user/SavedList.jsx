@@ -17,7 +17,7 @@ import useFetch from "../../services/hooks/useFetch";
 
 //TYPE: A = 내 플로깅 , B = 북마크, C= 댓글 단 글
 const SavedList = ({ TYPE = "A" }) => {
-  const [currentTab, setCurrentTab] = useState(1);
+  const [currentTab, setCurrentTab] = useState(4);
   const [requestFunc, setRequestFunc] = useState(null);
 
   useEffect(() => {

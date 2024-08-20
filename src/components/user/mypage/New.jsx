@@ -4,10 +4,11 @@ import right from "../../../assets/mypage/right.svg";
 import Item from "../../list/Item";
 import useGetInitialData from "../../../services/hooks/useGetInitialData";
 import { postGetCompletePost } from "../../../services/api/post";
+import { useNavigate } from "react-router-dom";
 
 const New = () => {
   const { data } = useGetInitialData(postGetCompletePost);
-
+  const navigate = useNavigate();
   return (
     data && (
       <Wrapper>
@@ -18,7 +19,10 @@ const New = () => {
           <div className="divider" />
         </>
 
-        <div className="review-btn">
+        <div
+          className="review-btn"
+          onClick={() => navigate("/mypage/myplogging")}
+        >
           다른 플로깅 리뷰하기
           <img src={right} />
         </div>
