@@ -50,7 +50,7 @@ const NavBar = ({ isNoGap = false }) => {
 export default NavBar;
 
 const Wrapper = styled.div`
-  z-index: 99px;
+  z-index: 99;
   position: fixed;
   bottom: 0;
   background-color: var(--white);
