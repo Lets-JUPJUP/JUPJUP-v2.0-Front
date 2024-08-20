@@ -18,6 +18,14 @@ const CommentInput = ({
     if (inputRef.current !== null) {
       inputRef.current.disabled = false; // input 비활성화 해제
       inputRef.current.focus(); // input에 focus
+
+      // 스크롤을 최하단으로
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 100);
     }
 
     // 인풋 바깥 클릭을 감지하는 이벤트 리스너 등록
@@ -55,15 +63,17 @@ const CommentInput = ({
   };
 
   return (
-    <Wrapper ref={wrapperRef}>
-      <input
-        ref={inputRef}
-        placeholder="댓글을 입력하세요"
-        onChange={handleChange}
-        value={content}
-      />
-      <Send src={send} onClick={handleClick} />
-    </Wrapper>
+    <Gap>
+      <Wrapper ref={wrapperRef}>
+        <input
+          ref={inputRef}
+          placeholder="댓글을 입력하세요"
+          onChange={handleChange}
+          value={content}
+        />
+        <Send src={send} onClick={handleClick} />
+      </Wrapper>
+    </Gap>
   );
 };
 
@@ -94,4 +104,8 @@ const Wrapper = styled.div`
 
 const Send = styled.img`
   width: 20px;
+`;
+
+const Gap = styled.div`
+  margin-bottom: 44px;
 `;

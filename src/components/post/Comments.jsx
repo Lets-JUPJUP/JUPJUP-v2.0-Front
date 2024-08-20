@@ -55,14 +55,6 @@ const Comments = ({ setShowFooter }) => {
   return (
     comments && (
       <Wrapper>
-        {showInput && (
-          <CommentInput
-            createComment={createComment}
-            setShowInput={setShowInput}
-            createReply={createReply}
-            parentId={parentId}
-          />
-        )}
         <Top>
           <div className="title">댓글 ({comments.commentNo})</div>
           <div
@@ -109,6 +101,14 @@ const Comments = ({ setShowFooter }) => {
             </div>
           );
         })}
+        {showInput && (
+          <CommentInput
+            createComment={createComment}
+            setShowInput={setShowInput}
+            createReply={createReply}
+            parentId={parentId}
+          />
+        )}
       </Wrapper>
     )
   );
