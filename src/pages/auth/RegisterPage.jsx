@@ -17,6 +17,8 @@ import Toast from "../../components/common/Toast";
 import useBtnActive from "../../services/hooks/useBtnActive";
 import useFetch from "../../services/hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import SetProfileImage from "../../components/common/SetProfileImage";
+import useS3Image from "../../services/hooks/useS3Image";
 
 const RegisterPage = () => {
   const [nickname, handleChangeNickname] = useInput("");
@@ -24,6 +26,7 @@ const RegisterPage = () => {
   const [profileImage, setProfileImage] = useState("");
   const [gender, setGender] = useState("");
   const [isHaveGender, setIsHaveGender] = useState(false);
+  const [images, setImages] = useState([]); //단일 이미지지만 로직상 배열로 받음
 
   const [toastMessage, setToastMessage] = useState("");
 
@@ -35,6 +38,7 @@ const RegisterPage = () => {
     error: createProfileError,
     fetchData: createProfile,
   } = useFetch(memberUpdateProfile);
+  const { uploadImage } = useS3Image();
 
   const navigate = useNavigate();
 
@@ -45,12 +49,25 @@ const RegisterPage = () => {
   useEffect(() => {
     if (profileData) {
       console.log(profileData);
-      setProfileImage(profileData.profileImageUrl);
       setGender(profileData.gender);
+      setProfileImage(profileData.profileImageUrl || profile);
       //기본 프로필 데이터에 이미 성별 정보가 있다면 선택 불가능 하게 함
       setIsHaveGender(profileData.gender !== "NOT_DEFINED");
     }
   }, [profileData]);
+
+  //버튼 클릭시 프로필 변경 요청
+  const requestRegister = async () => {
+    //S3이미지 업로드
+    const urls = await uploadImage(images);
+    const requestBody = {
+      nickname: nickname,
+      age: age,
+      gender: gender,
+      profileImage: urls[0],
+    };
+    createProfile(requestBody);
+  };
 
   //닉네임 중복 체크
   useEffect(() => {
@@ -61,12 +78,7 @@ const RegisterPage = () => {
         setToastMessage("이미 사용 중인 닉네임입니다.");
       } else {
         //사용 가능한 닉네임이라면 가입 진행
-        createProfile({
-          nickname: nickname,
-          age: age,
-          gender: gender,
-          profileImage: profileImage,
-        });
+        requestRegister();
       }
     }
   }, [validNameData]);
@@ -88,7 +100,7 @@ const RegisterPage = () => {
     }
   }, [createProfileError, createProfileStatus]);
 
-  const requestRegister = () => {
+  const handleClick = () => {
     if (nickname !== "") {
       checkValidName({ nickname: nickname });
     }
@@ -103,9 +115,11 @@ const RegisterPage = () => {
         <Header title="프로필 생성" isBack={true} />
 
         <Form>
-          <div>
-            <img className="profileimage" src={profileImage || profile} />
-          </div>
+          <SetProfileImage
+            profileImage={profileImage}
+            images={images}
+            setImages={setImages}
+          />
 
           <Comment>
             즐겁고 안전한 플로깅을 위해 <br /> 정확한 정보를 입력해주세요.
@@ -132,11 +146,7 @@ const RegisterPage = () => {
         </Form>
 
         <Bottom>
-          <LongBtn
-            text="완료"
-            onClick={requestRegister}
-            isActive={isBtnActive}
-          />
+          <LongBtn text="완료" onClick={handleClick} isActive={isBtnActive} />
         </Bottom>
       </div>
     </>

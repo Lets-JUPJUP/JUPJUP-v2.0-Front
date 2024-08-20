@@ -18,13 +18,16 @@ import useBtnActive from "../../services/hooks/useBtnActive";
 import useFetch from "../../services/hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import Toast from "../../components/common/Toast";
+import SetProfileImage from "../../components/common/SetProfileImage";
+import useS3Image from "../../services/hooks/useS3Image";
 
 const EditPage = () => {
   const { data } = useGetInitialData(memberGetMyProfile);
-
+  const { uploadImage } = useS3Image();
   const [nickname, handleChangeNickname] = useInput(data?.nickname);
   const [age, handleChangeAge] = useInput(data?.age);
   const [profileImage, setProfileImage] = useState("");
+  const [images, setImages] = useState([]); //단일 이미지지만 로직상 배열로 받음
 
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState("");
@@ -43,8 +46,21 @@ const EditPage = () => {
   const isBtnActive = useBtnActive({ nickname, age });
 
   useEffect(() => {
-    setProfileImage(data?.profileImageUrl);
+    setProfileImage(data?.profileImageUrl || profile);
   }, [data]);
+
+  //버튼 클릭시 프로필 변경 요청
+  const requestUpdate = async () => {
+    //S3이미지 업로드
+    const urls = await uploadImage(images);
+    const requestBody = {
+      nickname: nickname,
+      age: age,
+      gender: data.gender,
+      profileImage: urls[0],
+    };
+    updateProfile(requestBody);
+  };
 
   //닉네임 중복 체크
   useEffect(() => {
@@ -55,12 +71,7 @@ const EditPage = () => {
         setToastMessage("이미 사용 중인 닉네임입니다.");
       } else {
         //사용 가능한 닉네임이라면 가입 진행
-        updateProfile({
-          nickname: nickname,
-          age: age,
-          gender: data.gender,
-          profileImage: profileImage,
-        });
+        requestUpdate();
       }
     }
   }, [validNameData]);
@@ -76,7 +87,7 @@ const EditPage = () => {
     }
   }, [updateProfileError, updateProfileStatus]);
 
-  const requestUpdate = () => {
+  const handleClick = () => {
     if (nickname !== "") {
       checkValidName({ nickname: nickname });
     }
@@ -91,10 +102,11 @@ const EditPage = () => {
         <Header isBack={true} title="정보 수정" />
         <Wrapper>
           <Form>
-            <div>
-              <img className="profile-image" src={profileImage || profile} />
-            </div>
-
+            <SetProfileImage
+              profileImage={profileImage}
+              images={images}
+              setImages={setImages}
+            />
             <Inputs>
               <Input
                 placeholder={data.nickname}
@@ -115,11 +127,7 @@ const EditPage = () => {
           </Form>
 
           <Bottom>
-            <LongBtn
-              text="완료"
-              isActive={isBtnActive}
-              onClick={requestUpdate}
-            />
+            <LongBtn text="완료" isActive={isBtnActive} onClick={handleClick} />
           </Bottom>
         </Wrapper>
 
@@ -151,12 +159,6 @@ const Form = styled.div`
   gap: 40px;
   margin-top: 60px;
   align-items: center;
-
-  .profile-image {
-    width: 160px;
-    height: 160px;
-    border-radius: 4px;
-  }
 `;
 
 const Inputs = styled.div`
