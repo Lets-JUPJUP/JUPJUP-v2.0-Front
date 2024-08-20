@@ -6,7 +6,7 @@ const MapPage = () => {
   return (
     <>
       <KakaoMap />
-      <NavBar isNoGap={true} />
+      <NavBar />
     </>
   );
 };

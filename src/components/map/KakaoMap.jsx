@@ -217,5 +217,5 @@ const Wrapper = styled.div`
 
 const Map = styled.div`
   width: 100%;
-  height: calc(100vh - 57px);
+  height: calc(100%);
 `;
