@@ -216,7 +216,6 @@ const Wrapper = styled.div`
 `;
 
 const Map = styled.div`
-  z-index: 1;
   width: 100%;
   height: calc(100%);
 `;
