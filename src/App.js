@@ -26,7 +26,6 @@ function App() {
           {/*로그인 시 접근 가능한 페이지 */}
           <Route path="/map" element={<MapPage />} />
 
-          <Route path="/" element={<MainPage />} />
           <Route path="/list" element={<PloggingListPage />} />
           <Route path="/list/filters" element={<FilterSelectPage />} />
 
@@ -51,6 +50,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
+        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/loading" element={<LoginLoadingPage />} />
       </Routes>
