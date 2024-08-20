@@ -78,7 +78,7 @@ const RegisterPage = () => {
       localStorage.setItem("age", age);
       const token = localStorage.getItem("temptoken");
       localStorage.setItem("juptoken", token);
-      localStorage.removeItem(temptoken);
+      localStorage.removeItem("temptoken");
       navigate("/", {
         onComplete: () => {
           // 이동이 완료된 후에 새로고침
