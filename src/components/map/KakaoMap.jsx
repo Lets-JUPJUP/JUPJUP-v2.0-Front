@@ -172,7 +172,6 @@ const KakaoMap = () => {
 export default KakaoMap;
 
 const Wrapper = styled.div`
-  overflow: hidden;
   width: 100%;
   height: calc(100vh - 57px);
   position: relative;
@@ -217,6 +216,7 @@ const Wrapper = styled.div`
 `;
 
 const Map = styled.div`
+  z-index: 1;
   width: 100%;
   height: calc(100%);
 `;
