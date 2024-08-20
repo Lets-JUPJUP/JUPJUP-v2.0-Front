@@ -9,6 +9,11 @@ import { useNavigate } from "react-router-dom";
 
 const Info = ({ info }) => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("juptoken");
+    window.location.reload();
+  };
   return (
     info && (
       <Wrapper>
@@ -21,7 +26,9 @@ const Info = ({ info }) => {
         </div>
 
         <div className="section">
-          <div className="logout">로그아웃</div>
+          <div className="logout" onClick={handleLogout}>
+            로그아웃
+          </div>
           <img
             className="settings"
             src={settings}
