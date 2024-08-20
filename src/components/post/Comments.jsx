@@ -13,7 +13,7 @@ import {
 import { useParams } from "react-router-dom";
 import CommentInput from "./CommentInput";
 
-const Comments = () => {
+const Comments = ({ setShowFooter }) => {
   const { id } = useParams();
   const {
     status,
@@ -47,6 +47,10 @@ const Comments = () => {
   useState(() => {
     console.log(comments);
   }, [loading]);
+
+  useEffect(() => {
+    setShowFooter(!showInput);
+  }, [showInput]);
 
   return (
     comments && (

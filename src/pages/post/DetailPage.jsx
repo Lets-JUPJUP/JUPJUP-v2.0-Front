@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
 import Mapview from "../../components/post/Mapview";
@@ -19,6 +19,7 @@ const DetailPage = () => {
   const { id } = useParams();
   const { data, refetch } = useGetInitialData(postGetDetail, id);
   console.log(data);
+  const [showFooter, setShowFooter] = useState(true);
   return (
     data && (
       <>
@@ -56,21 +57,22 @@ const DetailPage = () => {
             <Pic images={data.fileUrls} />
           </div>
 
-          <Comments />
+          <Comments setShowFooter={setShowFooter} />
         </Wrapper>
-
-        <Footer
-          isAuthor={data.isAuthor}
-          joinedMemberCount={data.joinedMemberCount}
-          maxMember={data.maxMember}
-          postId={data.id}
-          dueDate={data.dueDate}
-          isJoined={data.isJoined}
-          isFail={data.isEnded && !data.isRecruitmentSuccessful}
-          isHearted={data.isHearted}
-          isSuccess={data.isEnded && data.isRecruitmentSuccessful}
-          refetch={refetch}
-        />
+        {showFooter && (
+          <Footer
+            isAuthor={data.isAuthor}
+            joinedMemberCount={data.joinedMemberCount}
+            maxMember={data.maxMember}
+            postId={data.id}
+            dueDate={data.dueDate}
+            isJoined={data.isJoined}
+            isFail={data.isEnded && !data.isRecruitmentSuccessful}
+            isHearted={data.isHearted}
+            isSuccess={data.isEnded && data.isRecruitmentSuccessful}
+            refetch={refetch}
+          />
+        )}
       </>
     )
   );

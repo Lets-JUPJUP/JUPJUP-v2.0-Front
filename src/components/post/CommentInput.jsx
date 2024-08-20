@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import send from "../../assets/post/send.svg";
-import useFetch from "../../services/hooks/useFetch";
-import { postCreateComment } from "../../services/api/post";
 import { useParams } from "react-router-dom";
 
 const CommentInput = ({
@@ -11,16 +9,29 @@ const CommentInput = ({
   createReply,
   parentId,
 }) => {
+  const wrapperRef = useRef(null);
   const inputRef = useRef(null);
-  const { id } = useParams(); //post_id
+  const { id } = useParams(); // post_id
   const [content, setContent] = useState("");
 
   useEffect(() => {
     if (inputRef.current !== null) {
-      inputRef.current.disabled = false; //input 비활성화 해제
-      inputRef.current.focus(); //input에 focus
+      inputRef.current.disabled = false; // input 비활성화 해제
     }
-  }, []);
+
+    // 인풋 바깥 클릭을 감지하는 이벤트 리스너 등록
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowInput(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowInput]);
 
   const handleChange = (e) => {
     setContent(e.target.value);
@@ -37,13 +48,13 @@ const CommentInput = ({
       createComment(id, { content: content });
     }
 
-    //성공시
+    // 성공시
     setContent("");
     setShowInput(false);
   };
 
   return (
-    <Wrapper>
+    <Wrapper ref={wrapperRef}>
       <input
         ref={inputRef}
         placeholder="댓글을 입력하세요"
