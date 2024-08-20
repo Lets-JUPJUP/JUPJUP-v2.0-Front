@@ -13,14 +13,9 @@ import {
 import { useParams } from "react-router-dom";
 import CommentInput from "./CommentInput";
 
-const Comments = ({ setShowFooter }) => {
+const Comments = ({ setShowFooter, comments, getComments }) => {
   const { id } = useParams();
-  const {
-    status,
-    data: comments,
-    fetchData: getComments,
-    loading,
-  } = useFetch(postGetComments);
+  // const { fetchData: getComments } = useFetch(postGetComments);
   const { isRefetch: createCommentisRefetch, fetchData: createComment } =
     useFetch(postCreateComment);
   const { isRefetch: createReplyisRefetch, fetchData: createReply } =
@@ -43,10 +38,6 @@ const Comments = ({ setShowFooter }) => {
     deleteCommentisRefetch,
     deleteReplyisRefetch,
   ]);
-
-  useState(() => {
-    console.log(comments);
-  }, [loading]);
 
   useEffect(() => {
     setShowFooter(!showInput);

@@ -10,16 +10,24 @@ import Text from "../../components/post/Text";
 import Comments from "../../components/post/Comments";
 import Footer from "../../components/post/Footer";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
-import { postGetDetail } from "../../services/api/post";
+import { postGetComments, postGetDetail } from "../../services/api/post";
 import { useParams } from "react-router-dom";
 import { getKorGender } from "../../services/translate/gender";
 import { handleDateString } from "../../services/format/date";
+import useFetch from "../../services/hooks/useFetch";
 
 const DetailPage = () => {
   const { id } = useParams();
   const { data, refetch } = useGetInitialData(postGetDetail, id);
   console.log(data);
   const [showFooter, setShowFooter] = useState(true);
+
+  const { data: comments, fetchData: getComments } = useFetch(postGetComments);
+
+  useEffect(() => {
+    getComments(id);
+  }, []);
+
   return (
     data && (
       <>
@@ -57,7 +65,11 @@ const DetailPage = () => {
             <Pic images={data.fileUrls} />
           </div>
 
-          <Comments setShowFooter={setShowFooter} />
+          <Comments
+            setShowFooter={setShowFooter}
+            comments={comments}
+            getComments={getComments}
+          />
         </Wrapper>
         {showFooter && (
           <Footer
