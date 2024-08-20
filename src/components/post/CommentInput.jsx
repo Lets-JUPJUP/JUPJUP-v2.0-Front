@@ -27,7 +27,11 @@ const CommentInput = ({
   };
 
   const handleClick = () => {
-    if (parentId) {
+    if (content === "") {
+      setShowInput(false);
+      return;
+    }
+    if (parentId && content !== "") {
       createReply(id, { parentId: parentId, content: content });
     } else {
       createComment(id, { content: content });
