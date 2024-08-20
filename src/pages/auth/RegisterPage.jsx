@@ -79,12 +79,9 @@ const RegisterPage = () => {
       const token = localStorage.getItem("temptoken");
       localStorage.setItem("juptoken", token);
       localStorage.removeItem("temptoken");
-      navigate("/", {
-        onComplete: () => {
-          // 이동이 완료된 후에 새로고침
-          window.location.reload();
-        },
-      });
+      navigate("/");
+
+      window.location.reload();
     } else if (createProfileError) {
       //에러 처리
       setToastMessage("회원가입 오류: 부적절한 정보입니다.");

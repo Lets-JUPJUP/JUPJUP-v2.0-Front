@@ -31,12 +31,9 @@ const LoginLoadingPage = () => {
       localStorage.setItem("gender", data.gender);
       localStorage.setItem("age", data.age);
       localStorage.setItem("memberId", data.id);
-      navigate("/", {
-        onComplete: () => {
-          // 이동이 완료된 후에 새로고침
-          window.location.reload();
-        },
-      });
+      navigate("/");
+
+      window.location.reload();
     } else {
       //토큰 임시 저장해 둔 뒤 프로필 생성 후 juptoken으로 토큰 다시 저장
       //가입 외의 페이지에 대한 접근제한은 juptoken을 기준으로 하기 떄문에 temptoken으로 가입 중도 이탈자에 대한 예외처리를 함
