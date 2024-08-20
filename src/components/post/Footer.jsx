@@ -183,7 +183,7 @@ const Footer = ({
 export default Footer;
 
 const Wrapper = styled.div`
-  z-index: 3px;
+  z-index: 3;
   position: fixed;
   width: 100%;
   bottom: 0;
