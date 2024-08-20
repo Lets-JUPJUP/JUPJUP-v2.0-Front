@@ -113,6 +113,26 @@ const SearchMap = ({ setRoute, route }) => {
     }
   }
 
+  const successHandler = (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    const locPosition = new kakao.maps.LatLng(lat, lon);
+
+    mapRef.current.setCenter(locPosition);
+    console.log("현재위치 가져오기 성공");
+  };
+
+  const errorHandler = (error) => {
+    if (error.message === "User denied Geolocation") {
+      alert("위치 정보에 동의해주셔야 해당 서비스 이용이 가능합니다.");
+      const locPosition = new kakao.maps.LatLng(37.5664056, 126.9778222);
+      mapRef.current.setCenter(locPosition);
+      return;
+    } else {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     //첫 지도 생성 (현위치 기준)
     const mapContainer = document.getElementById("map-view");
@@ -124,28 +144,13 @@ const SearchMap = ({ setRoute, route }) => {
     mapRef.current = new kakao.maps.Map(mapContainer, mapOption);
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const locPosition = new kakao.maps.LatLng(lat, lon);
-
-          mapRef.current.setCenter(locPosition);
-          console.log("현재위치 가져오기 성공");
-        },
-        function (error) {
-          console.error("위치 정보를 가져오는데 실패했습니다:", error);
-          const locPosition = new kakao.maps.LatLng(37.5664056, 126.9778222);
-          mapRef.current.setCenter(locPosition);
-          alert("위치 권한을 허용해야 합니다.");
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        }
-      );
+      navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      });
     } else {
+      console.log("Geolocation을 사용할 수 없습니다."); // Geolocation 미지원 로그
     }
 
     // 지도를 클릭했을때 클릭한 위치에 마커를 추가하도록 지도에 클릭이벤트를 등록합니다
