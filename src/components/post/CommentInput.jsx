@@ -58,7 +58,7 @@ const CommentInput = ({
 export default CommentInput;
 
 const Wrapper = styled.div`
-  z-index: 2;
+  z-index: 4;
   width: 100%;
   padding: 12px 20px;
   box-sizing: border-box;
