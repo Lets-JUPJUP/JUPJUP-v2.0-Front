@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import back from "../../assets/icons/back.svg";
 import noti from "../../assets/icons/noti.svg";
+import notiwithdot from "../../assets/icons/notiwithdot.svg";
 import home from "../../assets/icons/home.svg";
 import share from "../../assets/icons/share.svg";
 import alert from "../../assets/icons/alert.svg";
 import styled from "styled-components";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
-import { notiGetSubscribe } from "../../services/api/noti";
+import { notiGetCount, notiGetSubscribe } from "../../services/api/noti";
 import { useLocation, useNavigate } from "react-router-dom";
 import { handleDateString } from "../../services/format/date";
 
@@ -42,20 +43,9 @@ const Header = ({
   const handleBack = () => {
     const history = JSON.parse(sessionStorage.getItem("history")) || [];
 
-    if (history.length > 1) {
-      const previousPath = history[history.length - 2];
-
-      // 뒤로 가기 불가 페이지 제어
-      if (previousPath == "/write/2") {
-        history.pop(); // 현재 페이지를 스택에서 제거
-        sessionStorage.setItem("history", JSON.stringify(history));
-        navigate("/list");
-      } else {
-        history.pop(); // 현재 페이지를 스택에서 제거
-        sessionStorage.setItem("history", JSON.stringify(history));
-        navigate(-1);
-      }
-    }
+    history.pop(); // 현재 페이지를 스택에서 제거
+    sessionStorage.setItem("history", JSON.stringify(history));
+    navigate(-1);
   };
 
   return (

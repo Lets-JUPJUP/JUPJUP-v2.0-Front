@@ -13,6 +13,26 @@ import Toast from "../../components/common/Toast";
 import useS3Image from "../../services/hooks/useS3Image";
 
 const WritePage2 = () => {
+  //접근 불가 페이지 제어
+  useEffect(() => {
+    handleBack();
+  }, []);
+
+  const handleBack = () => {
+    const history = JSON.parse(sessionStorage.getItem("history")) || [];
+
+    if (history.length > 1) {
+      const previousPath = history[history.length - 2];
+      console.log(previousPath);
+      // 뒤로 가기 불가 페이지 제어
+      if (previousPath !== "/write/1") {
+        history.pop(); // 현재 페이지를 스택에서 제거
+        sessionStorage.setItem("history", JSON.stringify(history));
+        navigate(-1);
+      }
+    }
+  };
+
   const [toastMessage, setToastMessage] = useState("");
   const [body, setBody] = useRecoilState(postFormState);
   const [route, setRoute] = useState([]); //객체(주소명,경도,위도)배열
