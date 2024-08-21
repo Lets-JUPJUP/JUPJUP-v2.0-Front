@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import profile from "../../assets/post/profile.svg";
@@ -36,16 +36,27 @@ const Comment = ({
     <Wrapper>
       <div className="top">
         <div className="left">
-          <img
-            className="profile"
-            src={profileImageUrl ? profileImageUrl : profile}
-          />
-          {isAuthor ? (
-            <div className="nickname mine">{nickname}</div>
+          {isRemoved ? (
+            <img className="profile" src={profile} />
           ) : (
-            <div className="nickname">{nickname}</div>
+            <img
+              className="profile"
+              src={profileImageUrl ? profileImageUrl : profile}
+            />
           )}
-
+          {isRemoved ? (
+            <>
+              <div className="nickname">{"알 수 없음"}</div>
+            </>
+          ) : (
+            <>
+              {isAuthor ? (
+                <div className="nickname mine">{nickname}</div>
+              ) : (
+                <div className="nickname">{nickname}</div>
+              )}
+            </>
+          )}
           <div className="date">{handleDateString(createdDate)}</div>
         </div>
         <div className="icons">
@@ -63,7 +74,11 @@ const Comment = ({
         </div>
       </div>
 
-      <p className="content">{content}</p>
+      {isRemoved ? (
+        <p className="content">{"삭제된 댓글 입니다"}.</p>
+      ) : (
+        <p className="content">{content}</p>
+      )}
     </Wrapper>
   );
 };
