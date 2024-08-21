@@ -21,7 +21,11 @@ const MainPage = () => {
     <Wrapper>
       <div className="header">
         <img src={letsjupjup} />
-        <img src={bell} className="bell" />
+        <img
+          src={bell}
+          className="bell"
+          onClick={() => navigate("mypage/noti")}
+        />
       </div>
       <img src={mainview} className="mainview" />
 
