@@ -38,12 +38,6 @@ const Drawer = ({ setIsOpen, target }) => {
     }
   }, [feedbacks]);
 
-  useEffect(() => {
-    if (postError && postError.response.status == 400) {
-      //중복요청에러
-    }
-  }, [postError]);
-
   return (
     <>
       <Bg
@@ -96,12 +90,15 @@ const Drawer = ({ setIsOpen, target }) => {
           </div>
           <LongBtn
             text={"완료"}
-            onClick={() =>
+            onClick={() => {
               postFeedback({
                 trashCanId: target.id, // 쓰레기통 id
                 feedbackCode: code, // 피드백 코드
-              })
-            }
+              });
+
+              alert("피드백이 저장되었습니다.");
+              setIsOpen(false);
+            }}
           />
         </Bottom>
       </Wrapper>
