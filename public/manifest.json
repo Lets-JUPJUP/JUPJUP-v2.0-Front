@@ -1,0 +1,20 @@
+{
+  "background_color": "#ffffff",
+  "description": "플로깅 운동 주도 웹 서비스",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Lets-JUPJUP",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Lets-JUPJUP",
+  "start_url": "/",
+  "theme_color": "#FFFFFF",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "id": "jupjup123"
+}
