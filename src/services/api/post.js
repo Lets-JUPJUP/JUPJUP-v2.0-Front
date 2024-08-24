@@ -85,7 +85,7 @@ export const postGetRecruitingList = async () => {
 
 //[전체] 플로깅 리스트
 export const postGetWholeList = async () => {
-  return await client.get(`/api/v1/posts/list`);
+  return await client.get(`api/v1/posts/joined`);
 };
 
 //북마크한 플로깅 리스트
