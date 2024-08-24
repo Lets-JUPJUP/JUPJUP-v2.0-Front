@@ -7,7 +7,7 @@ const getSavedFilter = () => {
     ? JSON.parse(savedValue).filterPersistState
     : {
         allGender: true,
-        withPet: false,
+        withPet: true,
         allAge: false,
         districts: [],
         excludeClosedRecruitment: true,
@@ -28,7 +28,7 @@ export const filterPersistState = atom({
   key: "filterPersistState",
   default: {
     allGender: true,
-    withPet: false,
+    withPet: true,
     allAge: false,
     districts: [],
     excludeClosedRecruitment: true,

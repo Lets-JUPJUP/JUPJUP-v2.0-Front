@@ -15,7 +15,7 @@ const FilterSelectPage = () => {
   const resetFilter = () => {
     setFilter({
       allGender: true,
-      withPet: false,
+      withPet: true,
       allAge: false,
       districts: [],
       excludeClosedRecruitment: true,
