@@ -58,16 +58,17 @@ const Wrapper = styled.div`
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  height: 57px;
+  height: 65px;
   padding: 3px 20px;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  padding-bottom: 8px;
 
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.04),
     0px -2px 20px 0px rgba(0, 0, 0, 0.06);
 `;
 
 const Gap = styled.div`
-  margin-bottom: ${(props) => (props.$isNoGap ? "0px" : "101px")};
+  margin-bottom: ${(props) => (props.$isNoGap ? "0px" : "109px")};
 `;
