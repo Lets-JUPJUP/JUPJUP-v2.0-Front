@@ -69,7 +69,11 @@ const Form = ({ setIsActive, checkValid }) => {
     console.log(body);
     if (isBtnActive) {
       //입력값 유효성 체크
-      if (maxAge >= minAge && maxMember >= minMember && startDate >= dueDate) {
+      if (
+        parseInt(maxAge) >= parseInt(minAge) &&
+        parseInt(maxMember) >= parseInt(minMember) &&
+        startDate >= dueDate
+      ) {
         //요청 바디에 입력값 넣기
         setBody({
           title: title,
