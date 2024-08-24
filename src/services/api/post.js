@@ -5,6 +5,11 @@ export const postCreatePost = async (body) => {
   return await client.post("api/v1/posts", body);
 };
 
+//글 삭제
+export const postDeletePost = async (id) => {
+  return await client.delete(`api/v1/posts/${id}`);
+};
+
 //글 상세조회
 export const postGetDetail = async (id) => {
   return await client.get(`/api/v1/posts/${id}`);

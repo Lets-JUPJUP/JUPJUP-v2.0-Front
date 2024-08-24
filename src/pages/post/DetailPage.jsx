@@ -33,7 +33,7 @@ const DetailPage = () => {
       <>
         <Header
           isBack={true}
-          isShare={true}
+          isDelete={data.isAuthor}
           isDetail={true}
           postTitle={data.title}
           dueDate={data.dueDate}

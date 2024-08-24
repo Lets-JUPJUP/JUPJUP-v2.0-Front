@@ -4,18 +4,20 @@ import back from "../../assets/icons/back.svg";
 import noti from "../../assets/icons/noti.svg";
 import notiwithdot from "../../assets/icons/notiwithdot.svg";
 import home from "../../assets/icons/home.svg";
-import share from "../../assets/icons/share.svg";
-import alert from "../../assets/icons/alert.svg";
+import deleteicon from "../../assets/icons/deleteicon.svg";
+import alerticon from "../../assets/icons/alert.svg";
 import styled from "styled-components";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
 import { notiGetCount, notiGetSubscribe } from "../../services/api/noti";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { handleDateString } from "../../services/format/date";
+import useFetch from "../../services/hooks/useFetch";
+import { postDeletePost } from "../../services/api/post";
 
 const Header = ({
   isBack = false,
   isNoti = false,
-  isShare = false,
+  isDelete = false,
   isHome = false,
   isAlert = false,
   title = "",
@@ -27,6 +29,11 @@ const Header = ({
 }) => {
   //SSE 구독 요청
   useGetInitialData(notiGetSubscribe);
+
+  //게시글 삭제
+  const { id } = useParams();
+  const { status: deletePostStatus, fetchData: deletePost } =
+    useFetch(postDeletePost);
 
   const navigate = useNavigate();
 
@@ -47,6 +54,17 @@ const Header = ({
     sessionStorage.setItem("history", JSON.stringify(history));
     navigate(-1);
   };
+
+  const handleDelete = () => {
+    deletePost(id);
+  };
+
+  useEffect(() => {
+    if (deletePostStatus == 200) {
+      alert("게시글이 삭제 되었습니다.");
+      navigate("/list");
+    }
+  }, [deletePostStatus]);
 
   return (
     <Wrapper>
@@ -71,10 +89,10 @@ const Header = ({
       )}
       <Right>
         {isNoti && <img src={noti} onClick={() => navigate("/mypage/noti")} />}
-        {isShare && <img src={share} />}
+        {isDelete && <img src={deleteicon} onClick={handleDelete} />}
         {isAlert && (
           <img
-            src={alert}
+            src={alerticon}
             onClick={() => navigate(`/user/${idForAlert}/alert`)}
           />
         )}
