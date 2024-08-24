@@ -5,6 +5,7 @@ import host from "../../assets/icons/host.svg";
 import thumbs from "../../assets/icons/thumbs.svg";
 import thumbs_color from "../../assets/icons/thumbs_color.svg";
 import { getKorGender } from "../../services/translate/gender";
+import { useNavigate } from "react-router-dom";
 
 const Participant = ({
   participant,
@@ -13,6 +14,7 @@ const Participant = ({
   thumbTargets,
 }) => {
   const [thumbState, setThumbState] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isThumb && thumbTargets.includes(participant.memberId)) {
@@ -32,7 +34,10 @@ const Participant = ({
 
   return (
     <Wrapper>
-      <div className="left">
+      <div
+        className="left"
+        onClick={() => navigate(`/user/${participant.memberId}`)}
+      >
         <img className="profile" src={participant.profileImageUrl || profile} />
         <div className="nickname">{participant.nickname}</div>
         {isThumb && (
