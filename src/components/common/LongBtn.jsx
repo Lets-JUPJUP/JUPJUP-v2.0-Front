@@ -15,6 +15,7 @@ export default LongBtn;
 
 const Wrapper = styled.div`
   width: 100vw;
+  max-width: 700px;
   box-sizing: border-box;
   padding: 0 20px;
 `;

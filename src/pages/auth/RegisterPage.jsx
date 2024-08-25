@@ -112,7 +112,7 @@ const RegisterPage = () => {
       {toastMessage && (
         <Toast message={toastMessage} setToastMessage={setToastMessage} />
       )}
-      <div>
+      <Wrapper>
         <Header title="프로필 생성" isBack={true} />
 
         <Form>
@@ -149,12 +149,17 @@ const RegisterPage = () => {
         <Bottom>
           <LongBtn text="완료" onClick={handleClick} isActive={isBtnActive} />
         </Bottom>
-      </div>
+      </Wrapper>
     </>
   );
 };
 
 export default RegisterPage;
+
+const Wrapper = styled.div`
+  position: relative;
+  height: calc(100vh - 20px);
+`;
 
 const Form = styled.div`
   display: flex;

@@ -186,16 +186,17 @@ const Bg = styled.div`
   position: fixed;
   background: rgba(0, 0, 0, 0.4);
   width: 100vw;
+  max-width: 700px;
   height: 100%;
   top: 0;
-  left: 0;
+
   z-index: 100;
 `;
 
 const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
+  max-width: 700px;
   z-index: 101;
 
   .divider {

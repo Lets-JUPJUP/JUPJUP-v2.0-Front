@@ -98,8 +98,8 @@ const Bg = styled.div`
   background: rgba(0, 0, 0, 0.4);
   width: 100vw;
   height: 100%;
+  max-width: 700px;
   top: 0;
-  left: 0;
   z-index: 100;
 `;
 
@@ -108,7 +108,8 @@ const Wrapper = styled.div`
   overflow-y: scroll;
   position: fixed;
   width: 100%;
+  max-width: 700px;
   bottom: 0;
-  left: 0;
+
   z-index: 101;
 `;

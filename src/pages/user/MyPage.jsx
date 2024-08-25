@@ -50,6 +50,8 @@ export default MyPage;
 
 const Wrapper = styled.div`
   padding: 0 20px;
+  position: relative;
+  height: calc(100vh - 109px);
 
   .divider {
     height: 1.2px;
@@ -74,5 +76,5 @@ const Bottom = styled.div`
   box-sizing: border-box;
   padding: 20px;
   left: 0;
-  bottom: 101px;
+  bottom: 0px;
 `;

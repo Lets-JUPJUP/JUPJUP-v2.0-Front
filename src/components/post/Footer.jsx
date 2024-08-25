@@ -185,9 +185,9 @@ export default Footer;
 const Wrapper = styled.div`
   z-index: 3;
   position: fixed;
+  max-width: 700px;
   width: 100%;
   bottom: 0;
-  left: 0;
 
   width: 100%;
   height: 88px;

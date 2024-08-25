@@ -140,6 +140,8 @@ const EditPage = () => {
 export default EditPage;
 
 const Wrapper = styled.div`
+  position: relative;
+  height: calc(100vh - 109px);
   .quit {
     display: flex;
     padding: 4px 10px;

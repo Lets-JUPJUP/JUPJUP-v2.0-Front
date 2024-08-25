@@ -28,10 +28,12 @@ const PloggingListPage = () => {
               return <Item item={item} key={item.id} />;
             })}
         </List>
+      </Wrapper>
+      <FloatingArea>
         <div className="btn" onClick={() => navigate("/write/1")}>
           <img src={writebtn} />
         </div>
-      </Wrapper>
+      </FloatingArea>
       <NavBar />
     </>
   );
@@ -45,11 +47,23 @@ const Wrapper = styled.div`
   padding: 0 20px;
   display: flex;
   flex-direction: column;
+`;
+
+const List = styled.div`
+  margin-top: 12px;
+`;
+
+const FloatingArea = styled.div`
+  max-width: 700px;
+  width: calc(100% - 40px);
+  box-sizing: border-box;
+  padding: 0px 20px;
+  position: fixed;
+  bottom: 109px;
+  display: flex;
+  justify-content: flex-end;
 
   .btn {
-    position: fixed;
-    right: 20px;
-    bottom: 109px;
     border-radius: 16px;
     width: 69px;
     height: 69px;
@@ -61,8 +75,4 @@ const Wrapper = styled.div`
     /* shadow */
     box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.25);
   }
-`;
-
-const List = styled.div`
-  margin-top: 12px;
 `;

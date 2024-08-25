@@ -57,6 +57,7 @@ const Wrapper = styled.div`
 
   display: flex;
   box-sizing: border-box;
+  max-width: 700px;
   width: 100%;
   height: 65px;
   padding: 3px 20px;

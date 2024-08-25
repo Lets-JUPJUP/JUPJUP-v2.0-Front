@@ -13,28 +13,33 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Logo src={logo} />
 
       <div onClick={handlekakaoLogin}>
         <Kakao src={kakao} />
       </div>
-    </>
+    </Wrapper>
   );
 };
 
 export default LoginPage;
 
+const Wrapper = styled.div`
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const Logo = styled.img`
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, 0%);
+  position: fixed;
+  margin-top: 20vh;
 `;
 
 const Kakao = styled.img`
-  position: absolute;
+  position: fixed;
   bottom: 80px;
-  left: 50%;
+
   transform: translate(-50%, 0%);
 `;

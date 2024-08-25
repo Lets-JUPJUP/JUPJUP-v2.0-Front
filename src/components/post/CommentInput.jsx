@@ -64,13 +64,15 @@ const CommentInput = ({
 
   return (
     <Wrapper ref={wrapperRef}>
-      <input
-        ref={inputRef}
-        placeholder="댓글을 입력하세요"
-        onChange={handleChange}
-        value={content}
-      />
-      <Send src={send} onClick={handleClick} />
+      <div className="border-box">
+        <input
+          ref={inputRef}
+          placeholder="댓글을 입력하세요"
+          onChange={handleChange}
+          value={content}
+        />
+        <Send src={send} onClick={handleClick} />
+      </div>
     </Wrapper>
   );
 };
@@ -78,19 +80,26 @@ const CommentInput = ({
 export default CommentInput;
 
 const Wrapper = styled.div`
+  width: 100vw;
   z-index: 4;
-  width: 100%;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  height: 44px;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;
-  border-top: solid 5px var(--grey300);
+  display: flex;
+  justify-content: center;
+
+  .border-box {
+    width: 100%;
+    max-width: 700px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    height: 44px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: solid 5px var(--grey300);
+  }
 
   input {
     width: calc(100% - 40px);

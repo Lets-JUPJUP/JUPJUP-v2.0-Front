@@ -137,6 +137,7 @@ const Top = styled.div`
 `;
 
 const Wrapper = styled.div`
+  max-width: 700px;
   padding-bottom: 16px;
 
   .divider {

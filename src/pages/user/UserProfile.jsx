@@ -54,6 +54,10 @@ const UserProfile = () => {
 export default UserProfile;
 
 const Wrapper = styled.div`
+  padding: 0 20px;
+  position: relative;
+  height: calc(100vh - 109px);
+
   .stat {
     text-align: center;
     margin-bottom: 8px;
@@ -105,5 +109,5 @@ const Bottom = styled.div`
   box-sizing: border-box;
   padding: 20px;
   left: 0;
-  bottom: 40px;
+  bottom: 0px;
 `;
