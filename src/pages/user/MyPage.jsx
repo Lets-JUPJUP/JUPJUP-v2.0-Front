@@ -7,12 +7,18 @@ import Stat from "../../components/user/mypage/Stat";
 import New from "../../components/user/mypage/New";
 import NavBar from "../../components/common/NavBar";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
-import { memberGetMyProfile } from "../../services/api/member";
+import {
+  memberGetMyProfile,
+  memberGetUserStat,
+} from "../../services/api/member";
 import { postGetCompletePost } from "../../services/api/post";
 
 const MyPage = () => {
+  const id = localStorage.getItem("memberId");
   const { data: info } = useGetInitialData(memberGetMyProfile);
   const { data: newPost } = useGetInitialData(postGetCompletePost);
+  const { data: stat } = useGetInitialData(memberGetUserStat, id);
+
   return (
     info && (
       <>
@@ -29,7 +35,7 @@ const MyPage = () => {
           <Bottom>
             <div className="title gap">내 통계</div>
             <div className="divider" />
-            <Stat memberId={info.id} />
+            {stat && <Stat stat={stat} />}
             <div className="divider" />
           </Bottom>
         </Wrapper>

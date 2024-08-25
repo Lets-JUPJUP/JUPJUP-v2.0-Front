@@ -14,6 +14,7 @@ import { getKorGender } from "../../services/translate/gender";
 const UserProfile = () => {
   const { id } = useParams();
   const { data: profile } = useGetInitialData(memberGetUserProfile, id);
+  const { data: stat } = useGetInitialData(memberGetUserStat, id);
 
   return (
     <>
@@ -43,9 +44,7 @@ const UserProfile = () => {
 
         <Bottom>
           <div className="stat">통계</div>
-          <div className="container">
-            <Stat memberId={id} />
-          </div>
+          <div className="container">{stat && <Stat stat={stat} />}</div>
         </Bottom>
       </Wrapper>
     </>
