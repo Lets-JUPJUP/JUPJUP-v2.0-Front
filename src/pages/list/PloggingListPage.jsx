@@ -56,7 +56,7 @@ const List = styled.div`
 
 const FloatingArea = styled.div`
   max-width: 700px;
-  width: calc(100% - 40px);
+  width: 100%;
   box-sizing: border-box;
   padding: 0px 20px;
   position: fixed;
