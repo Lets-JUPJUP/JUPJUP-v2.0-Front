@@ -108,7 +108,7 @@ const Wrapper = styled.div`
 `;
 
 const Bottom = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 80px;
   left: 50%;
   transform: translate(-50%, 0%);
