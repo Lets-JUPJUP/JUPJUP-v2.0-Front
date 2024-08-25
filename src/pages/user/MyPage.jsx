@@ -8,10 +8,11 @@ import New from "../../components/user/mypage/New";
 import NavBar from "../../components/common/NavBar";
 import useGetInitialData from "../../services/hooks/useGetInitialData";
 import { memberGetMyProfile } from "../../services/api/member";
+import { postGetCompletePost } from "../../services/api/post";
 
 const MyPage = () => {
   const { data: info } = useGetInitialData(memberGetMyProfile);
-
+  const { data: newPost } = useGetInitialData(postGetCompletePost);
   return (
     info && (
       <>
@@ -23,7 +24,7 @@ const MyPage = () => {
           <Btns />
           <div className="divider" />
 
-          <New />
+          {newPost && <New newPost={newPost} />}
 
           <Bottom>
             <div className="title gap">내 통계</div>

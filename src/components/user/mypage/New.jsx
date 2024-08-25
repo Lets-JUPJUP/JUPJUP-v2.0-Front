@@ -2,20 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import right from "../../../assets/mypage/right.svg";
 import Item from "../../list/Item";
-import useGetInitialData from "../../../services/hooks/useGetInitialData";
-import { postGetCompletePost } from "../../../services/api/post";
+
 import { useNavigate } from "react-router-dom";
 
-const New = () => {
-  const { data } = useGetInitialData(postGetCompletePost);
+const New = ({ newPost }) => {
   const navigate = useNavigate();
   return (
-    data && (
+    newPost && (
       <Wrapper>
         <div className="title">최근 성사된 플로깅</div>
         <>
           <div className="divider" />
-          <Item item={data} />
+          <Item item={newPost} />
           <div className="divider" />
         </>
 
