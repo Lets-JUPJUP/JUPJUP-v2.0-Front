@@ -22,7 +22,8 @@ const MyPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (info && newPost && stat) setIsLoaded(true);
+    console.log(info, newPost, stat);
+    if (info && stat) setIsLoaded(true);
   }, [info, newPost, stat]);
 
   return (
@@ -36,7 +37,7 @@ const MyPage = () => {
           <Btns />
           <div className="divider" />
 
-          <New newPost={newPost} />
+          {newPost && <New newPost={newPost} />}
 
           <Bottom>
             <div className="title gap">내 통계</div>
