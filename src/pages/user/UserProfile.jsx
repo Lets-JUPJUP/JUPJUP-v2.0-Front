@@ -24,20 +24,22 @@ const UserProfile = () => {
         idForAlert={id}
       />
       <Wrapper>
-        <Form>
-          <div>
-            <img
-              className="profile"
-              src={profile?.profileImageUrl || profile}
-            />
-          </div>
+        {profile && (
+          <Form>
+            <div>
+              <img
+                className="profile"
+                src={profile?.profileImageUrl || profile}
+              />
+            </div>
 
-          <div className="infos">
-            <Info>{profile?.nickname}</Info>
-            <Info>{profile?.age}세</Info>
-            <Info>{getKorGender(profile?.gender)}</Info>
-          </div>
-        </Form>
+            <div className="infos">
+              <Info>{profile?.nickname}</Info>
+              <Info>{profile?.age}세</Info>
+              <Info>{getKorGender(profile?.gender)}</Info>
+            </div>
+          </Form>
+        )}
 
         <Bottom>
           <div className="stat">통계</div>
