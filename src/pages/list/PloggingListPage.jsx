@@ -14,20 +14,21 @@ import { filterPersistState, filterState } from "../../services/store/filter";
 const PloggingListPage = () => {
   const navigate = useNavigate();
   const filters = useRecoilValue(filterPersistState);
-  const { data: list, error } = useGetInitialData(postGetList, filters);
-  console.log(list);
+  const { data: list } = useGetInitialData(postGetList, filters);
+
   return (
     <>
       <Header isHome={true} isNoti={true} title="플로깅하기" />
       <Wrapper>
         <FilterHeader />
 
-        <List>
-          {list &&
-            list.map((item) => {
+        {list && (
+          <List>
+            {list.map((item) => {
               return <Item item={item} key={item.id} />;
             })}
-        </List>
+          </List>
+        )}
       </Wrapper>
       <FloatingArea>
         <div className="btn" onClick={() => navigate("/write/1")}>

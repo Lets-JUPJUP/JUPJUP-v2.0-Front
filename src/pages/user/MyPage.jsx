@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header";
 import Info from "../../components/user/mypage/Info";
@@ -19,10 +19,16 @@ const MyPage = () => {
   const { data: newPost } = useGetInitialData(postGetCompletePost);
   const { data: stat } = useGetInitialData(memberGetUserStat, id);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (info && newPost && stat) setIsLoaded(true);
+  }, [info, newPost, stat]);
+
   return (
-    info && (
-      <>
-        <Header title="마이페이지" isHome={true} isNoti={true} />
+    <>
+      <Header title="마이페이지" isHome={true} isNoti={true} />
+      {isLoaded && (
         <Wrapper>
           <Info info={info} />
           <div className="divider" />
@@ -30,19 +36,19 @@ const MyPage = () => {
           <Btns />
           <div className="divider" />
 
-          {newPost && <New newPost={newPost} />}
+          <New newPost={newPost} />
 
           <Bottom>
             <div className="title gap">내 통계</div>
             <div className="divider" />
-            {stat && <Stat stat={stat} />}
+            <Stat stat={stat} />
             <div className="divider" />
           </Bottom>
         </Wrapper>
+      )}
 
-        <NavBar />
-      </>
-    )
+      <NavBar />
+    </>
   );
 };
 
