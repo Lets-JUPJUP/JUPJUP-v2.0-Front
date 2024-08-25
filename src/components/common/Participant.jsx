@@ -90,6 +90,7 @@ const Wrapper = styled.div`
 
   .profile {
     width: 40px;
+    height: 40px;
     border-radius: 4px;
   }
 `;
