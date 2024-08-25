@@ -12,7 +12,7 @@ const New = () => {
   return (
     data && (
       <Wrapper>
-        <div className="title">최근 완료한 플로깅</div>
+        <div className="title">최근 성사된 플로깅</div>
         <>
           <div className="divider" />
           <Item item={data} />
@@ -23,7 +23,7 @@ const New = () => {
           className="review-btn"
           onClick={() => navigate("/mypage/myplogging")}
         >
-          다른 플로깅 리뷰하기
+          플로깅 리뷰하기
           <img src={right} />
         </div>
       </Wrapper>
