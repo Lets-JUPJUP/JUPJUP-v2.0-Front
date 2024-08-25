@@ -16,9 +16,11 @@ const Comment = ({
   isReply,
   deleteFunc,
 }) => {
+  const myId = localStorage.getItem("memberId");
   const { id, content, isRemoved, isAuthor, createdDate, replyList, parentId } =
     comment;
 
+  console.log(comment);
   const { writerId, nickname, profileImageUrl } = comment.writerInfoDto;
 
   const navigate = useNavigate();
@@ -60,7 +62,7 @@ const Comment = ({
           <div className="date">{handleDateString(createdDate)}</div>
         </div>
         <div className="icons">
-          {isAuthor ? (
+          {writerId == myId ? (
             <img src={x} onClick={handleDelete} />
           ) : (
             <>

@@ -88,6 +88,7 @@ const RegisterPage = () => {
     if (createProfileStatus == 200) {
       localStorage.setItem("gender", gender);
       localStorage.setItem("age", age);
+      localStorage.setItem("memberId", profileData.id);
       const token = localStorage.getItem("temptoken");
       localStorage.setItem("juptoken", token);
       localStorage.removeItem("temptoken");
