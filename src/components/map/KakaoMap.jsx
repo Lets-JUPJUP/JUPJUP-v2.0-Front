@@ -159,7 +159,7 @@ const KakaoMap = () => {
             setLon={setLon}
           />
         </div>
-        <div className="btns">
+        <div className="btn">
           <img className="gps" src={gps} onClick={refreshMap} />
         </div>
 
@@ -184,35 +184,16 @@ const Wrapper = styled.div`
     z-index: 10;
   }
 
-  .btns {
-    width: 100%;
+  .btn {
+    width: 90%;
     position: absolute;
     top: 68px;
     box-sizing: border-box;
-    padding: 0 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
     z-index: 10;
     display: flex;
     justify-content: end;
-
-    .gps {
-      transform: translate(-50%, 0);
-    }
-
-    .btn {
-      position: absolute;
-      right: 50%;
-      transform: translate(50%, 0%);
-      box-sizing: border-box;
-      display: inline-flex;
-      padding: 8px 10px;
-      justify-content: center;
-      align-items: center;
-      border-radius: 4px;
-      background: var(--main);
-
-      color: var(--white);
-      font-weight: 600;
-    }
   }
 `;
 
