@@ -160,7 +160,6 @@ const KakaoMap = () => {
           />
         </div>
         <div className="btns">
-          <div className="btn">현 지도로 재검색</div>
           <img className="gps" src={gps} onClick={refreshMap} />
         </div>
 
@@ -196,6 +195,7 @@ const Wrapper = styled.div`
     justify-content: end;
 
     .gps {
+      transform: translate(-50%, 0);
     }
 
     .btn {
