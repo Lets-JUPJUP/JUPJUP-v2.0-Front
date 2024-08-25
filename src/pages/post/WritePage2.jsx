@@ -28,7 +28,7 @@ const WritePage2 = () => {
       if (previousPath !== "/write/1") {
         history.pop(); // 현재 페이지를 스택에서 제거
         sessionStorage.setItem("history", JSON.stringify(history));
-        navigate(-1);
+        navigate("/list");
       }
     }
   };
