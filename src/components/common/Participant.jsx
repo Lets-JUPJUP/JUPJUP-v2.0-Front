@@ -14,11 +14,17 @@ const Participant = ({
   thumbTargets,
 }) => {
   const [thumbState, setThumbState] = useState(false);
+  const [isMine, setIsMine] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isThumb && thumbTargets.includes(participant.memberId)) {
       setThumbState(true);
+    }
+
+    const myId = localStorage.getItem("memberId");
+    if (participant.memberId == myId) {
+      setIsMine(true);
     }
   }, []);
 
@@ -49,7 +55,9 @@ const Participant = ({
       </div>
 
       {isThumb ? (
-        thumbState ? (
+        isMine ? (
+          <></>
+        ) : thumbState ? (
           <img className="thumbs" src={thumbs_color} onClick={toggleThumb} />
         ) : (
           <img className="thumbs" src={thumbs} onClick={toggleThumb} />
