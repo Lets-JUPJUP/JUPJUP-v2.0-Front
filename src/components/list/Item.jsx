@@ -27,10 +27,9 @@ const Item = ({ item, viewOnly = false }) => {
     withPet,
   } = item;
 
-  //리뷰 버튼 활성화 조건 (내가 참여한 글, 작성자 아님, 모집성공, 시작일지남, 리뷰아직안함)
+  //리뷰 버튼 활성화 조건 (내가 참여한 글, 모집성공, 시작일지남, 리뷰아직안함)
   var isReviewAble =
     isJoined &&
-    !isAuthor &&
     isRecruitmentSuccessful &&
     new Date(startDate) < new Date() &&
     !isReviewed;
