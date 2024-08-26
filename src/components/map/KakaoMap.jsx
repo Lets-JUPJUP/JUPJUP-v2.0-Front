@@ -164,7 +164,7 @@ const KakaoMap = () => {
         </div>
 
         <Map id="map" />
-        <NavBar />
+        <NavBar isNoGap={true} />
       </Wrapper>
     </>
   );
