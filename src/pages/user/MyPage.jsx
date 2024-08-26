@@ -15,38 +15,51 @@ import { postGetCompletePost } from "../../services/api/post";
 
 const MyPage = () => {
   const id = localStorage.getItem("memberId");
-  const { data: info } = useGetInitialData(memberGetMyProfile);
-  const { data: newPost } = useGetInitialData(postGetCompletePost);
-  const { data: stat } = useGetInitialData(memberGetUserStat, id);
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { data: info, refetch: refetchInfo } =
+    useGetInitialData(memberGetMyProfile);
+  const { data: newPost, refetch: refetchNewPost } =
+    useGetInitialData(postGetCompletePost);
+  const { data: stat, refetch: refetchStat } = useGetInitialData(
+    memberGetUserStat,
+    id
+  );
 
   useEffect(() => {
-    console.log(info, newPost, stat);
-    if (info && stat) setIsLoaded(true);
+    if (info == undefined) {
+      refetchInfo();
+    }
+    if (newPost == undefined) {
+      refetchNewPost();
+    }
+    if (stat == undefined) {
+      refetchStat();
+    }
   }, [info, newPost, stat]);
 
   return (
     <>
       <Header title="마이페이지" isHome={true} isNoti={true} />
-      {isLoaded && (
-        <Wrapper>
-          <Info info={info} />
-          <div className="divider" />
 
-          <Btns />
-          <div className="divider" />
-
-          {newPost && <New newPost={newPost} />}
-
-          <Bottom>
-            <div className="title gap">내 통계</div>
+      <Wrapper>
+        {info && (
+          <>
+            <Info info={info} />
             <div className="divider" />
-            <Stat stat={stat} />
+            <Btns />
             <div className="divider" />
-          </Bottom>
-        </Wrapper>
-      )}
+          </>
+        )}
+
+        {newPost && <New newPost={newPost} />}
+
+        <Bottom>
+          <div className="title gap">내 통계</div>
+          <div className="divider" />
+          {stat && <Stat stat={stat} />}
+          <div className="divider" />
+        </Bottom>
+      </Wrapper>
 
       <NavBar />
     </>
