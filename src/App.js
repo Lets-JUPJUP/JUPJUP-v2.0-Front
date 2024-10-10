@@ -17,11 +17,13 @@ import AlertPage from "./pages/user/AlertPage";
 import WritePage from "./pages/post/WritePage";
 import WritePage2 from "./pages/post/WritePage2";
 import { PrivateRoute, PrivateRouteTemp } from "./services/router/PrivateRoute";
+import ChatbotPage from "./pages/chatbot/ChatbotPage";
 
 function App() {
   return (
     <div>
       <Routes>
+        <Route path="/chatbot" element={<ChatbotPage />} />
         <Route element={<PrivateRoute />}>
           {/*로그인 시 접근 가능한 페이지 */}
           <Route path="/map" element={<MapPage />} />
