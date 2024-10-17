@@ -23,33 +23,45 @@ const ChatbotPage = () => {
     chatListInitialState
   ); // 메세지 대화 목록
 
+  const scrollRef = useRef();
+  useEffect(() => {
+    // 현재 스크롤 위치 === scrollRef.current.scrollTop
+    // 스크롤 길이 === scrollRef.current.scrollHeight
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [chatList.length]);
+
   // detail text 목록 -> 각 카테고리 별로 마지막 것만 추려서 대화 목록에 업데이트
   return (
     <Wrapper>
-      <div className="header">
-        <img
-          src={back_black}
-          className="back"
-          alt="back"
-          onClick={() => navigate(-1)}
-        />
-        <img src={letsjupjup} alt="letsjupjup" />
-      </div>
-      <div className="headerHeight" />
-      <Introduction>
-        <img src={julie} alt="julie" />
-        <div className="title">챗봇 줄리</div>
-        <div>
-          <div className="desc">
-            챗봇이 부정확한 정보를 제공하는 실수를 할 수 있습니다.
-          </div>
-          <div className="desc">중요한 정보는 별도의 확인을 거쳐주세요.</div>
+      <Header>
+        <div className="header">
+          <img
+            src={back_black}
+            className="back"
+            alt="back"
+            onClick={() => navigate(-1)}
+          />
+          <img src={letsjupjup} alt="letsjupjup" />
         </div>
-      </Introduction>
+        <div className="headerHeight" />
+      </Header>
 
-      <Chat>
+      <Chat ref={scrollRef}>
+        <Introduction>
+          <img src={julie} alt="julie" />
+          <div className="title">챗봇 줄리</div>
+          <div>
+            <div className="desc">
+              챗봇이 부정확한 정보를 제공하는 실수를 할 수 있습니다.
+            </div>
+            <div className="desc">중요한 정보는 별도의 확인을 거쳐주세요.</div>
+          </div>
+        </Introduction>
+        
         <AssiMessageBox>
-          <ChatbotProfile chatList={chatList} id={0}/>
+          <ChatbotProfile chatList={chatList} id={0} />
           <AssiBubble>안녕하세요 AI 챗봇 줄리에요.</AssiBubble>
           <AssiBubble>어느 지역을 중심으로 플로깅하고 싶으신가요?</AssiBubble>
         </AssiMessageBox>
@@ -63,7 +75,7 @@ const ChatbotPage = () => {
         {chatList[0] &&
           (chatList[1] && chatList[1].content ? (
             <AssiMessageBox>
-              <ChatbotProfile chatList={chatList} id={1}/>
+              <ChatbotProfile chatList={chatList} id={1} />
               <AssiBubble>{chatList[1].content}</AssiBubble>
             </AssiMessageBox>
           ) : (
@@ -112,7 +124,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+`;
 
+const Header = styled.div`
   .header {
     box-sizing: border-box;
     width: 100%;
@@ -164,6 +178,12 @@ const Introduction = styled.div`
 const Chat = styled.div`
   padding: 0 20px;
   margin-bottom: 32px;
+
+  flex-grow: 1; // Chat 컴포넌트가 빈 공간을 채우도록 설정
+  overflow-y: auto; // 내용이 넘칠 때 스크롤 생성
+  max-height: calc(
+    100vh - ${headerHeight}px - 48px
+  ); // Header와 Input 사이의 공간 계산
 `;
 
 const MessageBox = styled.div`
