@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import letsjupjup from "../../assets/main/letsjupjup.svg";
 import back_black from "../../assets/icons/back_black.svg";
 import julie from "../../assets/chatbot/julie.svg";
@@ -23,6 +23,10 @@ const ChatbotPage = () => {
     chatListInitialState
   ); // 메세지 대화 목록
 
+  const [extraBtnState, setExtraBtnState] = useState([false, false, false]); // 추가 질문 버튼 3개 state
+  // 추가 질문 리스트 -> 각 카테고리 별로 마지막 것만 추려서 gpt에 전달
+  const [detail, setDetail] = useState([]); // 추가 질문 배열 {type: "WHERE", content: "~"}
+
   const scrollRef = useRef();
   useEffect(() => {
     // 현재 스크롤 위치 === scrollRef.current.scrollTop
@@ -32,7 +36,18 @@ const ChatbotPage = () => {
     }
   }, [chatList.length]);
 
-  // detail text 목록 -> 각 카테고리 별로 마지막 것만 추려서 대화 목록에 업데이트
+  // 추가 질문 컴포넌트 버튼 클릭 시 실행되는 함수
+  const handleExtraBtnClick = (type, id) => {
+    setCurStep(type); // 현재 단계를 바꿔줌
+    // 버튼 state 업데이트 -> id에 해당하는 값만 true, 나머지는 false 처리
+    const updatedState = [...extraBtnState].map((_, index) => {
+      return index === id ? true : false; // id와 같은 index만 true로 설정
+    });
+    setExtraBtnState(updatedState);
+  };
+
+  // DoneBtn 클릭 시 실행되는 함수
+
   return (
     <Wrapper>
       <Header>
@@ -59,7 +74,7 @@ const ChatbotPage = () => {
             <div className="desc">중요한 정보는 별도의 확인을 거쳐주세요.</div>
           </div>
         </Introduction>
-        
+
         <AssiMessageBox>
           <ChatbotProfile chatList={chatList} id={0} />
           <AssiBubble>안녕하세요 AI 챗봇 줄리에요.</AssiBubble>
@@ -93,9 +108,30 @@ const ChatbotPage = () => {
                 물어봐주세요!
               </div>
               <BtnBox>
-                <OptionBtn>특정 장소 포함하기</OptionBtn>
-                <OptionBtn>소요 시간 지정하기</OptionBtn>
-                <OptionBtn>기타 정보 질문하기</OptionBtn>
+                <OptionBtn
+                  $isActive={extraBtnState[0]}
+                  onClick={() => {
+                    handleExtraBtnClick("WHERE", 0);
+                  }}
+                >
+                  특정 장소 포함하기
+                </OptionBtn>
+                <OptionBtn
+                  $isActive={extraBtnState[1]}
+                  onClick={() => {
+                    handleExtraBtnClick("TIME", 1);
+                  }}
+                >
+                  소요 시간 지정하기
+                </OptionBtn>
+                <OptionBtn
+                  $isActive={extraBtnState[2]}
+                  onClick={() => {
+                    handleExtraBtnClick("ETC", 2);
+                  }}
+                >
+                  기타 정보 질문하기
+                </OptionBtn>
               </BtnBox>
               <div>
                 <DoneBtn>다시 물어보기</DoneBtn>
@@ -245,8 +281,17 @@ const ExtraBtn = styled.div`
 `;
 
 const OptionBtn = styled(ExtraBtn)`
-  background: var(--white);
-  color: var(--black);
+  ${(props) =>
+    props.$isActive
+      ? css`
+          border: 2px solid var(--main);
+          background: var(--light);
+          color: var(--main);
+        `
+      : css`
+          background: var(--white);
+          color: var(--black);
+        `}
 `;
 
 const DoneBtn = styled(ExtraBtn)`
