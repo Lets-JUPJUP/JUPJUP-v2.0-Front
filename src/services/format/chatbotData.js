@@ -26,6 +26,8 @@ export const chatListReducer = (state, action) => {
       ];
     }
     case "user_DETAILED": {
+      // detail 배열에서 각 카테고리 별로 마지막 요소만 따온 뒤
+      // string 처리해서 content에 추가
       return [];
     }
     default:

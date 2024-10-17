@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import chat_send_grey from "../../assets/chatbot/chat_send_grey.svg";
 import chat_send from "../../assets/chatbot/chat_send.svg";
-import { chatbotCallGPT } from "../../services/api/chatbot";
 import { placeholderList } from "../../services/format/chatbotData";
 
 const ChatbotInput = ({ curStep, chatList, chatListDispatch, assiRender, setAssiRender }) => {
@@ -31,33 +30,16 @@ const ChatbotInput = ({ curStep, chatList, chatListDispatch, assiRender, setAssi
 
   // chatgpt 제출 함수
   const handleSubmit = () => {
+
+    // BASIC일 때
     chatListDispatch({ type: "user_BASIC", content: chatInput, detail: null }); // action으로 BASIC_USER(0), chatInput, detail 배열 전달
+
+    // WHERE || TIME || ETC일 때
+    // detail 배열에 {type: "WHERE", content: "홍제천을 플로깅 루트에 포함해줘"} 같은 형식 추가
+
     setChatInput(""); // input state 초기화
   };
 
-  // chatList가 업데이트된 후에 GPT API 호출
-  useEffect(() => {
-    if (chatList.length === 1 || chatList.length === 3) {
-      const { role, content } = chatList[0]; // 첫 번째 요소 가져오기
-      const dataArray = [{ role, content }];
-
-      const fetchData = async () => {
-        try {
-          const res = await chatbotCallGPT(dataArray); // gpt에게 질문 보내기
-          console.log(res.data.choices[0].message.content); // 답변 받으면 콘솔 출력
-          chatListDispatch({ type: "assistant_BASIC", content: res.data.choices[0].message.content, detail: null });
-
-          let copy = [...assiRender];
-          copy[0] = true;
-          setAssiRender(copy);
-        } catch {
-          alert("잠시 후 다시 시도해주세요");
-        }
-      };
-      // length가 2와 4일 때는 채팅 저장 호출
-      fetchData(); // GPT API 호출
-    }
-  }, [chatList]); // chatList가 변경될 때마다 실행
 
   return (
     <Wrapper>

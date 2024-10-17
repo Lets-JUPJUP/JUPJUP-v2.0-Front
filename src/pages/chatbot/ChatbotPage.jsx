@@ -10,6 +10,7 @@ import {
   chatListInitialState,
   chatListReducer,
 } from "../../services/format/chatbotData";
+import { chatbotCallGPT } from "../../services/api/chatbot";
 
 const ChatbotPage = () => {
   const navigate = useNavigate();
@@ -47,6 +48,32 @@ const ChatbotPage = () => {
   };
 
   // DoneBtn 클릭 시 실행되는 함수
+  // dispatch 함수로 detail 배열 넣으면, 
+  // reducer 함수에서 내용 가공해서(각 카테고리 별 마지막 요소만 골라서 텍스트 처리), chatList에 추가
+
+  // chatList가 업데이트된 후에 GPT API 호출
+  useEffect(() => {
+    if (chatList.length === 1 || chatList.length === 3) {
+      const { role, content } = chatList[0]; // 첫 번째 요소 가져오기
+      const dataArray = [{ role, content }];
+
+      const fetchData = async () => {
+        try {
+          const res = await chatbotCallGPT(dataArray); // gpt에게 질문 보내기
+          console.log(res.data.choices[0].message.content); // 답변 받으면 콘솔 출력
+          chatListDispatch({ type: "assistant_BASIC", content: res.data.choices[0].message.content, detail: null });
+
+          let copy = [...assiRender];
+          copy[0] = true;
+          setAssiRender(copy);
+        } catch {
+          alert("잠시 후 다시 시도해주세요");
+        }
+      };
+      // length가 2와 4일 때는 채팅 저장 호출
+      fetchData(); // GPT API 호출
+    }
+  }, [chatList]); // chatList가 변경될 때마다 실행
 
   return (
     <Wrapper>
