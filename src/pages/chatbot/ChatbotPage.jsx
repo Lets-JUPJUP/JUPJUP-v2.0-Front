@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import styled from "styled-components";
 import letsjupjup from "../../assets/main/letsjupjup.svg";
 import back_black from "../../assets/icons/back_black.svg";
@@ -6,10 +6,24 @@ import julie from "../../assets/chatbot/julie.svg";
 import { useNavigate } from "react-router-dom";
 import ChatInput from "../../components/chatbot/ChatbotInput";
 import ChatbotProfile from "../../components/chatbot/ChatbotProfile";
+import {
+  chatListInitialState,
+  chatListReducer,
+} from "../../services/format/chatbotData";
 
 const ChatbotPage = () => {
   const navigate = useNavigate();
-  const [curStep, setCurStep] = useState("basic"); // 현재 단계 state (basic, detail)
+  const [curStep, setCurStep] = useState("BASIC"); // 현재 단계 state (basic, where, time, etc)
+
+  // 세부 렌더링 단계 (추가 질문 컴포넌트, 마무리 멘트)
+  const [assiRender, setAssiRender] = useState([false, false]);
+
+  const [chatList, chatListDispatch] = useReducer(
+    chatListReducer,
+    chatListInitialState
+  ); // 메세지 대화 목록
+
+  // detail text 목록 -> 각 카테고리 별로 마지막 것만 추려서 대화 목록에 업데이트
   return (
     <Wrapper>
       <div className="header">
@@ -35,31 +49,57 @@ const ChatbotPage = () => {
 
       <Chat>
         <AssiMessageBox>
-          <ChatbotProfile />
+          <ChatbotProfile chatList={chatList} id={0}/>
           <AssiBubble>안녕하세요 AI 챗봇 줄리에요.</AssiBubble>
           <AssiBubble>어느 지역을 중심으로 플로깅하고 싶으신가요?</AssiBubble>
-          <AssiBubble>
-            <div>
-              더 자세한 추천을 원하시나요? 질문 후 ‘다시 물어보기’로
-              물어봐주세요!
-            </div>
-            <BtnBox>
-              <OptionBtn>특정 장소 포함하기</OptionBtn>
-              <OptionBtn>소요 시간 지정하기</OptionBtn>
-              <OptionBtn>기타 정보 질문하기</OptionBtn>
-            </BtnBox>
-            <div>
-              <DoneBtn>다시 물어보기</DoneBtn>
-            </div>
-          </AssiBubble>
         </AssiMessageBox>
 
-        <UserMessageBox>
-          <UserBubble>안녕하세요</UserBubble>
-        </UserMessageBox>
+        {chatList[0] && chatList[0].content && (
+          <UserMessageBox>
+            <UserBubble>{chatList[0].content}</UserBubble>
+          </UserMessageBox>
+        )}
+
+        {chatList[0] &&
+          (chatList[1] && chatList[1].content ? (
+            <AssiMessageBox>
+              <ChatbotProfile chatList={chatList} id={1}/>
+              <AssiBubble>{chatList[1].content}</AssiBubble>
+            </AssiMessageBox>
+          ) : (
+            <AssiMessageBox>
+              <ChatbotProfile />
+              <AssiBubble>로딩 중...</AssiBubble>
+            </AssiMessageBox>
+          ))}
+
+        {assiRender[0] && (
+          <AssiMessageBox>
+            <AssiBubble>
+              <div>
+                더 자세한 추천을 원하시나요? 질문 후 ‘다시 물어보기’로
+                물어봐주세요!
+              </div>
+              <BtnBox>
+                <OptionBtn>특정 장소 포함하기</OptionBtn>
+                <OptionBtn>소요 시간 지정하기</OptionBtn>
+                <OptionBtn>기타 정보 질문하기</OptionBtn>
+              </BtnBox>
+              <div>
+                <DoneBtn>다시 물어보기</DoneBtn>
+              </div>
+            </AssiBubble>
+          </AssiMessageBox>
+        )}
       </Chat>
 
-      <ChatInput curStep={curStep}/>
+      <ChatInput
+        curStep={curStep}
+        chatList={chatList}
+        chatListDispatch={chatListDispatch}
+        assiRender={assiRender}
+        setAssiRender={setAssiRender}
+      />
     </Wrapper>
   );
 };
@@ -161,6 +201,8 @@ const AssiBubble = styled(Bubble)`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  white-space: pre-wrap;
 `;
 
 const UserBubble = styled(Bubble)`

@@ -2,26 +2,22 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import chat_send_grey from "../../assets/chatbot/chat_send_grey.svg";
 import chat_send from "../../assets/chatbot/chat_send.svg";
+import { chatbotCallGPT } from "../../services/api/chatbot";
+import { placeholderList } from "../../services/format/chatbotData";
 
-const ChatbotInput = ({ curStep }) => {
+const ChatbotInput = ({ curStep, chatList, chatListDispatch, assiRender, setAssiRender }) => {
   const maxChatLength = 50; // 최대 글자 수
-  const [chat, setChat] = useState(""); // input 내용 state
+  const [chatInput, setChatInput] = useState(""); // input 내용 state
   const [curPlaceholder, setCurPlaceholder] = useState(
     "ex) 연희동 근처 플로깅 루트를 추천해줘."
   ); // 현재 placeholder
 
   // input onChange 함수
   const handleChange = (e) => {
-    setChat(e.target.value);
+    setChatInput(e.target.value);
   };
 
   // props로 받아야 할 것 : 현재 사용자가 선택한 상태 (basic인지, place, time, etc인지)
-  const placeholderList = [
-    { type: "basic", placeholder: "ex) 연희동 근처 플로깅 루트를 추천해줘." },
-    { type: "where", placeholder: "ex) 홍제폭포를 플로깅 루트에 포함해줘." },
-    { type: "time", placeholder: "ex) 2시간 이내 루트를 추천해줘." },
-    { type: "etc", placeholder: "ex) 오르막이 없는 평지로 추천해줘." },
-  ];
 
   useEffect(() => {
     // curStep에 맞는 placeholder를 찾아서 state를 업데이트
@@ -34,21 +30,59 @@ const ChatbotInput = ({ curStep }) => {
   }, [curStep]); // curStep이 변경될 때마다 실행
 
   // chatgpt 제출 함수
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    chatListDispatch({ type: "user_BASIC", content: chatInput, detail: null }); // action으로 BASIC_USER(0), chatInput, detail 배열 전달
+    setChatInput(""); // input state 초기화
+  };
+
+  // chatList가 업데이트된 후에 GPT API 호출
+  useEffect(() => {
+    if (chatList.length === 1 || chatList.length === 3) {
+      const { role, content } = chatList[0]; // 첫 번째 요소 가져오기
+      const dataArray = [{ role, content }];
+
+      const fetchData = async () => {
+        try {
+          const res = await chatbotCallGPT(dataArray); // gpt에게 질문 보내기
+          console.log(res.data.choices[0].message.content); // 답변 받으면 콘솔 출력
+          chatListDispatch({ type: "assistant_BASIC", content: res.data.choices[0].message.content, detail: null });
+
+          let copy = [...assiRender];
+          copy[0] = true;
+          setAssiRender(copy);
+        } catch {
+          alert("잠시 후 다시 시도해주세요");
+        }
+      };
+      // length가 2와 4일 때는 채팅 저장 호출
+      fetchData(); // GPT API 호출
+    }
+  }, [chatList]); // chatList가 변경될 때마다 실행
 
   return (
     <Wrapper>
       <div className="inputHeight" />
       <Container>
-        <ChatInput placeholder={curPlaceholder} onChange={handleChange} />
+        <Input
+          value={chatInput}
+          placeholder={curPlaceholder}
+          onChange={handleChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit();
+            }
+          }}
+        />
         <div className="rightSection">
           <div
-            className={chat.length > maxChatLength ? "charNumMax" : "charNum"}
+            className={
+              chatInput.length > maxChatLength ? "charNumMax" : "charNum"
+            }
           >
-            {chat.length}/{maxChatLength}
+            {chatInput.length}/{maxChatLength}
           </div>
-          {chat.length > 0 ? (
-            <img src={chat_send} alt="chat_send" />
+          {chatInput.length > 0 ? (
+            <img src={chat_send} alt="chat_send" onClick={handleSubmit} />
           ) : (
             <img src={chat_send_grey} alt="chat_send" />
           )}
@@ -100,7 +134,7 @@ const Container = styled.div`
   }
 `;
 
-const ChatInput = styled.input`
+const Input = styled.input`
   flex-grow: 1;
   border: none;
   outline: none;
