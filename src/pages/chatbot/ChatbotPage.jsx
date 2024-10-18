@@ -194,8 +194,8 @@ const ChatbotPage = () => {
 
         {detail && (
           <UserMessageBox>
-            {detail.map((item) => {
-              return <UserBubble>{item.content}</UserBubble>;
+            {detail.map((item, index) => {
+              return <UserBubble key={index}>{item.content}</UserBubble>;
             })}
           </UserMessageBox>
         )}
