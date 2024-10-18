@@ -6,7 +6,7 @@ export const chatbotCallGPT = async (chatList) => {
   return axios.post(
     "https://api.openai.com/v1/chat/completions",
     {
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: chatList,
       temperature: 0.5,
       max_tokens: 400,
