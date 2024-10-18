@@ -26,9 +26,28 @@ export const chatListReducer = (state, action) => {
       ];
     }
     case "user_DETAILED": {
-      // detail 배열에서 각 카테고리 별로 마지막 요소만 따온 뒤
-      // string 처리해서 content에 추가
-      return [];
+      // 1. detail 배열에서 같은 type 중 마지막 요소만 남김
+      const lastItems = Object.values(
+        action.detail.reduce((acc, curr) => {
+          acc[curr.type] = curr; // 같은 type일 때 덮어씀
+          return acc;
+        }, {})
+      );
+
+      // 2. 배열을 문자열로 변환
+      const resultString = `Please provide additional information in Korean based on the plogging recommendation answer you mentioned before. ${lastItems
+        .map((item) => `${item.type.toLowerCase()}: ${item.content}`)
+        .join(", ")}`;
+        
+      return [
+        ...state,
+        {
+          type: type,
+          role: role,
+          content: resultString,
+          timestamp: new Date(),
+        },
+      ];
     }
     default:
       throw Error("Unknown action: " + action.type);

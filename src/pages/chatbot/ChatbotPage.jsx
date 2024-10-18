@@ -48,29 +48,54 @@ const ChatbotPage = () => {
   };
 
   // DoneBtn 클릭 시 실행되는 함수
-  // dispatch 함수로 detail 배열 넣으면, 
-  // reducer 함수에서 내용 가공해서(각 카테고리 별 마지막 요소만 골라서 텍스트 처리), chatList에 추가
+  const handleDoneBtnClick = () => {
+    if (detail.length) {
+      chatListDispatch({
+        type: "user_DETAILED",
+        content: null,
+        detail: detail,
+      });
+      setExtraBtnState([false, false, false]); // 버튼 선택 초기화
+    } else {
+      alert("추가 질문을 작성해주세요!");
+    }
+  };
 
   // chatList가 업데이트된 후에 GPT API 호출
   useEffect(() => {
     if (chatList.length === 1 || chatList.length === 3) {
-      const { role, content } = chatList[0]; // 첫 번째 요소 가져오기
-      const dataArray = [{ role, content }];
+      const filteredArray = chatList.map(({ role, content }) => ({
+        role,
+        content,
+      }));
 
       const fetchData = async () => {
         try {
-          const res = await chatbotCallGPT(dataArray); // gpt에게 질문 보내기
-          console.log(res.data.choices[0].message.content); // 답변 받으면 콘솔 출력
-          chatListDispatch({ type: "assistant_BASIC", content: res.data.choices[0].message.content, detail: null });
+          const res = await chatbotCallGPT(filteredArray); // GPT에게 질문 보내기
+          const messageContent = res.data.choices[0].message.content; // GPT 답변
 
-          let copy = [...assiRender];
-          copy[0] = true;
-          setAssiRender(copy);
+          const handleChatDispatch = (type, index) => {
+            chatListDispatch({
+              type: type,
+              content: messageContent,
+              detail: null,
+            });
+
+            let copy = [...assiRender];
+            copy[index] = true;
+            setAssiRender(copy);
+          };
+
+          if (chatList.length === 1) {
+            handleChatDispatch("assistant_BASIC", 0);
+          } else if (chatList.length === 3) {
+            handleChatDispatch("assistant_DETAILED", 1);
+          }
         } catch {
           alert("잠시 후 다시 시도해주세요");
         }
       };
-      // length가 2와 4일 때는 채팅 저장 호출
+
       fetchData(); // GPT API 호출
     }
   }, [chatList]); // chatList가 변경될 때마다 실행
@@ -161,8 +186,38 @@ const ChatbotPage = () => {
                 </OptionBtn>
               </BtnBox>
               <div>
-                <DoneBtn>다시 물어보기</DoneBtn>
+                <DoneBtn onClick={handleDoneBtnClick}>다시 물어보기</DoneBtn>
               </div>
+            </AssiBubble>
+          </AssiMessageBox>
+        )}
+
+        {detail && (
+          <UserMessageBox>
+            {detail.map((item) => {
+              return <UserBubble>{item.content}</UserBubble>;
+            })}
+          </UserMessageBox>
+        )}
+
+        {chatList[2] &&
+          (chatList[3] && chatList[3].content ? (
+            <AssiMessageBox>
+              <ChatbotProfile chatList={chatList} id={3} />
+              <AssiBubble>{chatList[3].content}</AssiBubble>
+            </AssiMessageBox>
+          ) : (
+            <AssiMessageBox>
+              <ChatbotProfile />
+              <AssiBubble>로딩 중...</AssiBubble>
+            </AssiMessageBox>
+          ))}
+
+        {assiRender[1] && (
+          <AssiMessageBox>
+            <AssiBubble>
+              챗봇을 이용해주셔서 감사합니다. {"\n"} 안전하고 즐거운 플로깅
+              되세요!
             </AssiBubble>
           </AssiMessageBox>
         )}
@@ -170,10 +225,9 @@ const ChatbotPage = () => {
 
       <ChatInput
         curStep={curStep}
-        chatList={chatList}
         chatListDispatch={chatListDispatch}
-        assiRender={assiRender}
-        setAssiRender={setAssiRender}
+        detail={detail}
+        setDetail={setDetail}
       />
     </Wrapper>
   );

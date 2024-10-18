@@ -4,7 +4,7 @@ import chat_send_grey from "../../assets/chatbot/chat_send_grey.svg";
 import chat_send from "../../assets/chatbot/chat_send.svg";
 import { placeholderList } from "../../services/format/chatbotData";
 
-const ChatbotInput = ({ curStep, chatList, chatListDispatch, assiRender, setAssiRender }) => {
+const ChatbotInput = ({ curStep, chatListDispatch, detail, setDetail }) => {
   const maxChatLength = 50; // 최대 글자 수
   const [chatInput, setChatInput] = useState(""); // input 내용 state
   const [curPlaceholder, setCurPlaceholder] = useState(
@@ -30,16 +30,21 @@ const ChatbotInput = ({ curStep, chatList, chatListDispatch, assiRender, setAssi
 
   // chatgpt 제출 함수
   const handleSubmit = () => {
-
-    // BASIC일 때
-    chatListDispatch({ type: "user_BASIC", content: chatInput, detail: null }); // action으로 BASIC_USER(0), chatInput, detail 배열 전달
-
-    // WHERE || TIME || ETC일 때
-    // detail 배열에 {type: "WHERE", content: "홍제천을 플로깅 루트에 포함해줘"} 같은 형식 추가
+    if (curStep === "BASIC") {
+      // BASIC일 때
+      chatListDispatch({
+        type: "user_BASIC",
+        content: chatInput,
+        detail: null,
+      }); // action으로 BASIC_USER(0), chatInput, detail 배열 전달
+    } else if (curStep === "WHERE" || curStep === "TIME" || curStep === "ETC") {
+      // WHERE || TIME || ETC일 때
+      // detail 배열에 {type: "WHERE", content: "홍제천을 플로깅 루트에 포함해줘"} 같은 형식 추가
+      setDetail([...detail, { type: curStep, content: chatInput }]);
+    }
 
     setChatInput(""); // input state 초기화
   };
-
 
   return (
     <Wrapper>
