@@ -11,6 +11,7 @@ import {
   chatListReducer,
 } from "../../services/format/chatbotData";
 import { chatbotCallGPT } from "../../services/api/chatbot";
+import { BeatLoader } from "react-spinners";
 
 const ChatbotPage = () => {
   const navigate = useNavigate();
@@ -149,7 +150,9 @@ const ChatbotPage = () => {
           ) : (
             <AssiMessageBox>
               <ChatbotProfile />
-              <AssiBubble>로딩 중...</AssiBubble>
+              <AssiBubble>
+                <BeatLoader size={10} margin={4} color="#7654FF" />
+              </AssiBubble>
             </AssiMessageBox>
           ))}
 
@@ -210,7 +213,9 @@ const ChatbotPage = () => {
           ) : (
             <AssiMessageBox>
               <ChatbotProfile />
-              <AssiBubble>로딩 중...</AssiBubble>
+              <AssiBubble>
+                <BeatLoader size={10} margin={4} color="#7654FF" />
+              </AssiBubble>
             </AssiMessageBox>
           ))}
 
