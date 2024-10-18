@@ -23,9 +23,10 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/chatbot" element={<ChatbotPage />} />
         <Route element={<PrivateRoute />}>
           {/*로그인 시 접근 가능한 페이지 */}
+          <Route path="/chatbot" element={<ChatbotPage />} />
+          
           <Route path="/map" element={<MapPage />} />
 
           <Route path="/list" element={<PloggingListPage />} />
