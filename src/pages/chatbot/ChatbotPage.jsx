@@ -90,6 +90,7 @@ const ChatbotPage = () => {
             handleChatDispatch("assistant_BASIC", 0);
           } else if (chatList.length === 3) {
             handleChatDispatch("assistant_DETAILED", 1);
+            setCurStep("FINISH");
           }
         } catch {
           alert("잠시 후 다시 시도해주세요");

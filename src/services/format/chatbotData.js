@@ -3,6 +3,7 @@ export const placeholderList = [
   { type: "WHERE", placeholder: "ex) 홍제폭포를 플로깅 루트에 포함해줘." },
   { type: "TIME", placeholder: "ex) 2시간 이내 루트를 추천해줘." },
   { type: "ETC", placeholder: "ex) 오르막이 없는 평지로 추천해줘." },
+  { type: "FINISH", placeholder: "대화가 종료되었습니다." },
 ];
 
 export const chatListInitialState = [];
@@ -38,7 +39,7 @@ export const chatListReducer = (state, action) => {
       const resultString = `Please provide additional information in Korean based on the plogging recommendation answer you mentioned before. ${lastItems
         .map((item) => `${item.type.toLowerCase()}: ${item.content}`)
         .join(", ")}`;
-        
+
       return [
         ...state,
         {

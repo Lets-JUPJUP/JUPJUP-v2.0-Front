@@ -53,6 +53,7 @@ const ChatbotInput = ({ curStep, chatListDispatch, detail, setDetail }) => {
         <Input
           value={chatInput}
           placeholder={curPlaceholder}
+          disabled={curStep === "FINISH" ? true : false}
           onChange={handleChange}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
