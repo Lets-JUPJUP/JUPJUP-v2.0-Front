@@ -7,7 +7,14 @@ export const chatbotCallGPT = async (chatList) => {
     "https://api.openai.com/v1/chat/completions",
     {
       model: "gpt-4o-mini",
-      messages: chatList,
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a helpful assistant. Your name is Julie, and you have to answer within 400 characters maximum in Korean.",
+        },
+        ...chatList,
+      ],
       temperature: 0.5,
       max_tokens: 400,
     },
