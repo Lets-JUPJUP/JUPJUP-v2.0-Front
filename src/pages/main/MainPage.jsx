@@ -4,6 +4,7 @@ import letsjupjup from "../../assets/main/letsjupjup.svg";
 import mainview from "../../assets/main/mainview.png";
 import bell from "../../assets/main/bell.svg";
 import banner from "../../assets/main/banner.png";
+import chatbot from "../../assets/main/chatbot.svg";
 import NavBar from "../../components/common/NavBar";
 import LongBtn from "../../components/common/LongBtn";
 import { useNavigate } from "react-router-dom";
@@ -20,18 +21,28 @@ const MainPage = () => {
   return (
     <Wrapper>
       <div className="header">
-        <img src={letsjupjup} />
+        <img src={letsjupjup} alt="letsjupjup" />
         <img
           src={bell}
           className="bell"
+          alt="bell"
           onClick={() => navigate("mypage/noti")}
         />
       </div>
-      <img src={mainview} className="mainview" />
+      <img src={mainview} className="mainview" alt="mainview" />
 
       <Recommend>
-        <div className="title">이달의 추천 코스</div>
-        <img className="banner" src={banner} />
+        <div className="section">
+          <div className="title">이달의 추천 코스</div>
+          <img
+            className="chatbot"
+            alt="chatbot"
+            src={chatbot}
+            onClick={() => navigate("/chatbot")}
+          />
+        </div>
+
+        <img className="banner" alt="banner" src={banner} />
       </Recommend>
 
       <div className="btn">
@@ -67,6 +78,7 @@ const Wrapper = styled.div`
   .bell {
     position: absolute;
     right: 20px;
+    cursor: pointer;
   }
 
   .mainview {
@@ -86,10 +98,20 @@ const Recommend = styled.div`
 
   margin-top: 36px;
 
-  .title {
-    color: var(--black);
+  .section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    font-size: 18px;
-    font-weight: 600;
+    .title {
+      color: var(--black);
+
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .chatbot {
+      cursor: pointer;
+    }
   }
 `;

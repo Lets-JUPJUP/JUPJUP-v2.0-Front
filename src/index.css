@@ -26,15 +26,8 @@ html {
   font-family: "SUIT";
   font-weight: 300;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.eot");
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.woff2")
-      format("woff2"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.woff")
-      format("woff"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Light.ttf")
-      format("truetype");
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2")
+    format("woff2");
   font-display: swap;
 }
 
@@ -42,15 +35,8 @@ html {
   font-family: "SUIT";
   font-weight: 600;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.eot");
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.woff2")
-      format("woff2"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.woff")
-      format("woff"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.ttf")
-      format("truetype");
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-SemiBold.woff2")
+    format("woff2");
   font-display: swap;
 }
 
