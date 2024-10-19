@@ -10,8 +10,14 @@ import {
   chatListInitialState,
   chatListReducer,
 } from "../../services/format/chatbotData";
-import { chatbotCallGPT } from "../../services/api/chatbot";
+import {
+  chatbotCallGPT,
+  chatbotGetChats,
+  chatbotPostSaveChat,
+} from "../../services/api/chatbot";
 import { BeatLoader } from "react-spinners";
+import useFetch from "../../services/hooks/useFetch";
+import { handleISOTime } from "../../services/format/date";
 
 const ChatbotPage = () => {
   const navigate = useNavigate();
@@ -28,6 +34,26 @@ const ChatbotPage = () => {
   const [extraBtnState, setExtraBtnState] = useState([false, false, false]); // 추가 질문 버튼 3개 state
   // 추가 질문 리스트 -> 각 카테고리 별로 마지막 것만 추려서 gpt에 전달
   const [detail, setDetail] = useState([]); // 추가 질문 배열 {type: "WHERE", content: "~"}
+  const [chatsHistory, setChatsHistory] = useState([]);
+
+  // 이전 채팅 가져오기
+  const { data: chatsHistoryData, fetchData: getChatsHistory } =
+    useFetch(chatbotGetChats);
+
+  useEffect(() => {
+    getChatsHistory();
+  }, []);
+  useEffect(() => {
+    if (chatsHistoryData && chatsHistoryData.chatList) {
+      console.log(chatsHistoryData.chatList);
+      setChatsHistory(
+        chatsHistoryData.chatList.map((chat) => ({
+          ...chat,
+          timestamp: handleISOTime(chat.timestamp),
+        }))
+      );
+    }
+  }, [chatsHistoryData]);
 
   const scrollRef = useRef();
   useEffect(() => {
@@ -36,7 +62,7 @@ const ChatbotPage = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [chatList.length]);
+  }, [chatsHistory.length, chatList.length]);
 
   // 추가 질문 컴포넌트 버튼 클릭 시 실행되는 함수
   const handleExtraBtnClick = (type, id) => {
@@ -64,11 +90,21 @@ const ChatbotPage = () => {
 
   // chatList가 업데이트된 후에 GPT API 호출
   useEffect(() => {
+    console.log("chatList useEffect");
+    // 채팅 저장 함수
+    const postData = async (index) => {
+      try {
+        await chatbotPostSaveChat(chatList[index]);
+      } catch (e) {
+        console.log(e);
+      }
+    };
     if (chatList.length === 1 || chatList.length === 3) {
+      // user 채팅 입력
       const filteredArray = chatList.map(({ role, content }) => ({
         role,
         content,
-      }));
+      })); // 객체에서 role과 content만 받아오기
 
       const fetchData = async () => {
         try {
@@ -80,17 +116,18 @@ const ChatbotPage = () => {
               type: type,
               content: messageContent,
               detail: null,
-            });
+            }); // chatList state에 저장
 
             let copy = [...assiRender];
             copy[index] = true;
-            setAssiRender(copy);
+            setAssiRender(copy); // assiRender true로 변경
           };
 
           if (chatList.length === 1) {
+            // assistant 채팅 입력/저장
             handleChatDispatch("assistant_BASIC", 0);
           } else if (chatList.length === 3) {
-            handleChatDispatch("assistant_DETAILED", 1);
+            handleChatDispatch("assistant_DETAILED", 1); // assistant 채팅 입력/저장
             setCurStep("FINISH");
           }
         } catch {
@@ -99,6 +136,12 @@ const ChatbotPage = () => {
       };
 
       fetchData(); // GPT API 호출
+    } else if (chatList.length === 2) {
+      // assistant 채팅 저장
+      postData(1);
+    } else if (chatList.length === 4) {
+      // assistant 채팅 저장
+      postData(3);
     }
   }, [chatList]); // chatList가 변경될 때마다 실행
 
@@ -129,8 +172,26 @@ const ChatbotPage = () => {
           </div>
         </Introduction>
 
+        {chatsHistory ? (
+          chatsHistory.map((chat, index) => {
+            return (
+              <AssiMessageBox key={index}>
+                <ChatbotProfile chat={chat} />
+                <AssiBubble>{chat.message}</AssiBubble>
+              </AssiMessageBox>
+            );
+          })
+        ) : (
+          <AssiMessageBox>
+            <ChatbotProfile />
+            <AssiBubble>
+              <BeatLoader size={10} margin={4} color="#7654FF" />
+            </AssiBubble>
+          </AssiMessageBox>
+        )}
+
         <AssiMessageBox>
-          <ChatbotProfile chatList={chatList} id={0} />
+          <ChatbotProfile chat={chatList[0]} />
           <AssiBubble>안녕하세요 AI 챗봇 줄리에요.</AssiBubble>
           <AssiBubble>어느 지역을 중심으로 플로깅하고 싶으신가요?</AssiBubble>
         </AssiMessageBox>
@@ -144,7 +205,7 @@ const ChatbotPage = () => {
         {chatList[0] &&
           (chatList[1] && chatList[1].content ? (
             <AssiMessageBox>
-              <ChatbotProfile chatList={chatList} id={1} />
+              <ChatbotProfile chat={chatList[1]} />
               <AssiBubble>{chatList[1].content}</AssiBubble>
             </AssiMessageBox>
           ) : (
@@ -207,7 +268,7 @@ const ChatbotPage = () => {
         {chatList[2] &&
           (chatList[3] && chatList[3].content ? (
             <AssiMessageBox>
-              <ChatbotProfile chatList={chatList} id={3} />
+              <ChatbotProfile chat={chatList[3]} />
               <AssiBubble>{chatList[3].content}</AssiBubble>
             </AssiMessageBox>
           ) : (
