@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import julie from "../../assets/chatbot/julie.svg";
 
-const ChatbotProfile = ({ chatList, id }) => {
+const ChatbotProfile = ({ chat }) => {
   // chatList[id].timestamp가 없을 경우에만 현재 날짜와 시간 가져오기
   const currentDate =
-    chatList && chatList[id]?.timestamp
-      ? chatList[id].timestamp
+    chat && chat?.timestamp
+      ? chat.timestamp
       : new Date();
 
   // 각 구성 요소 가져오기

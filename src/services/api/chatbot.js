@@ -42,5 +42,8 @@ export const chatbotPostSaveChat = async (chatData) => {
 };
 
 // 채팅 조회하기
+export const chatbotGetChats = () => {
+  return client.get(`/api/v1/chats`);
+};
 
 // 채팅 초기화하기
