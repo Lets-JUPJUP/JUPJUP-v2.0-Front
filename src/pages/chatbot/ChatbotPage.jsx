@@ -10,7 +10,10 @@ import {
   chatListInitialState,
   chatListReducer,
 } from "../../services/format/chatbotData";
-import { chatbotCallGPT } from "../../services/api/chatbot";
+import {
+  chatbotCallGPT,
+  chatbotPostSaveChat,
+} from "../../services/api/chatbot";
 import { BeatLoader } from "react-spinners";
 
 const ChatbotPage = () => {
@@ -64,7 +67,16 @@ const ChatbotPage = () => {
 
   // chatList가 업데이트된 후에 GPT API 호출
   useEffect(() => {
+    // 채팅 저장 함수
+    const postData = async (index) => {
+      try {
+        await chatbotPostSaveChat(chatList[index]);
+      } catch (e) {
+        console.log(e);
+      }
+    };
     if (chatList.length === 1 || chatList.length === 3) {
+      // user 채팅 입력
       const filteredArray = chatList.map(({ role, content }) => ({
         role,
         content,
@@ -99,6 +111,12 @@ const ChatbotPage = () => {
       };
 
       fetchData(); // GPT API 호출
+    } else if (chatList.length === 2) {
+      // assistant 채팅 저장
+      postData(1);
+    } else if (chatList.length === 4) {
+      // assistant 채팅 저장
+      postData(3);
     }
   }, [chatList]); // chatList가 변경될 때마다 실행
 
