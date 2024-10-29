@@ -173,14 +173,19 @@ const ChatbotPage = () => {
         </Introduction>
 
         {chatsHistory ? (
-          chatsHistory.map((chat, index) => {
-            return (
-              <AssiMessageBox key={index}>
-                <ChatbotProfile chat={chat} />
-                <AssiBubble>{chat.message}</AssiBubble>
-              </AssiMessageBox>
-            );
-          })
+          <ChatsHistory>
+            {chatsHistory.map((chat, index) => {
+              return (
+                <AssiMessageBox key={index}>
+                  <ChatbotProfile chat={chat} />
+                  <AssiBubble>{chat.message}</AssiBubble>
+                </AssiMessageBox>
+              );
+            })}
+            {!chatList.length && (
+              <div className="deleteHistory">이전 채팅 삭제하기</div>
+            )}
+          </ChatsHistory>
         ) : (
           <AssiMessageBox>
             <ChatbotProfile />
@@ -356,6 +361,40 @@ const Introduction = styled.div`
     color: var(--grey500);
     font-size: 12px;
     text-align: center;
+  }
+`;
+
+const ChatsHistory = styled.div`
+  .deleteHistory {
+    display: flex;
+    align-items: center;
+    color: var(--grey500);
+
+    font-size: 12px;
+    margin-top: 32px;
+
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  .deleteHistory::before {
+    content: "";
+    flex-grow: 1;
+    background: var(--grey500);
+    height: 1px;
+    margin-right: 8px;
+    display: inline-block;
+    text-shadow: none;
+  }
+
+  .deleteHistory::after {
+    content: "";
+    flex-grow: 1;
+    background: var(--grey500);
+    height: 1px;
+    margin-left: 8px;
+    display: inline-block;
+    text-shadow: none;
   }
 `;
 
