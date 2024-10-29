@@ -52,6 +52,7 @@ const ChatbotInput = ({ curStep, chatListDispatch, detail, setDetail }) => {
       <Container>
         <Input
           value={chatInput}
+          maxLength={maxChatLength}
           placeholder={curPlaceholder}
           disabled={curStep === "FINISH" ? true : false}
           onChange={handleChange}
