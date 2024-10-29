@@ -47,3 +47,6 @@ export const chatbotGetChats = () => {
 };
 
 // 채팅 초기화하기
+export const chatbotDeleteChats = () => {
+  return client.delete(`/api/v1/chats`);
+};

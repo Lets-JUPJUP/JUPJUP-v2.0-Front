@@ -12,6 +12,7 @@ import {
 } from "../../services/format/chatbotData";
 import {
   chatbotCallGPT,
+  chatbotDeleteChats,
   chatbotGetChats,
   chatbotPostSaveChat,
 } from "../../services/api/chatbot";
@@ -40,9 +41,14 @@ const ChatbotPage = () => {
   const { data: chatsHistoryData, fetchData: getChatsHistory } =
     useFetch(chatbotGetChats);
 
+  // 이전 채팅 삭제하기
+  const { isRefetch: deleteHistoryIsRefetch, fetchData: deleteChatsHistory } =
+    useFetch(chatbotDeleteChats);
+
   useEffect(() => {
     getChatsHistory();
-  }, []);
+  }, [deleteHistoryIsRefetch]); // 삭제 시 다시 데이터 불러오기
+
   useEffect(() => {
     if (chatsHistoryData && chatsHistoryData.chatList) {
       console.log(chatsHistoryData.chatList);
@@ -145,6 +151,14 @@ const ChatbotPage = () => {
     }
   }, [chatList]); // chatList가 변경될 때마다 실행
 
+  // 이전 채팅 삭제하기 함수
+  const handleDeleteHistory = () => {
+    const result = window.confirm("이전 채팅을 삭제하시겠습니까?");
+    if (result) {
+      deleteChatsHistory();
+    }
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -182,9 +196,11 @@ const ChatbotPage = () => {
                 </AssiMessageBox>
               );
             })}
-            {!chatList.length && (
+            {chatsHistory.length > 0 && !chatList.length && (
               <div className="deleteHistory">
-                <div className="deleteText">이전 채팅 삭제하기</div>
+                <div className="deleteText" onClick={handleDeleteHistory}>
+                  이전 채팅 삭제하기
+                </div>
               </div>
             )}
           </ChatsHistory>
