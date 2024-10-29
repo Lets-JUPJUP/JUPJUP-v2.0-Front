@@ -183,7 +183,9 @@ const ChatbotPage = () => {
               );
             })}
             {!chatList.length && (
-              <div className="deleteHistory">이전 채팅 삭제하기</div>
+              <div className="deleteHistory">
+                <div className="deleteText">이전 채팅 삭제하기</div>
+              </div>
             )}
           </ChatsHistory>
         ) : (
@@ -368,13 +370,8 @@ const ChatsHistory = styled.div`
   .deleteHistory {
     display: flex;
     align-items: center;
-    color: var(--grey500);
 
-    font-size: 12px;
     margin-top: 32px;
-
-    text-align: center;
-    text-decoration: underline;
   }
 
   .deleteHistory::before {
@@ -395,6 +392,13 @@ const ChatsHistory = styled.div`
     margin-left: 8px;
     display: inline-block;
     text-shadow: none;
+  }
+
+  .deleteText {
+    text-align: center;
+    text-decoration: underline;
+    color: var(--grey500);
+    font-size: 12px;
   }
 `;
 
