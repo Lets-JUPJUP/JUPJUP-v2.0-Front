@@ -17,14 +17,12 @@ export const handleDateString = (target, isKor = false) => {
     : month + "/" + day + " " + hour + ":" + minute;
 };
 
-export const handleISOTime = (isoString) => {
-  const date = new Date(isoString); // ISO 형식의 날짜 생성
-  
-  // 한국 시간 (KST, UTC+9) 오프셋을 더한 새로운 시간 생성
-  const utcOffset = date.getTimezoneOffset() * 60000; // UTC 오프셋 (분) -> 밀리초
-  const kstOffset = 9 * 60 * 60000; // 한국 표준시 (9시간) -> 밀리초
+// UTC(타임존) 변환 없이 Date 객체를 ISO 문자열로 변환
+export const handleDate = (date) => {
+  return date.toISOString().substr(0, 16); // 기본 toISOString 사용
+};
 
-  const koreanTime = new Date(date.getTime() + utcOffset + kstOffset); // KST 시간으로 변환된 Date 객체
-  
-  return koreanTime;
+// ISO 문자열을 Date 객체로 변환
+export const handleISOTime = (isoString) => {
+  return new Date(isoString);
 };
