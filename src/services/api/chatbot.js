@@ -1,6 +1,6 @@
 import axios from "axios";
 import { client } from "./client";
-import { handleDateFormat } from "../format/date";
+import { handleDate } from "../format/date";
 
 // chatgpt API에 질문하고 답변 받기
 export const chatbotCallGPT = async (chatList) => {
@@ -35,7 +35,7 @@ export const chatbotPostSaveChat = async (chatData) => {
     ...chatData,  // 기존 객체 복사
     role: chatData.role.toUpperCase(),  // role 값을 대문자로 변환
     message: chatData.content,
-    timestamp: handleDateFormat(chatData.timestamp),  // timestamp를 포맷팅
+    timestamp: handleDate(chatData.timestamp),  // timestamp를 포맷팅
   };
   delete body.content;
   return client.post("/api/v1/chats", body);
